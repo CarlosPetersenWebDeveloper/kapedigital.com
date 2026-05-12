@@ -1,5 +1,7 @@
 import type { APIRoute } from 'astro';
 
+export const prerender = false;
+
 const RESEND_API_URL = 'https://api.resend.com/emails';
 
 function getText(value: FormDataEntryValue | null): string {
