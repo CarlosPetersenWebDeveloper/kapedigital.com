@@ -3,11 +3,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "astro",
-  "env": {
-    "NODE_ENV": {
-      "default": "production"
-    }
-  },
   "headers": [
     {
       "source": "/public/sitemap.xml",
