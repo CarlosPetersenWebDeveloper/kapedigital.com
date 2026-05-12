@@ -172,9 +172,9 @@ export const POST: APIRoute = async ({ request }) => {
       // Attach calendar invite so it can be added to calendars directly
       attachments: [
         {
-          name: 'kapedigital-invite.ics',
+          filename: 'kapedigital-invite.ics',
           type: 'text/calendar; charset=utf-8; method=REQUEST',
-          data: Buffer.from(icsContent).toString('base64'),
+          content: Buffer.from(icsContent).toString('base64'),
         },
       ],
       reply_to: email,
