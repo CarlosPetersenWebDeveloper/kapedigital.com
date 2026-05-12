@@ -105,14 +105,15 @@ export const POST: APIRoute = async ({ request }) => {
 
   const subject = `Nuevo contacto de ${name} - Kape Digital`;
 
-  function formatDateForIcal(d: Date) {
-    const yyyy = d.getUTCFullYear();
-    const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
-    const dd = String(d.getUTCDate()).padStart(2, '0');
-    const hh = String(d.getUTCHours()).padStart(2, '0');
-    const min = String(d.getUTCMinutes()).padStart(2, '0');
-    const ss = String(d.getUTCSeconds()).padStart(2, '0');
-    return `${yyyy}${mm}${dd}T${hh}${min}${ss}Z`;
+  function formatDateForIcal(d: Date, opts?: { utc?: boolean }) {
+    const useUtc = opts?.utc ?? true;
+    const yyyy = useUtc ? d.getUTCFullYear() : d.getFullYear();
+    const mm = String((useUtc ? d.getUTCMonth() : d.getMonth()) + 1).padStart(2, '0');
+    const dd = String(useUtc ? d.getUTCDate() : d.getDate()).padStart(2, '0');
+    const hh = String(useUtc ? d.getUTCHours() : d.getHours()).padStart(2, '0');
+    const min = String(useUtc ? d.getUTCMinutes() : d.getMinutes()).padStart(2, '0');
+    const ss = String(useUtc ? d.getUTCSeconds() : d.getSeconds()).padStart(2, '0');
+    return `${yyyy}${mm}${dd}T${hh}${min}${ss}${useUtc ? 'Z' : ''}`;
   }
 
   function buildIcs({
@@ -137,9 +138,14 @@ export const POST: APIRoute = async ({ request }) => {
     // If the user provided date+time, use it (local). Otherwise fallback to next day 30min.
     let start: Date;
     if (proposedDate && proposedTime) {
-      // Construct local datetime: YYYY-MM-DDTHH:MM:SS
-      start = new Date(`${proposedDate}T${proposedTime}:00`);
-      if (isNaN(start.getTime())) {
+      // Parse components to avoid inconsistent parsing across environments
+      try {
+        const [yy, mm, dd] = proposedDate.split('-').map(Number);
+        const [hh, min] = proposedTime.split(':').map(Number);
+        // Create a Date in local time with those components (floating time)
+        start = new Date(yy, mm - 1, dd, hh || 0, min || 0, 0);
+        if (isNaN(start.getTime())) throw new Error('Invalid date');
+      } catch (e) {
         start = new Date(Date.now() + 24 * 60 * 60 * 1000);
       }
     } else {
@@ -148,9 +154,10 @@ export const POST: APIRoute = async ({ request }) => {
 
     const end = new Date(start.getTime() + 30 * 60 * 1000);
 
-    const dtstamp = formatDateForIcal(new Date());
-    const dtstart = formatDateForIcal(start);
-    const dtend = formatDateForIcal(end);
+    // dtstamp in UTC, but DTSTART/DTEND as floating local times (no Z)
+    const dtstamp = formatDateForIcal(new Date(), { utc: true });
+    const dtstart = formatDateForIcal(start, { utc: false });
+    const dtend = formatDateForIcal(end, { utc: false });
     const uid = `${Date.now()}-${Math.random().toString(36).slice(2)}@kapedigital.com`;
 
     const description = `Contacto: ${name} (${email})\\nEmpresa: ${company || 'No indicó'}\\nServicio: ${service || 'No indicó'}\\n\\nMensaje:\\n${message}`;
