@@ -35,6 +35,8 @@ export const POST: APIRoute = async ({ request }) => {
   const service = getText(formData.get('service'));
   const budget = getText(formData.get('budget'));
   const message = getText(formData.get('message'));
+  const date = getText(formData.get('date'));
+  const time = getText(formData.get('time'));
   const honeypot = getText(formData.get('website'));
 
   if (honeypot) {
@@ -67,6 +69,92 @@ export const POST: APIRoute = async ({ request }) => {
 
   const subject = `Nuevo contacto de ${name} - Kape Digital`;
 
+  function formatDateForIcal(d: Date) {
+    const yyyy = d.getUTCFullYear();
+    const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+    const dd = String(d.getUTCDate()).padStart(2, '0');
+    const hh = String(d.getUTCHours()).padStart(2, '0');
+    const min = String(d.getUTCMinutes()).padStart(2, '0');
+    const ss = String(d.getUTCSeconds()).padStart(2, '0');
+    return `${yyyy}${mm}${dd}T${hh}${min}${ss}Z`;
+  }
+
+  function buildIcs({
+    name,
+    email,
+    company,
+    service,
+    message,
+    organizerEmail,
+    proposedDate,
+    proposedTime,
+  }: {
+    name: string;
+    email: string;
+    company: string;
+    service: string;
+    message: string;
+    organizerEmail: string;
+    proposedDate?: string;
+    proposedTime?: string;
+  }) {
+    // If the user provided date+time, use it (local). Otherwise fallback to next day 30min.
+    let start: Date;
+    if (proposedDate && proposedTime) {
+      // Construct local datetime: YYYY-MM-DDTHH:MM:SS
+      start = new Date(`${proposedDate}T${proposedTime}:00`);
+      if (isNaN(start.getTime())) {
+        start = new Date(Date.now() + 24 * 60 * 60 * 1000);
+      }
+    } else {
+      start = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    }
+
+    const end = new Date(start.getTime() + 30 * 60 * 1000);
+
+    const dtstamp = formatDateForIcal(new Date());
+    const dtstart = formatDateForIcal(start);
+    const dtend = formatDateForIcal(end);
+    const uid = `${Date.now()}-${Math.random().toString(36).slice(2)}@kapedigital.com`;
+
+    const description = `Contacto: ${name} (${email})\\nEmpresa: ${company || 'No indicó'}\\nServicio: ${service || 'No indicó'}\\n\\nMensaje:\\n${message}`;
+
+    const lines = [
+      'BEGIN:VCALENDAR',
+      'PRODID:-//kapedigital.com//EN',
+      'VERSION:2.0',
+      'CALSCALE:GREGORIAN',
+      'METHOD:REQUEST',
+      'BEGIN:VEVENT',
+      `UID:${uid}`,
+      `DTSTAMP:${dtstamp}`,
+      `DTSTART:${dtstart}`,
+      `DTEND:${dtend}`,
+      `SUMMARY:Reunión con ${name} - Kape Digital`,
+      `DESCRIPTION:${description}`,
+      `ORGANIZER;CN=Kape Digital:mailto:${organizerEmail}`,
+      `ATTENDEE;CN=${name};ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE:mailto:${email}`,
+      'SEQUENCE:0',
+      'PRIORITY:5',
+      'CLASS:PUBLIC',
+      'END:VEVENT',
+      'END:VCALENDAR',
+    ];
+
+    return lines.join('\r\n');
+  }
+
+  const icsContent = buildIcs({
+    name,
+    email,
+    company,
+    service,
+    message,
+    organizerEmail: fromEmail,
+    proposedDate: date || undefined,
+    proposedTime: time || undefined,
+  });
+
   const resendResponse = await fetch(RESEND_API_URL, {
     method: 'POST',
     headers: {
@@ -78,6 +166,14 @@ export const POST: APIRoute = async ({ request }) => {
       to: [toEmail],
       subject,
       html: buildEmailHtml({ name, email, company, service, budget, message }),
+      // Attach calendar invite so it can be added to calendars directly
+      attachments: [
+        {
+          name: 'kapedigital-invite.ics',
+          type: 'text/calendar; charset=utf-8; method=REQUEST',
+          data: Buffer.from(icsContent).toString('base64'),
+        },
+      ],
       reply_to: email,
     }),
   });
@@ -89,6 +185,7 @@ export const POST: APIRoute = async ({ request }) => {
       headers: { 'Content-Type': 'application/json' },
     });
   }
+
 
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,
