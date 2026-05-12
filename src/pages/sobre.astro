@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import CTA from '../components/CTA.astro';
+import Footer from '../components/Footer.astro';
+
+const stack = [
+  { name: 'React', desc: 'Interfaces modernas y rápidas' },
+  { name: 'PHP', desc: 'Backend flexible para negocios reales' },
+  { name: 'MySQL', desc: 'Datos y catálogos bien estructurados' },
+  { name: 'Laravel', desc: 'Aplicaciones robustas y escalables' },
+  { name: '.NET / C#', desc: 'Soluciones corporativas a medida' },
+  { name: 'Cloudflare', desc: 'Seguridad, DNS y rendimiento' },
+  { name: 'DigitalOcean', desc: 'Infraestructura sencilla y confiable' },
+  { name: 'Vercel', desc: 'Deploy rápido para frontends y landing pages' },
+  { name: 'Tailwind CSS', desc: 'Diseño ágil y consistente' },
+];
+
+const values = [
+  { title: 'Honestidad radical', desc: 'Si algo no es buena idea para tu negocio, te lo decimos aunque nos reste una venta.' },
+  { title: 'Cercano, no impersonal', desc: 'Trabajás directamente con Carlos. No con un equipo anónimo que cambia cada proyecto.' },
+  { title: 'Calidad sobre velocidad', desc: 'Preferimos hacer bien las cosas que entregar rápido algo mediocre.' },
+  { title: 'Educación incluida', desc: 'Cada entrega viene con capacitación. Tu sitio es tuyo y aprendés a manejarlo.' },
+];
+---
+<Layout title="Sobre mí — Kape Digital" description="Conocé a Carlos Petersen, el desarrollador detrás de Kape Digital, la micro-agencia de desarrollo web en Costa Rica.">
+  <Navbar />
+  <main class="pt-16">
+
+    <!-- Hero -->
+    <section class="py-20 lg:py-28 bg-kape-white relative overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
+        <div class="coffee-ring coffee-ring-xl absolute -top-16 -right-16 opacity-25"></div>
+        <div class="coffee-ring coffee-ring-md absolute bottom-8 left-8 opacity-20"></div>
+      </div>
+
+      <div class="max-w-5xl mx-auto px-6 lg:px-8 relative">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+          <!-- Photo placeholder -->
+          <div class="reveal reveal-left flex justify-center lg:justify-start">
+            <div class="relative">
+              <!-- Coffee ring decorations around photo -->
+              <div class="coffee-ring coffee-ring-md absolute -top-6 -right-6 opacity-30"></div>
+              <div class="coffee-ring coffee-ring-sm absolute -bottom-4 -left-4 opacity-20"></div>
+              <!-- Photo container -->
+              <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-[2rem] bg-kape-beige overflow-hidden
+                          shadow-[0_20px_60px_rgba(111,78,55,0.18)] relative">
+                <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 text-kape-medio/40">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                  <span class="text-xs uppercase tracking-wider">Foto pendiente</span>
+                </div>
+              </div>
+              <!-- Name card below -->
+              <div class="mt-4 text-center">
+                <p class="font-jakarta font-bold text-kape-oscuro text-lg">Carlos Petersen</p>
+                <p class="text-sm text-kape-medio/60">Fundador · Kape Digital</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Story -->
+          <div class="reveal reveal-right">
+            <span class="section-pill">Sobre mí</span>
+            <h1 class="font-jakarta font-extrabold text-3xl lg:text-4xl text-kape-oscuro mb-6 leading-tight">
+              Detrás de Kape Digital hay una persona,<br/>
+              <em class="accent-script font-normal text-kape-medio">no una agencia.</em>
+            </h1>
+
+            <!-- Story placeholder -->
+            <div class="space-y-4 text-kape-medio/80 text-base leading-relaxed mb-8">
+              <p>
+                Soy Carlos Petersen, desarrollador web freelancer en Costa Rica con menos de un año
+                en el mercado pero con la convicción de que los negocios costarricenses merecen
+                una presencia digital tan buena como los de cualquier parte del mundo.
+              </p>
+              <p>
+                Kape Digital nació de ver a emprendedores con productos increíbles perder clientes
+                simplemente por no estar bien en internet. El nombre "Kape" — café en tagalo — es
+                un homenaje a la calidez del café costarricense y una metáfora de cómo me gusta
+                trabajar: cercano, sin prisa, con calidad.
+              </p>
+              <p class="bg-kape-beige rounded-xl p-4 border-l-4 border-kape-naranja text-sm italic font-lora">
+                "Digitalizamos tu negocio, como un buen café: a tu gusto y con calidad."
+              </p>
+            </div>
+
+            <!-- Portafolio links -->
+            <div>
+              <p class="text-xs font-bold uppercase tracking-wider text-kape-medio/50 mb-3">Proyectos recientes:</p>
+              <div class="flex flex-wrap gap-2">
+                {['mvpcardscr.com', 'beestorecr.com', 'ajsolucionessacr.com'].map(url => (
+                  <a href={`https://${url}`} target="_blank" rel="noopener"
+                     class="text-xs bg-kape-beige text-kape-naranja px-3 py-1.5 rounded-full font-medium hover:underline">
+                    {url}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values -->
+    <section class="py-16 bg-kape-beige">
+      <div class="max-w-5xl mx-auto px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="section-pill">Filosofía</span>
+          <h2 class="font-jakarta font-extrabold text-3xl text-kape-oscuro">Cómo trabajo</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-5">
+          {values.map((v, i) => (
+            <div class={`reveal reveal-delay-${i+1} bg-kape-white rounded-2xl p-7`}>
+              <h3 class="font-jakarta font-bold text-kape-oscuro text-lg mb-2">{v.title}</h3>
+              <p class="text-kape-medio/75 text-sm leading-relaxed">{v.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Stack -->
+    <section class="py-16 bg-kape-white">
+      <div class="max-w-5xl mx-auto px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="section-pill">Stack técnico</span>
+          <h2 class="font-jakarta font-extrabold text-3xl text-kape-oscuro">Con qué construyo</h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {stack.map((s, i) => (
+            <div class={`reveal reveal-delay-${i+1} bg-kape-beige rounded-xl p-5 text-center`}>
+              <p class="font-jakarta font-bold text-kape-oscuro text-base mb-1">{s.name}</p>
+              <p class="text-kape-medio/60 text-xs">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <CTA />
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,129 @@
+---
+const steps = [
+  {
+    number: '01',
+    name:   'Cafecito exploratorio',
+    desc:   '30 minutos sin compromiso. Conversamos sobre tu negocio, tus metas y qué necesitás. Gratis.',
+    icon: `<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>`,
+    color: 'bg-kape-naranja',
+  },
+  {
+    number: '02',
+    name:   'Catación',
+    desc:   'Diagnóstico de tu estado digital actual y propuesta formal con alcance, plazos y precios claros.',
+    icon: `<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>`,
+    color: 'bg-kape-medio',
+  },
+  {
+    number: '03',
+    name:   'Tueste',
+    desc:   'Diseño y construcción de tu sitio. Revisiones incluidas. Te mantengo informado en cada paso.',
+    icon: `<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>`,
+    color: 'bg-kape-oscuro',
+  },
+  {
+    number: '04',
+    name:   'Servir',
+    desc:   'Entrega del proyecto final + capacitación para que manejés tu sitio con confianza.',
+    icon: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>`,
+    color: 'bg-kape-naranja',
+  },
+  {
+    number: '05',
+    name:   'Sobremesa',
+    desc:   'Soporte mensual opcional. Mejoras continuas, reportes y esa reunión mensual para tomar café.',
+    icon: `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
+    color: 'bg-kape-verde',
+  },
+];
+---
+<section id="proceso" class="py-24 bg-kape-white relative overflow-hidden">
+
+  <!-- Decorative coffee ring watermark -->
+  <div aria-hidden="true"
+       class="absolute top-12 right-0 w-80 h-80 rounded-full border-[30px] border-kape-beige/60 translate-x-1/3"
+       style="filter: blur(2px);"></div>
+  <div aria-hidden="true"
+       class="absolute bottom-12 left-0 w-56 h-56 rounded-full border-[20px] border-kape-beige/40 -translate-x-1/3"
+       style="filter: blur(2px);"></div>
+
+  <div class="max-w-6xl mx-auto px-6 lg:px-8 relative">
+
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <div class="reveal inline-flex items-center gap-2 bg-kape-beige text-kape-medio text-xs font-medium px-4 py-1.5 rounded-full mb-4">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        El proceso
+      </div>
+      <h2 class="reveal reveal-delay-1 font-jakarta font-bold text-3xl lg:text-4xl text-kape-oscuro mb-4">
+        ¿Cómo es trabajar juntos?
+      </h2>
+      <p class="reveal reveal-delay-2 text-kape-medio/80 text-lg max-w-xl mx-auto">
+        Sin sorpresas, sin tecnicismos. Cada paso es claro y vas al tanto de todo.
+      </p>
+    </div>
+
+    <!-- Steps — Desktop: horizontal with connecting line -->
+    <div class="hidden lg:block relative">
+
+      <!-- Connecting line -->
+      <div class="absolute top-10 left-[10%] right-[10%] h-0.5 bg-kape-beige">
+        <div class="process-line absolute inset-0 bg-gradient-to-r from-kape-naranja via-kape-medio to-kape-oscuro rounded-full"></div>
+      </div>
+
+      <!-- Steps -->
+      <div class="grid grid-cols-5 gap-4 relative">
+        {steps.map((step, i) => (
+          <div class={`reveal reveal-delay-${i + 1} flex flex-col items-center text-center gap-4`}>
+            <!-- Circle -->
+            <div class={`w-20 h-20 rounded-full ${step.color} flex items-center justify-center shadow-kape-md
+                         ring-4 ring-kape-white relative z-10 transition-transform duration-300 hover:scale-110`}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                   stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   set:html={step.icon}/>
+            </div>
+            <!-- Number -->
+            <span class="inline-flex items-center justify-center min-w-14 px-4 py-2 rounded-full bg-kape-oscuro text-kape-white font-jakarta font-extrabold text-3xl leading-none select-none shadow-[0_10px_30px_rgba(75,46,43,0.18)] ring-1 ring-kape-beige/40">
+              {step.number}
+            </span>
+            <!-- Content -->
+            <div>
+              <h3 class="font-jakarta font-bold text-kape-oscuro text-base mb-2">{step.name}</h3>
+              <p class="text-kape-medio/70 text-xs leading-relaxed">{step.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Steps — Mobile: vertical -->
+    <div class="lg:hidden space-y-0">
+      {steps.map((step, i) => (
+        <div class="reveal flex gap-5">
+          <!-- Left column: circle + line -->
+          <div class="flex flex-col items-center">
+            <div class={`w-12 h-12 rounded-full ${step.color} flex items-center justify-center shadow-kape-sm flex-shrink-0`}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   set:html={step.icon}/>
+            </div>
+            {i < steps.length - 1 && (
+              <div class="w-0.5 flex-1 my-2 bg-gradient-to-b from-kape-beige to-kape-white min-h-[40px]"></div>
+            )}
+          </div>
+          <!-- Right column: content -->
+          <div class="pb-8">
+            <span class="inline-flex items-center justify-center min-w-10 px-3 py-1.5 rounded-full bg-kape-oscuro text-kape-white text-xs font-bold uppercase tracking-[0.18em] shadow-[0_8px_20px_rgba(75,46,43,0.18)]">
+              {step.number}
+            </span>
+            <h3 class="font-jakarta font-bold text-kape-oscuro text-lg mt-0.5 mb-2">{step.name}</h3>
+            <p class="text-kape-medio/70 text-sm leading-relaxed">{step.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

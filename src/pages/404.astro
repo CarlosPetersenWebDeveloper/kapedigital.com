@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="404 — Página no encontrada | Kape Digital" description="La página que buscas no existe. Vuelve a inicio o contacta con nosotros.">
+  <Navbar />
+  <main class="pt-16 min-h-screen flex flex-col">
+    
+    <!-- 404 Hero Section -->
+    <section class="flex-1 flex items-center justify-center py-20 bg-kape-white relative overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
+        <div class="coffee-ring coffee-ring-xl absolute -top-20 -left-24 opacity-20"></div>
+        <div class="coffee-ring coffee-ring-lg absolute -bottom-32 -right-20 opacity-15"></div>
+      </div>
+      
+      <div class="max-w-2xl mx-auto px-6 lg:px-8 text-center relative">
+        <!-- Big 404 -->
+        <div class="mb-8">
+          <h1 class="font-jakarta font-black text-9xl lg:text-[150px] text-kape-naranja/20 leading-none">
+            404
+          </h1>
+          <p class="font-jakarta font-extrabold text-2xl lg:text-4xl text-kape-oscuro -mt-6">
+            Página no encontrada
+          </p>
+        </div>
+
+        <!-- Description -->
+        <p class="text-lg text-kape-medio/80 mb-4">
+          Lo sentimos, la página que buscas se fue a tomar un café y no volvió.
+        </p>
+        <p class="text-sm text-kape-medio/60 mb-10">
+          Verifica la URL o vuelve al inicio para explorar más.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/"
+             class="inline-flex items-center justify-center gap-2 bg-kape-naranja text-white font-bold px-7 py-3.5 rounded-full btn-ripple hover:bg-orange-700 transition-colors">
+            ← Volver al inicio
+          </a>
+          <a href="/#cafecito"
+             class="inline-flex items-center justify-center gap-2 border-2 border-kape-medio text-kape-oscuro font-bold px-7 py-3 rounded-full hover:bg-kape-beige transition-colors">
+            Agendar cafecito
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Suggestion Section -->
+    <section class="py-16 bg-kape-beige/40">
+      <div class="max-w-2xl mx-auto px-6 lg:px-8 text-center">
+        <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-6">
+          ¿Quizás buscabas algo de esto?
+        </h2>
+        <div class="grid sm:grid-cols-2 gap-4">
+          {[
+            { label: 'Servicios', href: '/servicios', icon: '☕' },
+            { label: 'Portafolio', href: '/portafolio', icon: '🎨' },
+            { label: 'Blog', href: '/blog', icon: '📝' },
+            { label: 'Sobre mí', href: '/sobre', icon: 'ℹ️' },
+          ].map(link => (
+            <a href={link.href}
+               class="p-4 bg-kape-white rounded-lg border border-kape-beige hover:border-kape-medio/30 transition-all hover:shadow-md">
+              <span class="text-3xl block mb-2">{link.icon}</span>
+              <span class="font-semibold text-kape-oscuro">{link.label}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>

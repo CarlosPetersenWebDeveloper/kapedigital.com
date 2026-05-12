@@ -1,0 +1,159 @@
+---
+interface Props {
+  title?:       string;
+  description?: string;
+}
+
+const {
+  title       = 'Kape Digital — Digitalizamos tu negocio, a tu gusto.',
+  description = 'Micro-agencia de desarrollo web en Costa Rica. Virtualizamos PYMEs y emprendedores con sitios web, tiendas en línea y presencia digital completa.',
+} = Astro.props;
+
+// Get current URL for canonical
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Organization Schema for Local SEO
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  'name': 'Kape Digital',
+  'url': 'https://kapedigital.com',
+  'logo': 'https://kapedigital.com/favicon.svg',
+  'description': description,
+  'sameAs': [
+    'https://www.instagram.com/kapedigital.cr',
+    'https://www.facebook.com/kapedigital.cr',
+    'https://www.linkedin.com/company/kape-digital',
+  ],
+  'address': {
+    '@type': 'PostalAddress',
+    'addressCountry': 'CR',
+    'addressLocality': 'Costa Rica',
+  },
+  'contactPoint': {
+    '@type': 'ContactPoint',
+    'contactType': 'Customer Service',
+    'availableLanguageId': 'es',
+  },
+  'areaServed': 'CR',
+  'priceRange': '$',
+};
+
+// BreadcrumbList Schema
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  'itemListElement': [
+    {
+      '@type': 'ListItem',
+      'position': 1,
+      'name': 'Inicio',
+      'item': 'https://kapedigital.com'
+    }
+  ]
+};
+---
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <!-- Meta esenciales -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <!-- Canonical URL para evitar duplicados -->
+    <link rel="canonical" href={canonicalURL.toString()} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Open Graph (redes sociales) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL.toString()} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://kapedigital.com/og-image.png" />
+    <meta property="og:locale" content="es_CR" />
+    <meta property="og:site_name" content="Kape Digital" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://kapedigital.com/og-image.png" />
+
+    <!-- SEO & Indexing -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
+    <meta name="language" content="Spanish" />
+    <meta name="author" content="Kape Digital" />
+    <meta name="creator" content="Kape Digital" />
+    <meta name="publisher" content="Kape Digital" />
+
+    <!-- Preconnect para Google Fonts (performance) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+    <!-- Google Fonts con font-display=swap para mejor performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500&family=Lora:ital,wght@0,400;1,400;1,500&display=swap"
+          rel="stylesheet" />
+
+    <!-- JSON-LD Schema para SEO (busca Google) -->
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+    <!-- Preload critical fonts (performance) -->
+    <link rel="preload" as="font" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800" type="font/woff2" crossorigin />
+  </head>
+
+  <body class="bg-kape-white font-inter text-kape-oscuro antialiased overflow-x-hidden" role="application">
+
+    <slot />
+
+    <script is:inline>
+      // ── Reveal on scroll ─────────────────────────────
+      var revealObs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('revealed');
+            revealObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
+        .forEach(function(el) { revealObs.observe(el); });
+
+      // ── Navbar shadow ─────────────────────────────────
+      var navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 20) navbar && navbar.classList.add('nav-scrolled');
+        else navbar && navbar.classList.remove('nav-scrolled');
+      }, { passive: true });
+
+      // ── Mobile menu ───────────────────────────────────
+      var btn   = document.getElementById('menu-btn');
+      var mNav  = document.getElementById('mobile-nav');
+      btn && btn.addEventListener('click', function() {
+        mNav && mNav.classList.toggle('hidden');
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !expanded);
+      });
+
+      // ── Process line reveal ───────────────────────────
+      var lineObs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) e.target.classList.add('revealed');
+        });
+      }, { threshold: 0.35 });
+      document.querySelectorAll('.process-line').forEach(function(el) {
+        lineObs.observe(el);
+      });
+    </script>
+  </body>
+</html>
