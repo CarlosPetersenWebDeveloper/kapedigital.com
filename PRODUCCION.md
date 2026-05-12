@@ -60,7 +60,7 @@ En Vercel > Settings > Environment Variables:
 
 ```
 VITE_CONTACT_EMAIL = hola@kapedigital.com
-VITE_CALENDLY_URL = https://calendly.com/carlos-kapedigital/cafecito
+VITE_CALENDLY_URL = https://calendly.com/carlos-petersen-calderon29
 VITE_API_BASE_URL = https://kapedigital.com
 VITE_GA4_ID = G-XXXXXXXXXX (Google Analytics)
 ```
