@@ -9,3 +9,4 @@ dist_new/
 *.sqlite
 .astro/
 .vscode-profiles/
+.vercel/
