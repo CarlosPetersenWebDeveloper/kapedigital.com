@@ -8,6 +8,22 @@ function getText(value: FormDataEntryValue | null): string {
   return typeof value === 'string' ? value.trim() : '';
 }
 
+function formatProposedDateTime(proposedDate?: string, proposedTime?: string) {
+  if (!proposedDate && !proposedTime) return 'No indicado';
+  try {
+    let d: Date;
+    if (proposedDate && proposedTime) d = new Date(`${proposedDate}T${proposedTime}:00`);
+    else if (proposedDate) d = new Date(`${proposedDate}T00:00:00`);
+    else d = new Date();
+    return d.toLocaleString('es-ES', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+  } catch (e) {
+    return 'No indicado';
+  }
+}
+
 function buildEmailHtml(input: {
   name: string;
   email: string;
@@ -15,16 +31,33 @@ function buildEmailHtml(input: {
   service: string;
   budget: string;
   message: string;
+  date?: string;
+  time?: string;
+  forRecipient?: 'owner' | 'submitter';
 }) {
+  const proposed = formatProposedDateTime(input.date, input.time);
+  const title = input.forRecipient === 'submitter'
+    ? 'Gracias por contactar a Kape Digital'
+    : 'Nuevo lead de Kape Digital';
+
   return `
-    <h2 style="margin:0 0 16px;font-family:Arial,sans-serif;color:#4B2E2B">Nuevo lead de Kape Digital</h2>
-    <p style="margin:0 0 8px;font-family:Arial,sans-serif"><strong>Nombre:</strong> ${input.name}</p>
-    <p style="margin:0 0 8px;font-family:Arial,sans-serif"><strong>Email:</strong> ${input.email}</p>
-    <p style="margin:0 0 8px;font-family:Arial,sans-serif"><strong>Empresa:</strong> ${input.company || 'No indicó'}</p>
-    <p style="margin:0 0 8px;font-family:Arial,sans-serif"><strong>Servicio:</strong> ${input.service || 'No indicó'}</p>
-    <p style="margin:0 0 8px;font-family:Arial,sans-serif"><strong>Presupuesto:</strong> ${input.budget || 'No indicó'}</p>
-    <p style="margin:16px 0 8px;font-family:Arial,sans-serif"><strong>Mensaje:</strong></p>
-    <div style="white-space:pre-wrap;font-family:Arial,sans-serif;line-height:1.6;color:#2f2f2f">${input.message}</div>
+    <div style="font-family:Arial,sans-serif;color:#222;margin:0;padding:24px;background:#f6f6f7">
+      <div style="max-width:680px;margin:0 auto;background:#fff;border-radius:8px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,0.06)">
+        <h2 style="margin:0 0 12px;color:#4B2E2B">${title}</h2>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;color:#333">
+          <tbody>
+            <tr><td style="padding:8px 0;width:160px;font-weight:700">Nombre:</td><td style="padding:8px 0">${input.name}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:700">Email:</td><td style="padding:8px 0">${input.email}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:700">Empresa:</td><td style="padding:8px 0">${input.company || 'No indicó'}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:700">Servicio:</td><td style="padding:8px 0">${input.service || 'No indicó'}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:700">Presupuesto:</td><td style="padding:8px 0">${input.budget || 'No indicó'}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:700">Fecha propuesta:</td><td style="padding:8px 0">${proposed}</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:16px;padding:12px;background:#fafafa;border-radius:6px;color:#444;white-space:pre-wrap;line-height:1.5">${input.message}</div>
+        <p style="margin:18px 0 0;font-size:13px;color:#666">Recibirás un archivo adjunto (.ics) que te permitirá añadir la reunión a tu calendario.</p>
+      </div>
+    </div>
   `;
 }
 
@@ -168,7 +201,7 @@ export const POST: APIRoute = async ({ request }) => {
       from: fromEmail,
       to: [toEmail],
       subject,
-      html: buildEmailHtml({ name, email, company, service, budget, message }),
+      html: buildEmailHtml({ name, email, company, service, budget, message, date, time }),
       // Attach calendar invite so it can be added to calendars directly
       attachments: [
         {
@@ -189,6 +222,36 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
+  // Send a copy to the submitter so they receive the cotización/request copy
+  try {
+    const submitterResp = await fetch(RESEND_API_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: fromEmail,
+        to: [email],
+        subject: `Copia de tu solicitud - Kape Digital`,
+        html: buildEmailHtml({ name, email, company, service, budget, message, date, time, forRecipient: 'submitter' }),
+        attachments: [
+          {
+            filename: 'kapedigital-invite.ics',
+            type: 'text/calendar; charset=utf-8; method=REQUEST',
+            content: Buffer.from(icsContent).toString('base64'),
+          },
+        ],
+      }),
+    });
+
+    if (!submitterResp.ok) {
+      const errText = await submitterResp.text();
+      console.error('Error sending copy to submitter:', errText);
+    }
+  } catch (e) {
+    console.error('Failed to send copy to submitter:', e);
+  }
 
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,
