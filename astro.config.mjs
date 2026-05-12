@@ -6,7 +6,9 @@ export default defineConfig({
   // Site domain for SEO
   site: 'https://kapedigital.com',
   
-  adapter: vercel(),
+  adapter: vercel({
+    runtime: 'nodejs20.x',
+  }),
   integrations: [tailwind()],
   
   // Optimization for better Lighthouse scores
