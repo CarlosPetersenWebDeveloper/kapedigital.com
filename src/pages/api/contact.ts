@@ -55,9 +55,10 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const resendApiKey = import.meta.env.RESEND_API_KEY;
-  const fromEmail = import.meta.env.RESEND_FROM_EMAIL;
-  const toEmail = import.meta.env.QUOTE_TO_EMAIL ?? import.meta.env.VITE_CONTACT_EMAIL ?? 'hola@kapedigital.com';
+  const env = globalThis.process?.env ?? {};
+  const resendApiKey = env.RESEND_API_KEY ?? import.meta.env.RESEND_API_KEY;
+  const fromEmail = env.RESEND_FROM_EMAIL ?? import.meta.env.RESEND_FROM_EMAIL;
+  const toEmail = env.QUOTE_TO_EMAIL ?? import.meta.env.QUOTE_TO_EMAIL ?? import.meta.env.VITE_CONTACT_EMAIL ?? 'hola@kapedigital.com';
 
   if (!resendApiKey || !fromEmail) {
     return new Response(JSON.stringify({
