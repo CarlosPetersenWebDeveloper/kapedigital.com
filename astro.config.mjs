@@ -1,10 +1,12 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import vercel from '@astrojs/vercel/serverless';
 
 export default defineConfig({
   // Site domain for SEO
   site: 'https://kapedigital.com',
   
+  adapter: vercel(),
   integrations: [tailwind()],
   
   // Optimization for better Lighthouse scores
@@ -19,8 +21,8 @@ export default defineConfig({
     },
   },
 
-  // Output configuration
-  output: 'static',
+  // Output configuration - use 'hybrid' to allow both static pages and dynamic API routes
+  output: 'hybrid',
   
   // Trailing slash for consistent URLs (better for SEO)
   trailingSlash: 'ignore',

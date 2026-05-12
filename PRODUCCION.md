@@ -59,8 +59,9 @@ CNAME: kapedigital.com → cname.vercel-dns.com
 En Vercel > Settings > Environment Variables:
 
 ```
-VITE_CONTACT_EMAIL = hola@kapedigital.com
-VITE_CALENDLY_URL = https://calendly.com/carlos-petersen-calderon29
+RESEND_API_KEY = re_xxx_your_key
+RESEND_FROM_EMAIL = no-reply@kapedigital.com
+QUOTE_TO_EMAIL = hola@kapedigital.com
 VITE_API_BASE_URL = https://kapedigital.com
 VITE_GA4_ID = G-XXXXXXXXXX (Google Analytics)
 ```

@@ -44,21 +44,7 @@ const links = [
       ))}
     </ul>
 
-    <!-- CTA -->
-    <a href="/#cafecito"
-       class="hidden lg:inline-flex items-center gap-2 bg-kape-naranja text-white text-sm font-semibold
-              px-5 py-2.5 rounded-full btn-ripple hover:bg-orange-700 transition-colors duration-200 flex-shrink-0"
-       aria-label="Agendar cafecito exploratorio gratis">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-        <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
-        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
-        <line x1="6" y1="1" x2="6" y2="4"/>
-        <line x1="10" y1="1" x2="10" y2="4"/>
-        <line x1="14" y1="1" x2="14" y2="4"/>
-      </svg>
-      Agendar cafecito
-    </a>
+
 
     <!-- Hamburger -->
     <button id="menu-btn"
@@ -78,7 +64,7 @@ const links = [
   <!-- Mobile menu -->
   <div id="mobile-nav"
        class="hidden lg:hidden bg-kape-white/96 navbar-blur border-t border-kape-beige px-6 py-5">
-    <ul class="flex flex-col gap-4 mb-5">
+    <ul class="flex flex-col gap-4">
       {links.map(link => (
         <li>
           <a href={link.href}
@@ -87,12 +73,6 @@ const links = [
           </a>
         </li>
       ))}
-    </ul> hover:bg-orange-700 transition-colors"
-       aria-label="Agendar cafecito exploratorio gratis
-    <a href="/#cafecito"
-       class="flex items-center justify-center gap-2 bg-kape-naranja text-white text-sm font-semibold
-              px-5 py-3 rounded-full btn-ripple">
-      Agendar cafecito gratis
-    </a>
+    </ul>
   </div>
 </header>
