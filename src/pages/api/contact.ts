@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { sanitizeInput, validateContactForm } from '../../utils/validation';
 
 export const prerender = false;
 
@@ -6,6 +7,15 @@ const RESEND_API_URL = 'https://api.resend.com/emails';
 
 function getText(value: FormDataEntryValue | null): string {
   return typeof value === 'string' ? value.trim() : '';
+}
+
+function escapeIcsText(value: string): string {
+  return value
+    .replace(/\\/g, '\\\\')
+    .replace(/\r/g, '')
+    .replace(/\n/g, '\\n')
+    .replace(/,/g, '\\,')
+    .replace(/;/g, '\\;');
 }
 
 function formatProposedDateTime(proposedDate?: string, proposedTime?: string) {
@@ -46,15 +56,15 @@ function buildEmailHtml(input: {
         <h2 style="margin:0 0 12px;color:#4B2E2B">${title}</h2>
         <table style="width:100%;border-collapse:collapse;font-size:14px;color:#333">
           <tbody>
-            <tr><td style="padding:8px 0;width:160px;font-weight:700">Nombre:</td><td style="padding:8px 0">${input.name}</td></tr>
-            <tr><td style="padding:8px 0;font-weight:700">Email:</td><td style="padding:8px 0">${input.email}</td></tr>
-            <tr><td style="padding:8px 0;font-weight:700">Empresa:</td><td style="padding:8px 0">${input.company || 'No indicó'}</td></tr>
-            <tr><td style="padding:8px 0;font-weight:700">Servicio:</td><td style="padding:8px 0">${input.service || 'No indicó'}</td></tr>
-            <tr><td style="padding:8px 0;font-weight:700">Presupuesto:</td><td style="padding:8px 0">${input.budget || 'No indicó'}</td></tr>
+            <tr><td style="padding:8px 0;width:160px;font-weight:700">Nombre:</td><td style="padding:8px 0">${sanitizeInput(input.name)}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:700">Email:</td><td style="padding:8px 0">${sanitizeInput(input.email)}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:700">Empresa:</td><td style="padding:8px 0">${sanitizeInput(input.company || '')}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:700">Servicio:</td><td style="padding:8px 0">${sanitizeInput(input.service || '')}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:700">Presupuesto:</td><td style="padding:8px 0">${sanitizeInput(input.budget || '')}</td></tr>
             <tr><td style="padding:8px 0;font-weight:700">Fecha propuesta:</td><td style="padding:8px 0">${proposed}</td></tr>
           </tbody>
         </table>
-        <div style="margin-top:16px;padding:12px;background:#fafafa;border-radius:6px;color:#444;white-space:pre-wrap;line-height:1.5">${input.message}</div>
+        <div style="margin-top:16px;padding:12px;background:#fafafa;border-radius:6px;color:#444;white-space:pre-wrap;line-height:1.5">${sanitizeInput(input.message)}</div>
         <p style="margin:18px 0 0;font-size:13px;color:#666">Recibirás un archivo adjunto (.ics) que te permitirá añadir la reunión a tu calendario.</p>
       </div>
     </div>
@@ -83,6 +93,25 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (!name || !email || !message) {
     return new Response(JSON.stringify({ ok: false, error: 'Faltan campos obligatorios.' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  const validation = validateContactForm({
+    name,
+    email,
+    company,
+    service,
+    budget,
+    message,
+    date,
+    time,
+    website: honeypot,
+  });
+
+  if (!validation.isValid) {
+    return new Response(JSON.stringify({ ok: false, error: Object.values(validation.errors)[0] }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
     });
@@ -161,6 +190,7 @@ export const POST: APIRoute = async ({ request }) => {
     const uid = `${Date.now()}-${Math.random().toString(36).slice(2)}@kapedigital.com`;
 
     const description = `Contacto: ${name} (${email})\\nEmpresa: ${company || 'No indicó'}\\nServicio: ${service || 'No indicó'}\\n\\nMensaje:\\n${message}`;
+    const safeDescription = escapeIcsText(description);
 
     const lines = [
       'BEGIN:VCALENDAR',
@@ -173,10 +203,10 @@ export const POST: APIRoute = async ({ request }) => {
       `DTSTAMP:${dtstamp}`,
       `DTSTART:${dtstart}`,
       `DTEND:${dtend}`,
-      `SUMMARY:Reunión con ${name} - Kape Digital`,
-      `DESCRIPTION:${description}`,
-      `ORGANIZER;CN=Kape Digital:mailto:${organizerEmail}`,
-      `ATTENDEE;CN=${name};ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE:mailto:${email}`,
+      `SUMMARY:Reunión con ${escapeIcsText(name)} - Kape Digital`,
+      `DESCRIPTION:${safeDescription}`,
+      `ORGANIZER;CN=Kape Digital:mailto:${escapeIcsText(organizerEmail)}`,
+      `ATTENDEE;CN=${escapeIcsText(name)};ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE:mailto:${escapeIcsText(email)}`,
       'SEQUENCE:0',
       'PRIORITY:5',
       'CLASS:PUBLIC',

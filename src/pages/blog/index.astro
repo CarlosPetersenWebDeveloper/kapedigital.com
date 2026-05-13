@@ -2,14 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
-
-const posts = [
-  { slug: 'por-que-tu-negocio-no-aparece-en-google', category: 'SEO', title: '¿Por qué tu negocio no aparece en Google?', excerpt: 'La respuesta no es "hacé SEO". Es más sencillo y más profundo que eso. Acá te explico por dónde empezar sin gastar un colón.', readTime: '5 min', date: 'Abril 2026', accent: 'border-amber-400' },
-  { slug: 'whatsapp-business-lo-basico', category: 'Digitalización', title: 'WhatsApp Business: lo básico que todo negocio necesita', excerpt: 'Catálogo de productos, respuestas automáticas y un perfil profesional. Todo gratis. Te enseño a configurarlo en 20 minutos.', readTime: '4 min', date: 'Abril 2026', accent: 'border-green-500' },
-  { slug: 'landing-page-vs-sitio-web', category: 'Web', title: 'Landing page vs sitio web: ¿cuál necesitás primero?', excerpt: 'Depende de en qué etapa está tu negocio. Te ayudo a entender la diferencia con ejemplos reales de Costa Rica.', readTime: '6 min', date: 'Marzo 2026', accent: 'border-kape-naranja' },
-  { slug: 'cuanto-cuesta-un-sitio-web-costa-rica', category: 'Costos', title: '¿Cuánto cuesta tener un sitio web en Costa Rica?', excerpt: 'Entre $200 y $20,000. El rango es enorme y la diferencia importa. Te explico qué está detrás de cada precio.', readTime: '5 min', date: 'Marzo 2026', accent: 'border-kape-naranja' },
-  { slug: 'instagram-no-es-un-sitio-web', category: 'Estrategia', title: 'Instagram no es un sitio web: diferencias que importan', excerpt: 'Miles de emprendedores usan Instagram como su única presencia digital. Esto es lo que están arriesgando.', readTime: '4 min', date: 'Febrero 2026', accent: 'border-purple-500' },
-];
+import { blogPosts } from '../../data/blog';
 ---
 <Layout title="Blog — Notas de tueste · Kape Digital" description="Artículos prácticos sobre digitalización, sitios web y marketing para negocios costarricenses.">
   <Navbar />
@@ -37,18 +30,18 @@ const posts = [
 
         <!-- Featured post -->
         <article class="reveal bg-kape-white rounded-2xl overflow-hidden shadow-[0_8px_40px_rgba(111,78,55,0.10)] mb-8 group hover:-translate-y-1 transition-transform duration-300">
-          <div class={`h-2 ${posts[0].accent.replace('border-', 'bg-')}`}></div>
+          <div class={`h-2 ${blogPosts[0].accent.replace('border-', 'bg-')}`}></div>
           <div class="p-8 grid md:grid-cols-2 gap-6 items-center">
             <div>
               <div class="flex items-center gap-3 mb-3">
-                <span class="text-xs font-bold uppercase tracking-wider text-kape-naranja">{posts[0].category}</span>
-                <span class="text-xs text-kape-medio/50">{posts[0].date} · {posts[0].readTime} de lectura</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-kape-naranja">{blogPosts[0].category}</span>
+                <span class="text-xs text-kape-medio/50">{blogPosts[0].date} · {blogPosts[0].readTime} de lectura</span>
               </div>
               <h2 class="font-jakarta font-extrabold text-2xl text-kape-oscuro mb-3 group-hover:text-kape-medio transition-colors">
-                {posts[0].title}
+                {blogPosts[0].title}
               </h2>
-              <p class="text-kape-medio/75 text-sm leading-relaxed mb-5">{posts[0].excerpt}</p>
-              <a href={`/blog/${posts[0].slug}`}
+              <p class="text-kape-medio/75 text-sm leading-relaxed mb-5">{blogPosts[0].excerpt}</p>
+              <a href={`/blog/${blogPosts[0].slug}`}
                  class="inline-flex items-center gap-1.5 text-kape-naranja font-semibold text-sm hover:gap-3 transition-all">
                 Leer nota →
               </a>
@@ -64,7 +57,7 @@ const posts = [
 
         <!-- Rest of posts -->
         <div class="grid md:grid-cols-2 gap-5">
-          {posts.slice(1).map((post, i) => (
+          {blogPosts.slice(1).map((post, i) => (
             <article class={`reveal reveal-delay-${i + 1} bg-kape-white rounded-2xl overflow-hidden border-l-4 ${post.accent}
                              hover:shadow-[0_8px_32px_rgba(111,78,55,0.12)] hover:-translate-y-1 transition-all duration-300 group`}>
               <div class="p-6">

@@ -33,24 +33,10 @@ const organizationSchema = {
   'contactPoint': {
     '@type': 'ContactPoint',
     'contactType': 'Customer Service',
-    'availableLanguageId': 'es',
+    'availableLanguage': 'es-CR',
   },
   'areaServed': 'CR',
   'priceRange': '$',
-};
-
-// BreadcrumbList Schema
-const breadcrumbSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  'itemListElement': [
-    {
-      '@type': 'ListItem',
-      'position': 1,
-      'name': 'Inicio',
-      'item': 'https://kapedigital.com'
-    }
-  ]
 };
 ---
 <!DOCTYPE html>
@@ -105,13 +91,10 @@ const breadcrumbSchema = {
 
     <!-- JSON-LD Schema para SEO (busca Google) -->
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-
-    <!-- Preload critical fonts (performance) -->
-    <link rel="preload" as="font" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#FAF7F2" />
   </head>
 
-  <body class="bg-kape-white font-inter text-kape-oscuro antialiased overflow-x-hidden" role="application">
+  <body class="bg-kape-white font-inter text-kape-oscuro antialiased overflow-x-hidden">
 
     <slot />
 

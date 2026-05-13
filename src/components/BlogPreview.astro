@@ -1,33 +1,5 @@
 ---
-const posts = [
-  {
-    slug:     'por-que-tu-negocio-no-aparece-en-google',
-    category: 'SEO',
-    title:    '¿Por qué tu negocio no aparece en Google?',
-    excerpt:  'La respuesta no es "hacé SEO". Es más sencillo y más profundo que eso. Acá te explico por dónde empezar sin gastar un colón.',
-    readTime: '5 min',
-    color:    'bg-amber-50',
-    accent:   'bg-amber-500',
-  },
-  {
-    slug:     'whatsapp-business-lo-basico',
-    category: 'Digitalización',
-    title:    'WhatsApp Business: lo básico que todo negocio necesita',
-    excerpt:  'Catálogo de productos, respuestas automáticas y un perfil profesional. Todo gratis. Te enseño a configurarlo en 20 minutos.',
-    readTime: '4 min',
-    color:    'bg-green-50',
-    accent:   'bg-green-600',
-  },
-  {
-    slug:     'landing-page-vs-sitio-web',
-    category: 'Web',
-    title:    'Landing page vs sitio web: ¿cuál necesitás primero?',
-    excerpt:  'Depende de en qué etapa está tu negocio. Te ayudo a entender la diferencia con ejemplos reales de Costa Rica.',
-    readTime: '6 min',
-    color:    'bg-orange-50',
-    accent:   'bg-kape-naranja',
-  },
-];
+import { blogPosts } from '../data/blog';
 ---
 <section id="blog" class="py-24 bg-kape-beige">
   <div class="max-w-6xl mx-auto px-6 lg:px-8">
@@ -57,7 +29,7 @@ const posts = [
 
     <!-- Posts -->
     <div class="grid md:grid-cols-3 gap-6">
-      {posts.map((post, i) => (
+      {blogPosts.slice(0, 3).map((post, i) => (
         <article class={`reveal reveal-delay-${i + 1} ${post.color} rounded-2xl overflow-hidden
                          hover:shadow-kape-md transition-all duration-300 hover:-translate-y-1 group`}>
           <!-- Color bar top -->

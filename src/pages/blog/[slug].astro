@@ -1,0 +1,88 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { blogPosts } from '../../data/blog';
+
+export function getStaticPaths() {
+  return blogPosts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.title,
+  description: post.description,
+  datePublished: post.date,
+  author: {
+    '@type': 'Organization',
+    name: 'Kape Digital',
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': Astro.url.toString(),
+  },
+};
+---
+<Layout title={`${post.title} · Kape Digital`} description={post.description}>
+  <Navbar />
+  <main class="pt-16">
+    <article class="py-16 bg-kape-beige">
+      <div class="max-w-4xl mx-auto px-6 lg:px-8">
+        <a href="/blog" class="inline-flex items-center gap-2 text-sm font-semibold text-kape-naranja hover:underline mb-8">
+          ← Volver al blog
+        </a>
+
+        <header class="bg-kape-white rounded-3xl shadow-[0_8px_40px_rgba(111,78,55,0.10)] p-8 lg:p-10 mb-8">
+          <div class="flex flex-wrap items-center gap-3 mb-4">
+            <span class="section-pill">{post.category}</span>
+            <span class="text-sm text-kape-medio/60">{post.date} · {post.readTime} de lectura</span>
+          </div>
+          <h1 class="font-jakarta font-extrabold text-3xl lg:text-5xl text-kape-oscuro leading-tight mb-4">
+            {post.title}
+          </h1>
+          <p class="text-lg text-kape-medio/75 max-w-2xl leading-relaxed">
+            {post.excerpt}
+          </p>
+        </header>
+
+        <div class={`h-2 ${post.accent.replace('border-', 'bg-')} rounded-full mb-8`}></div>
+
+        <div class="space-y-6">
+          {post.sections.map((section) => (
+            <section class="bg-kape-white rounded-3xl p-8 shadow-[0_8px_30px_rgba(111,78,55,0.06)]">
+              <h2 class="font-jakarta font-bold text-2xl text-kape-oscuro mb-4">{section.heading}</h2>
+              <div class="space-y-4 text-kape-medio/80 leading-relaxed">
+                {section.paragraphs.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+              </div>
+              {section.bullets && (
+                <ul class="mt-5 space-y-2 text-kape-medio/80">
+                  {section.bullets.map((bullet) => (
+                    <li class="flex gap-3">
+                      <span class="mt-2 h-2 w-2 rounded-full bg-kape-naranja flex-shrink-0"></span>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          ))}
+        </div>
+
+        <footer class="mt-10 bg-kape-oscuro rounded-3xl p-8 text-kape-beige">
+          <p class="text-sm uppercase tracking-[0.2em] text-kape-beige/60 mb-3">Siguiente paso</p>
+          <p class="text-xl font-jakarta font-semibold mb-5">Si querés aplicar esto a tu negocio, lo aterrizamos juntos en una llamada corta.</p>
+          <a href="/#cafecito" class="inline-flex items-center justify-center rounded-full bg-kape-naranja px-6 py-3 font-semibold text-white hover:bg-orange-500 transition-colors">
+            Agendar cafecito
+          </a>
+        </footer>
+      </div>
+    </article>
+  </main>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <Footer />
+</Layout>
