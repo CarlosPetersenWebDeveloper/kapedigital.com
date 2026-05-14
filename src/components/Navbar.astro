@@ -11,7 +11,10 @@ const links = [
   { label: text.nav.about, href: localizedPath(Astro.url.pathname, '/sobre') },
 ];
 
-const switchHref = locale === 'en' ? localizedPath(Astro.url.pathname, '/') : '/en/';
+const currentPath = Astro.url.pathname;
+const switchHref = locale === 'en'
+  ? (currentPath === '/en' || currentPath === '/en/' ? '/' : currentPath.replace(/^\/en/, '') )
+  : `/en${currentPath === '/' ? '' : currentPath}`;
 ---
 <header id="navbar"
   class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 navbar-blur"
