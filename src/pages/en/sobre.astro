@@ -1,0 +1,68 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import CTA from '../../components/CTA.astro';
+import Footer from '../../components/Footer.astro';
+
+const stack = [
+  { name: 'React', desc: 'Modern and fast interfaces' },
+  { name: 'PHP', desc: 'Flexible backend for real businesses' },
+  { name: 'MySQL', desc: 'Well-structured data and catalogs' },
+  { name: 'Laravel', desc: 'Robust and scalable applications' },
+  { name: '.NET / C#', desc: 'Custom corporate solutions' },
+  { name: 'Cloudflare', desc: 'Security, DNS, and performance' },
+  { name: 'DigitalOcean', desc: 'Simple and reliable infrastructure' },
+  { name: 'Vercel', desc: 'Fast deployment for frontends and landing pages' },
+  { name: 'Tailwind CSS', desc: 'Agile and consistent design' },
+];
+
+const values = [
+  { title: 'Radical honesty', desc: 'If something is not a good idea for your business, we will tell you even if it costs us a sale.' },
+  { title: 'Close, not impersonal', desc: 'You work directly with Carlos. Not with an anonymous team that changes on every project.' },
+  { title: 'Quality over speed', desc: 'We prefer doing things well rather than delivering something mediocre fast.' },
+  { title: 'Training included', desc: 'Every delivery comes with training. Your site is yours and you learn how to use it.' },
+];
+
+---
+<Layout locale="en" title="About — Kape Digital" description="Meet Carlos Petersen, the developer behind Kape Digital, the web development micro-agency in Costa Rica.">
+  <Navbar />
+  <main class="pt-16">
+    <section class="py-20 lg:py-28 bg-kape-white relative overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
+        <div class="coffee-ring coffee-ring-xl absolute -top-16 -right-16 opacity-25"></div>
+        <div class="coffee-ring coffee-ring-md absolute bottom-8 left-8 opacity-20"></div>
+      </div>
+      <div class="max-w-3xl mx-auto px-6 lg:px-8 relative">
+        <div class="reveal reveal-right">
+          <span class="section-pill">About</span>
+          <h1 class="font-jakarta font-extrabold text-3xl lg:text-4xl text-kape-oscuro mb-6 leading-tight">Behind Kape Digital there is one person,<br/><em class="accent-script font-normal text-kape-medio">not an agency.</em></h1>
+          <div class="space-y-4 text-kape-medio/80 text-base leading-relaxed mb-8">
+            <p>I am Carlos Petersen, a freelance web developer in Costa Rica with less than a year in the market, but with the conviction that Costa Rican businesses deserve a digital presence as strong as anyone else's.</p>
+            <p>Kape Digital was born from seeing entrepreneurs with amazing products lose customers simply because they were not properly online. The name "Kape" — coffee in Tagalog — is a nod to the warmth of Costa Rican coffee and a metaphor for how I like to work: close, unhurried, and high quality.</p>
+            <p class="bg-kape-beige rounded-xl p-4 border-l-4 border-kape-naranja text-sm italic font-lora">"We digitize your business like a good coffee: tailored to you and built with quality."</p>
+          </div>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-kape-medio/50 mb-3">Recent projects:</p>
+            <div class="flex flex-wrap gap-2">{['mvpcardscr.com', 'beestorecr.com', 'ajsolucionessacr.com'].map(url => <a href={`https://${url}`} target="_blank" rel="noopener" class="text-xs bg-kape-beige text-kape-naranja px-3 py-1.5 rounded-full font-medium hover:underline">{url}</a>)}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-kape-beige">
+      <div class="max-w-5xl mx-auto px-6 lg:px-8">
+        <div class="text-center mb-12"><span class="section-pill">Philosophy</span><h2 class="font-jakarta font-extrabold text-3xl text-kape-oscuro">How I work</h2></div>
+        <div class="grid md:grid-cols-2 gap-5">{values.map((v, i) => <div class={`reveal reveal-delay-${i+1} bg-kape-white rounded-2xl p-7`}><h3 class="font-jakarta font-bold text-kape-oscuro text-lg mb-2">{v.title}</h3><p class="text-kape-medio/75 text-sm leading-relaxed">{v.desc}</p></div>)}</div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-kape-white">
+      <div class="max-w-5xl mx-auto px-6 lg:px-8">
+        <div class="text-center mb-12"><span class="section-pill">Tech stack</span><h2 class="font-jakarta font-extrabold text-3xl text-kape-oscuro">What I build with</h2></div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">{stack.map((s, i) => <div class={`reveal reveal-delay-${i+1} bg-kape-beige rounded-xl p-5 text-center`}><p class="font-jakarta font-bold text-kape-oscuro text-base mb-1">{s.name}</p><p class="text-kape-medio/60 text-xs">{s.desc}</p></div>)}</div>
+      </div>
+    </section>
+    <CTA />
+  </main>
+  <Footer />
+</Layout>

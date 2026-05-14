@@ -1,18 +1,32 @@
 ---
+import { getLocale, getSiteText, localizedPath } from '../i18n';
+
 const year = new Date().getFullYear();
+const locale = getLocale(Astro.url.pathname);
+const text = getSiteText(locale);
 const links = {
   servicios: [
-    { label: 'Grano — Landing',           href: '#servicios' },
-    { label: 'Tueste — Virtualización',   href: '#servicios' },
-    { label: 'Pergamino — Tienda',        href: '#servicios' },
-    { label: 'Finca — A medida',          href: '#servicios' },
-    { label: 'Sobremesa — Mantenimiento', href: '#servicios' },
+    locale === 'en'
+      ? { label: 'Grano — Landing page',          href: localizedPath(Astro.url.pathname, '/servicios') }
+      : { label: 'Grano — Landing',                href: localizedPath(Astro.url.pathname, '/servicios') },
+    locale === 'en'
+      ? { label: 'Tueste — Digitalization',        href: localizedPath(Astro.url.pathname, '/servicios') }
+      : { label: 'Tueste — Virtualización',        href: localizedPath(Astro.url.pathname, '/servicios') },
+    locale === 'en'
+      ? { label: 'Pergamino — Online store',       href: localizedPath(Astro.url.pathname, '/servicios') }
+      : { label: 'Pergamino — Tienda',             href: localizedPath(Astro.url.pathname, '/servicios') },
+    locale === 'en'
+      ? { label: 'Finca — Custom system',          href: localizedPath(Astro.url.pathname, '/servicios') }
+      : { label: 'Finca — A medida',               href: localizedPath(Astro.url.pathname, '/servicios') },
+    locale === 'en'
+      ? { label: 'After-dinner chat — Maintenance', href: localizedPath(Astro.url.pathname, '/servicios') }
+      : { label: 'Sobremesa — Mantenimiento',      href: localizedPath(Astro.url.pathname, '/servicios') },
   ],
   empresa: [
-    { label: 'Sobre mí',              href: '/sobre'      },
-    { label: 'Portafolio',            href: '#portafolio' },
-    { label: 'Notas de tueste',       href: '/blog'       },
-    { label: 'Política de privacidad',href: '/privacidad' },
+    { label: locale === 'en' ? 'About' : 'Sobre mí', href: localizedPath(Astro.url.pathname, '/sobre') },
+    { label: text.nav.portfolio, href: localizedPath(Astro.url.pathname, '/portafolio') },
+    { label: locale === 'en' ? 'Roast notes' : 'Notas de tueste', href: localizedPath(Astro.url.pathname, '/blog') },
+    { label: locale === 'en' ? 'Privacy policy' : 'Política de privacidad', href: localizedPath(Astro.url.pathname, '/privacidad') },
   ],
 };
 ---
@@ -39,8 +53,7 @@ const links = {
         </div>
 
         <p class="text-kape-beige/60 text-sm leading-relaxed mb-6 max-w-xs">
-          Digitalizamos tu negocio, a tu gusto y con calidad.
-          Especialistas en virtualizar PYMEs y emprendedores costarricenses.
+          {text.footer.intro}
         </p>
 
         <!-- Contact -->
@@ -75,7 +88,7 @@ const links = {
       <!-- Servicios -->
       <div>
         <h3 class="font-jakarta font-semibold text-kape-white text-sm uppercase tracking-wider mb-5">
-          Servicios
+          {text.footer.services}
         </h3>
         <ul class="space-y-3">
           {links.servicios.map(l => (
@@ -92,7 +105,7 @@ const links = {
       <!-- Empresa -->
       <div>
         <h3 class="font-jakarta font-semibold text-kape-white text-sm uppercase tracking-wider mb-5">
-          Kape Digital
+          {text.footer.company}
         </h3>
         <ul class="space-y-3">
           {links.empresa.map(l => (
@@ -112,7 +125,7 @@ const links = {
             class="inline-flex items-center gap-2 bg-kape-naranja text-white text-xs font-semibold
                    px-4 py-2.5 rounded-full hover:bg-orange-500 transition-colors"
           >
-            Agendar cafecito gratis →
+            {text.footer.cta} →
           </a>
         </div>
       </div>
@@ -123,10 +136,10 @@ const links = {
   <div class="border-t border-kape-beige/10">
     <div class="max-w-6xl mx-auto px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
       <p class="text-kape-beige/40 text-xs">
-        © {year} Kape Digital · Todos los derechos reservados · Costa Rica
+        © {year} Kape Digital · {text.footer.copyright} · Costa Rica
       </p>
       <p class="text-kape-beige/30 text-xs">
-        Hecho con ☕ y mucho código
+        {text.footer.handmade}
       </p>
     </div>
   </div>

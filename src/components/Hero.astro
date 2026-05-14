@@ -1,4 +1,8 @@
 ---
+import { getLocale, getSiteText, localizedPath } from '../i18n';
+
+const locale = getLocale(Astro.url.pathname);
+const text = getSiteText(locale);
 ---
 <section class="relative min-h-screen flex flex-col justify-center overflow-hidden bg-kape-white pt-16">
 
@@ -20,26 +24,24 @@
     <div class="reveal flex justify-center mb-8">
       <span class="section-pill">
         <span class="w-1.5 h-1.5 rounded-full bg-kape-naranja inline-block"></span>
-        Kape Digital · Costa Rica
+        {text.hero.eyebrow}
       </span>
     </div>
 
     <!-- Main headline -->
     <h1 class="reveal reveal-delay-1 font-jakarta font-extrabold leading-[1.1] text-kape-oscuro mb-6"
         style="font-size: clamp(2.4rem, 6vw, 5rem);">
-      Digitalizamos tu negocio<span class="text-kape-medio">,</span>
+      {text.hero.titleTop}<span class="text-kape-medio">,</span>
       <br />
       <em class="accent-script font-normal not-italic"
           style="font-size: clamp(2rem, 5vw, 4.2rem); color: #6F4E37;">
-        como un buen café.
+        {text.hero.titleAccent}
       </em>
     </h1>
 
     <!-- Slogan -->
     <p class="reveal reveal-delay-2 text-kape-medio/70 text-lg lg:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
-      A tu gusto y con calidad. Convertimos negocios costarricenses que operan por
-      WhatsApp y redes sociales en
-      <strong class="text-kape-oscuro font-medium">presencias digitales que venden.</strong>
+      {text.hero.description}
     </p>
 
     <!-- CTAs -->
@@ -48,7 +50,7 @@
          class="btn-ripple inline-flex items-center justify-center gap-2.5 bg-kape-naranja text-white
                 font-jakarta font-bold text-base px-8 py-4 rounded-full
                 hover:bg-orange-700 transition-colors duration-300 shadow-md"
-         aria-label="Agendar cafecito exploratorio gratis">
+        aria-label={text.hero.primaryCta}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
              aria-hidden="true">
           <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
@@ -57,14 +59,14 @@
           <line x1="10" y1="1" x2="10" y2="4"/>
           <line x1="14" y1="1" x2="14" y2="4"/>
         </svg>
-        Agendar cafecito gratis
+        {text.hero.primaryCta}
       </a>
-      <a href="#servicios"
+      <a href={localizedPath(Astro.url.pathname, '/servicios')}
          class="inline-flex items-center justify-center gap-2 border-2 border-kape-medio/40 text-kape-medio
                 font-jakarta font-semibold text-base px-8 py-4 rounded-full
                 hover:bg-kape-beige hover:border-kape-medio transition-all duration-300"
-         aria-label="Ver servicios disponibles">
-        Ver servicios
+         aria-label={text.hero.secondaryCta}>
+        {text.hero.secondaryCta}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
              aria-hidden="true">
           <polyline points="6 9 12 15 18 9"/>
@@ -86,8 +88,8 @@
             </div>
           ))}
         </div>
-        <p class="text-sm text-kape-medio">
-          <span class="font-bold text-kape-oscuro">+3 negocios</span> ya digitalizados
+          <p class="text-sm text-kape-medio">
+          <span class="font-bold text-kape-oscuro">+3</span> {locale === 'en' ? 'businesses already digitized' : 'negocios ya digitalizados'}
         </p>
       </div>
       <div class="hidden sm:block w-px h-6 bg-kape-medio/20"></div>
@@ -103,7 +105,7 @@
 
   <!-- Scroll indicator -->
   <div class="reveal reveal-delay-5 absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-    <span class="text-xs text-kape-medio uppercase tracking-widest">Scrolleá</span>
+    <span class="text-xs text-kape-medio uppercase tracking-widest">{text.hero.scroll}</span>
     <div class="w-px h-8 bg-gradient-to-b from-kape-medio to-transparent animate-pulse"></div>
   </div>
 

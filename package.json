@@ -20,6 +20,8 @@
     "tailwindcss": "^3.4.13"
   },
   "devDependencies": {
-    "terser": "^5.47.1"
+    "@astrojs/check": "^0.9.9",
+    "terser": "^5.47.1",
+    "typescript": "^5.9.3"
   }
 }

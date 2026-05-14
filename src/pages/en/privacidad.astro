@@ -1,0 +1,27 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+---
+<Layout locale="en" title="Privacy policy · Kape Digital" description="How we handle the data you share with Kape Digital.">
+  <Navbar />
+  <main class="pt-16 bg-kape-beige min-h-screen">
+    <section class="py-16">
+      <div class="max-w-4xl mx-auto px-6 lg:px-8">
+        <div class="bg-kape-white rounded-3xl p-8 lg:p-10 shadow-[0_8px_40px_rgba(111,78,55,0.08)]">
+          <span class="section-pill">Privacy</span>
+          <h1 class="font-jakarta font-extrabold text-3xl lg:text-4xl text-kape-oscuro mt-2 mb-4">Privacy policy</h1>
+          <p class="text-kape-medio/75 leading-relaxed mb-8">This page explains, in simple terms, what we do with the information you send through the contact form or by email.</p>
+          <div class="space-y-6 text-kape-medio/80 leading-relaxed">
+            <section><h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">What data we receive</h2><p>We may receive your name, email, company, service of interest, budget, date, time, and the message you share voluntarily.</p></section>
+            <section><h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">What we use it for</h2><p>We use that data only to answer your request, prepare a quote, or coordinate a call. We may also use your email to follow up on an inquiry you already sent.</p></section>
+            <section><h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">Who it is shared with</h2><p>Form submissions are processed through external email and automation services. We do not sell your data or use it for third-party advertising.</p></section>
+            <section><h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">How long we keep it</h2><p>We keep the information only for as long as is reasonable to continue commercial follow-up or keep the history of an active conversation.</p></section>
+            <section><h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">Contact</h2><p>If you want to request access, correction, or deletion of your data, write to hola@kapedigital.com.</p></section>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

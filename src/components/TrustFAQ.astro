@@ -1,41 +1,35 @@
 ---
-const trustPoints = [
-  {
-    title: 'Diagnóstico claro',
-    desc: 'Arrancamos con un cafecito y una revisión simple de tu presencia digital para detectar qué está frenando consultas y ventas.',
-  },
-  {
-    title: 'Proceso con hitos',
-    desc: 'Vas viendo avances por etapas, con alcance definido y entregables concretos. Sin sorpresas de último momento.',
-  },
-  {
-    title: 'Tu sitio es tuyo',
-    desc: 'Cuando entregamos el proyecto, el sitio queda a tu nombre y con acceso claro. No te dejamos atado a una caja negra.',
-  },
-  {
-    title: 'Soporte real',
-    desc: 'Si necesitás seguir creciendo, hay mantenimiento y acompañamiento para que el sitio no se quede quieto después del lanzamiento.',
-  },
-];
+import { getLocale, getSiteText } from '../i18n';
 
-const faqs = [
-  {
-    q: '¿Qué necesito para empezar?',
-    a: 'Con tu idea, el nombre del negocio y una conversación breve alcanza para arrancar. Si ya tenés logo, textos o redes, mejor; si no, también podemos ordenarlo.',
-  },
-  {
-    q: '¿Cuánto tarda un proyecto?',
-    a: 'Depende del alcance, pero la idea es trabajar por etapas y entregar rápido lo esencial para que tu negocio empiece a verse profesional cuanto antes.',
-  },
-  {
-    q: '¿Puedo empezar con algo pequeño?',
-    a: 'Sí. De hecho, muchas PYMEs convierten mejor cuando empiezan con una base clara y luego escalan a un sitio más grande o una tienda.',
-  },
-  {
-    q: '¿Ustedes me ayudan si solo tengo Instagram o WhatsApp?',
-    a: 'Sí. Justamente ahí es donde más sentido tiene ordenar la presencia digital y armar una base propia que no dependa solo de una red social.',
-  },
-];
+const locale = getLocale(Astro.url.pathname);
+const text = getSiteText(locale);
+const trustPoints = locale === 'en'
+  ? [
+      { title: 'Clear diagnosis', desc: 'We start with a coffee chat and a simple review of your digital presence to spot what is blocking inquiries and sales.' },
+      { title: 'Milestone-based process', desc: 'You see progress in stages, with a defined scope and concrete deliverables. No last-minute surprises.' },
+      { title: 'Your site is yours', desc: 'When we deliver the project, the site is under your name with clear access. We do not leave you tied to a black box.' },
+      { title: 'Real support', desc: 'If you want to keep growing, there is maintenance and guidance so the site does not stall after launch.' },
+    ]
+  : [
+      { title: 'Diagnóstico claro', desc: 'Arrancamos con un cafecito y una revisión simple de tu presencia digital para detectar qué está frenando consultas y ventas.' },
+      { title: 'Proceso con hitos', desc: 'Vas viendo avances por etapas, con alcance definido y entregables concretos. Sin sorpresas de último momento.' },
+      { title: 'Tu sitio es tuyo', desc: 'Cuando entregamos el proyecto, el sitio queda a tu nombre y con acceso claro. No te dejamos atado a una caja negra.' },
+      { title: 'Soporte real', desc: 'Si necesitás seguir creciendo, hay mantenimiento y acompañamiento para que el sitio no se quede quieto después del lanzamiento.' },
+    ];
+
+const faqs = locale === 'en'
+  ? [
+      { q: 'What do I need to get started?', a: 'Your idea, the business name, and a short conversation are enough to begin. If you already have a logo, copy, or social channels, great; if not, we can organize that too.' },
+      { q: 'How long does a project take?', a: 'It depends on scope, but the idea is to work in stages and deliver the essentials quickly so your business starts looking professional sooner.' },
+      { q: 'Can I start with something small?', a: 'Yes. In fact, many SMEs convert better when they start with a clear base and later scale up to a larger site or store.' },
+      { q: 'Can you help if I only have Instagram or WhatsApp?', a: 'Yes. That is exactly where it makes the most sense to organize the digital presence and build an owned base that does not depend on one social network.' },
+    ]
+  : [
+      { q: '¿Qué necesito para empezar?', a: 'Con tu idea, el nombre del negocio y una conversación breve alcanza para arrancar. Si ya tenés logo, textos o redes, mejor; si no, también podemos ordenarlo.' },
+      { q: '¿Cuánto tarda un proyecto?', a: 'Depende del alcance, pero la idea es trabajar por etapas y entregar rápido lo esencial para que tu negocio empiece a verse profesional cuanto antes.' },
+      { q: '¿Puedo empezar con algo pequeño?', a: 'Sí. De hecho, muchas PYMEs convierten mejor cuando empiezan con una base clara y luego escalan a un sitio más grande o una tienda.' },
+      { q: '¿Ustedes me ayudan si solo tengo Instagram o WhatsApp?', a: 'Sí. Justamente ahí es donde más sentido tiene ordenar la presencia digital y armar una base propia que no dependa solo de una red social.' },
+    ];
 ---
 <section id="confianza" class="py-24 bg-kape-white relative overflow-hidden">
   <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
@@ -45,12 +39,12 @@ const faqs = [
 
   <div class="max-w-6xl mx-auto px-6 lg:px-8 relative">
     <div class="text-center mb-14">
-      <span class="section-pill">Por qué confiar</span>
+      <span class="section-pill">{text.trustSection.eyebrow}</span>
       <h2 class="font-jakarta font-bold text-3xl lg:text-4xl text-kape-oscuro mt-3 mb-4">
-        Señales claras antes de contratar
+        {text.trustSection.title}
       </h2>
       <p class="text-kape-medio/75 text-lg max-w-2xl mx-auto">
-        La confianza no se pide, se demuestra. Acá tenés las piezas que hacen que un emprendedor o una PYME se sienta seguro antes de dar el paso.
+        {text.trustSection.subtitle}
       </p>
     </div>
 
@@ -70,19 +64,19 @@ const faqs = [
 
     <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 items-start">
       <div class="bg-kape-oscuro rounded-3xl p-8 lg:p-10 text-kape-beige shadow-[0_20px_60px_rgba(75,46,43,0.18)]">
-        <p class="text-xs uppercase tracking-[0.25em] text-kape-beige/55 mb-3">Compromiso práctico</p>
+        <p class="text-xs uppercase tracking-[0.25em] text-kape-beige/55 mb-3">{text.trustSection.commitmentEyebrow}</p>
         <h3 class="font-jakarta font-bold text-2xl lg:text-3xl text-white mb-4">
-          Te decimos qué conviene, aunque no sea lo más caro.
+          {text.trustSection.commitmentTitle}
         </h3>
         <p class="text-kape-beige/75 leading-relaxed mb-6">
-          Si tu negocio necesita una landing primero, te lo decimos. Si hace falta ordenar la marca antes de vender, también. La idea es que inviertas en lo que realmente mueve consultas y ventas.
+          {text.trustSection.commitmentBody}
         </p>
         <div class="flex flex-col sm:flex-row gap-3">
           <a href="#cafecito" class="inline-flex items-center justify-center rounded-full bg-kape-naranja px-6 py-3 font-semibold text-white hover:bg-orange-700 transition-colors">
-            Pedir diagnóstico gratis
+            {text.trustSection.primaryCta}
           </a>
           <a href="/servicios" class="inline-flex items-center justify-center rounded-full border border-kape-beige/25 px-6 py-3 font-semibold text-kape-beige hover:bg-kape-beige/10 transition-colors">
-            Ver servicios
+            {text.trustSection.secondaryCta}
           </a>
         </div>
       </div>

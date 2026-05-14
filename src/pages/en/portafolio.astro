@@ -1,0 +1,65 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import CTA from '../../components/CTA.astro';
+import Footer from '../../components/Footer.astro';
+
+const projects = [
+  { name: 'MVP Cards CR', url: 'https://mvpcardscr.com', type: 'Pergamino · Online store', desc: 'A collectible cards store with a filterable catalog, shopping cart, and online payments. Built for Costa Rican collectors.', challenge: 'The client was selling only through Instagram DMs and WhatsApp, losing sales because there was no 24/7 availability.', result: 'A live store with automated orders and a catalog that can be updated without technical help.', tags: ['React', 'PHP', 'MySQL', 'Cloudflare'], color: 'from-amber-100 to-amber-50' },
+  { name: 'BeeStore CR', url: 'https://beestorecr.com', type: 'Pergamino · Online store', desc: 'A Costa Rican cosmetics and personal care e-commerce site, without a payment gateway, with inventory management.', challenge: 'A business with a great product but no digital presence. Sales depended 100% on fairs and word of mouth.', result: 'An active digital sales channel, with customers from all over the country finding the business on Google.', tags: ['PHP', 'MySQL', 'React', 'DigitalOcean'], color: 'from-green-100 to-green-50' },
+  { name: 'AJ Soluciones SA', url: 'https://ajsolucionessacr.com', type: 'Tueste · Digitalization', desc: 'An informational site about a reagent supply business, built with PHP and WordPress to present the company and its services.', challenge: 'A service company with active clients but no web presence. Customers could not find them on Google.', result: 'They appear on Google Maps, have corporate email, and a site that creates a strong first impression.', tags: ['PHP', 'WordPress', 'MySQL', 'Cloudflare'], color: 'from-blue-100 to-blue-50' },
+];
+
+---
+<Layout locale="en" title="Portfolio — Kape Digital" description="Kape Digital web development projects: online stores, business sites, and more.">
+  <Navbar />
+  <main class="pt-16">
+    <section class="py-20 bg-kape-white relative overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
+        <div class="coffee-ring coffee-ring-lg absolute top-8 left-8 opacity-20"></div>
+        <div class="coffee-ring coffee-ring-xl absolute -bottom-16 -right-16 opacity-15"></div>
+      </div>
+      <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center relative">
+        <span class="section-pill">Portfolio</span>
+        <h1 class="font-jakarta font-extrabold text-4xl lg:text-5xl text-kape-oscuro mb-4">Recent projects</h1>
+        <p class="accent-script text-xl text-kape-medio/80 max-w-xl mx-auto">Each site is a real business that decided to take the digital leap.</p>
+      </div>
+    </section>
+    {projects.map((p, i) => (
+      <section class={`py-16 ${i % 2 === 0 ? 'bg-kape-beige' : 'bg-kape-white'}`}>
+        <div class="max-w-5xl mx-auto px-6 lg:px-8">
+          <div class={`grid lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+            <div class={`reveal ${i % 2 === 1 ? 'reveal-right lg:col-start-2' : 'reveal-left'}`}>
+              <div class={`rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(111,78,55,0.15)] bg-gradient-to-br ${p.color}`}>
+                <div class="bg-kape-beige px-4 py-3 flex items-center gap-2.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400"></span><span class="w-3 h-3 rounded-full bg-yellow-400"></span><span class="w-3 h-3 rounded-full bg-green-400"></span>
+                  <div class="flex-1 bg-kape-white rounded-full px-3 py-1 text-xs text-kape-medio/50">{p.url}</div>
+                </div>
+                <div class="p-6 space-y-3">
+                  <div class="h-5 w-1/2 bg-kape-medio/15 rounded-lg"></div>
+                  <div class="h-3 w-full bg-kape-medio/10 rounded"></div>
+                  <div class="h-3 w-4/5 bg-kape-medio/10 rounded"></div>
+                  <div class="grid grid-cols-3 gap-3 mt-4">{[1,2,3].map(() => <div class="aspect-square bg-kape-medio/10 rounded-xl"></div>)}</div>
+                  <div class="h-3 w-3/5 bg-kape-medio/10 rounded mt-2"></div>
+                </div>
+              </div>
+            </div>
+            <div class={`reveal ${i % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+              <p class="text-xs font-bold uppercase tracking-widest text-kape-naranja mb-2">{p.type}</p>
+              <h2 class="font-jakarta font-extrabold text-3xl text-kape-oscuro mb-4">{p.name}</h2>
+              <p class="text-kape-medio/80 text-base leading-relaxed mb-6">{p.desc}</p>
+              <div class="space-y-4 mb-6">
+                <div class="bg-kape-beige/60 rounded-xl p-4"><p class="text-xs font-bold text-kape-medio/50 uppercase tracking-wider mb-1">The challenge</p><p class="text-sm text-kape-medio/80">{p.challenge}</p></div>
+                <div class="bg-green-50 rounded-xl p-4"><p class="text-xs font-bold text-green-700/60 uppercase tracking-wider mb-1">The result</p><p class="text-sm text-kape-medio/80">{p.result}</p></div>
+              </div>
+              <div class="flex flex-wrap gap-2 mb-6">{p.tags.map(t => <span class="bg-kape-beige text-kape-medio text-xs px-3 py-1.5 rounded-full font-medium">{t}</span>)}</div>
+              <a href={p.url} target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-kape-naranja font-semibold text-sm hover:underline">View live site<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 0 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </section>
+    ))}
+    <CTA />
+  </main>
+  <Footer />
+</Layout>

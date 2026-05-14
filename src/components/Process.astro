@@ -1,41 +1,23 @@
 ---
-const steps = [
-  {
-    number: '01',
-    name:   'Cafecito exploratorio',
-    desc:   '30 minutos sin compromiso. Conversamos sobre tu negocio, tus metas y qué necesitás. Gratis.',
-    icon: `<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>`,
-    color: 'bg-kape-naranja',
-  },
-  {
-    number: '02',
-    name:   'Catación',
-    desc:   'Diagnóstico de tu estado digital actual y propuesta formal con alcance, plazos y precios claros.',
-    icon: `<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>`,
-    color: 'bg-kape-medio',
-  },
-  {
-    number: '03',
-    name:   'Tueste',
-    desc:   'Diseño y construcción de tu sitio. Revisiones incluidas. Te mantengo informado en cada paso.',
-    icon: `<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>`,
-    color: 'bg-kape-oscuro',
-  },
-  {
-    number: '04',
-    name:   'Servir',
-    desc:   'Entrega del proyecto final + capacitación para que manejés tu sitio con confianza.',
-    icon: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>`,
-    color: 'bg-kape-naranja',
-  },
-  {
-    number: '05',
-    name:   'Sobremesa',
-    desc:   'Soporte mensual opcional. Mejoras continuas, reportes y esa reunión mensual para tomar café.',
-    icon: `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
-    color: 'bg-kape-verde',
-  },
-];
+import { getLocale, getSiteText } from '../i18n';
+
+const locale = getLocale(Astro.url.pathname);
+const text = getSiteText(locale);
+const steps = locale === 'en'
+  ? [
+      { number: '01', name: 'Discovery coffee', desc: '30 minutes with no commitment. We talk about your business, goals, and what you need. Free.', icon: `<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>`, color: 'bg-kape-naranja' },
+      { number: '02', name: 'Assessment', desc: 'A diagnosis of your current digital state and a formal proposal with scope, timing, and clear pricing.', icon: `<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>`, color: 'bg-kape-medio' },
+      { number: '03', name: 'Roasting', desc: 'Design and build of your site. Reviews included. You stay informed at every step.', icon: `<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>`, color: 'bg-kape-oscuro' },
+      { number: '04', name: 'Serving', desc: 'Final delivery + training so you can manage your site confidently.', icon: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>`, color: 'bg-kape-naranja' },
+      { number: '05', name: 'After-dinner chat', desc: 'Optional monthly support. Ongoing improvements, reports, and that monthly coffee catch-up.', icon: `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`, color: 'bg-kape-verde' },
+    ]
+  : [
+      { number: '01', name: 'Cafecito exploratorio', desc: '30 minutos sin compromiso. Conversamos sobre tu negocio, tus metas y qué necesitás. Gratis.', icon: `<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>`, color: 'bg-kape-naranja' },
+      { number: '02', name: 'Catación', desc: 'Diagnóstico de tu estado digital actual y propuesta formal con alcance, plazos y precios claros.', icon: `<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>`, color: 'bg-kape-medio' },
+      { number: '03', name: 'Tueste', desc: 'Diseño y construcción de tu sitio. Revisiones incluidas. Te mantengo informado en cada paso.', icon: `<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>`, color: 'bg-kape-oscuro' },
+      { number: '04', name: 'Servir', desc: 'Entrega del proyecto final + capacitación para que manejés tu sitio con confianza.', icon: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>`, color: 'bg-kape-naranja' },
+      { number: '05', name: 'Sobremesa', desc: 'Soporte mensual opcional. Mejoras continuas, reportes y esa reunión mensual para tomar café.', icon: `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`, color: 'bg-kape-verde' },
+    ];
 ---
 <section id="proceso" class="py-24 bg-kape-white relative overflow-hidden">
 
@@ -55,13 +37,13 @@ const steps = [
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
           <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
         </svg>
-        El proceso
+        {text.processSection.eyebrow}
       </div>
       <h2 class="reveal reveal-delay-1 font-jakarta font-bold text-3xl lg:text-4xl text-kape-oscuro mb-4">
-        ¿Cómo es trabajar juntos?
+        {text.processSection.title}
       </h2>
       <p class="reveal reveal-delay-2 text-kape-medio/80 text-lg max-w-xl mx-auto">
-        Sin sorpresas, sin tecnicismos. Cada paso es claro y vas al tanto de todo.
+        {text.processSection.subtitle}
       </p>
     </div>
 

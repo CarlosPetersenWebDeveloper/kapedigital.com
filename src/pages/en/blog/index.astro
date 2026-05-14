@@ -1,0 +1,27 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Navbar from '../../../components/Navbar.astro';
+import Footer from '../../../components/Footer.astro';
+import { getBlogPosts } from '../../../data/blog';
+import { localizedPath } from '../../../i18n';
+
+const blogPosts = getBlogPosts('en');
+---
+<Layout locale="en" title="Blog — Roast notes · Kape Digital" description="Practical articles about digitalization, websites, and marketing for Costa Rican businesses.">
+  <Navbar />
+  <main class="pt-16">
+    <section class="py-20 bg-kape-white relative overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-0 pointer-events-none"><div class="coffee-ring coffee-ring-xl absolute -top-12 -left-16 opacity-20"></div></div>
+      <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center relative"><span class="section-pill">Blog</span><h1 class="font-jakarta font-extrabold text-4xl lg:text-5xl text-kape-oscuro mb-4">Roast notes</h1><p class="accent-script text-xl text-kape-medio/80 max-w-xl mx-auto">Practical articles for digitalizing your Costa Rican business.</p></div>
+    </section>
+    <section class="py-12 bg-kape-beige pb-24">
+      <div class="max-w-4xl mx-auto px-6 lg:px-8">
+        <div class="bg-kape-white rounded-2xl p-6 mb-8 text-kape-medio/75 text-sm leading-relaxed">The article archive is fully bilingual now.</div>
+        <article class="reveal bg-kape-white rounded-2xl overflow-hidden shadow-[0_8px_40px_rgba(111,78,55,0.10)] mb-8 group hover:-translate-y-1 transition-transform duration-300"><div class={`h-2 ${blogPosts[0].accent.replace('border-', 'bg-')}`}></div><div class="p-8 grid md:grid-cols-2 gap-6 items-center"><div><div class="flex items-center gap-3 mb-3"><span class="text-xs font-bold uppercase tracking-wider text-kape-naranja">{blogPosts[0].category}</span><span class="text-xs text-kape-medio/50">{blogPosts[0].date} · {blogPosts[0].readTime} read</span></div><h2 class="font-jakarta font-extrabold text-2xl text-kape-oscuro mb-3 group-hover:text-kape-medio transition-colors">{blogPosts[0].title}</h2><p class="text-kape-medio/75 text-sm leading-relaxed mb-5">{blogPosts[0].excerpt}</p><a href={localizedPath(Astro.url.pathname, `/blog/${blogPosts[0].slug}`)} class="inline-flex items-center gap-1.5 text-kape-naranja font-semibold text-sm hover:gap-3 transition-all">Read note →</a></div><div class="bg-kape-beige rounded-xl h-44 flex items-center justify-center"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#6F4E37" stroke-width="1.5" stroke-linecap="round" opacity="0.4"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div></div></article>
+        <div class="grid md:grid-cols-2 gap-5">{blogPosts.slice(1).map((post, i) => <article class={`reveal reveal-delay-${i + 1} bg-kape-white rounded-2xl overflow-hidden border-l-4 ${post.accent} hover:shadow-[0_8px_32px_rgba(111,78,55,0.12)] hover:-translate-y-1 transition-all duration-300 group`}><div class="p-6"><div class="flex items-center justify-between mb-3"><span class="text-xs font-bold uppercase tracking-wider text-kape-naranja">{post.category}</span><span class="text-xs text-kape-medio/50">{post.readTime} read</span></div><h2 class="font-jakarta font-bold text-kape-oscuro text-lg mb-2 group-hover:text-kape-medio transition-colors leading-snug">{post.title}</h2><p class="text-kape-medio/70 text-sm leading-relaxed mb-4">{post.excerpt}</p><a href={localizedPath(Astro.url.pathname, `/blog/${post.slug}`)} class="inline-flex items-center gap-1.5 text-kape-naranja text-sm font-semibold hover:gap-3 transition-all">Read note →</a></div></article>)}</div>
+        <div class="reveal mt-12 bg-kape-oscuro rounded-2xl p-8 text-center"><p class="text-kape-beige/60 text-sm mb-2">Once a month, no spam</p><h3 class="font-jakarta font-bold text-white text-2xl mb-4">Subscribe to the <span class="text-kape-naranja">monthly roast</span></h3><p class="text-kape-beige/70 text-sm mb-6 max-w-sm mx-auto">The most relevant digitalization ideas for business owners, all in one email.</p><form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"><input type="email" placeholder="you@email.com" class="flex-1 bg-kape-white/10 border border-kape-beige/20 text-white placeholder-kape-beige/40 rounded-xl px-4 py-3 text-sm outline-none focus:border-kape-naranja transition-colors"/><button type="submit" class="bg-kape-naranja text-white font-semibold px-6 py-3 rounded-xl hover:bg-orange-500 transition-colors btn-ripple">Subscribe</button></form></div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

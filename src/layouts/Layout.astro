@@ -2,11 +2,13 @@
 interface Props {
   title?:       string;
   description?: string;
+  locale?:      'es' | 'en';
 }
 
 const {
   title       = 'Kape Digital — Digitalizamos tu negocio, a tu gusto.',
   description = 'Micro-agencia de desarrollo web en Costa Rica. Virtualizamos PYMEs y emprendedores con sitios web, tiendas en línea y presencia digital completa.',
+  locale      = Astro.url.pathname.startsWith('/en') ? 'en' : 'es',
 } = Astro.props;
 
 // Get current URL for canonical
@@ -40,7 +42,7 @@ const organizationSchema = {
 };
 ---
 <!DOCTYPE html>
-<html lang="es">
+<html lang={locale === 'en' ? 'en' : 'es'}>
   <head>
     <!-- Meta esenciales -->
     <meta charset="UTF-8" />
@@ -62,7 +64,7 @@ const organizationSchema = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content="https://kapedigital.com/og-image.png" />
-    <meta property="og:locale" content="es_CR" />
+    <meta property="og:locale" content={locale === 'en' ? 'en_US' : 'es_CR'} />
     <meta property="og:site_name" content="Kape Digital" />
 
     <!-- Twitter Card -->
@@ -75,7 +77,7 @@ const organizationSchema = {
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow" />
     <meta name="bingbot" content="index, follow" />
-    <meta name="language" content="Spanish" />
+    <meta name="language" content={locale === 'en' ? 'English' : 'Spanish'} />
     <meta name="author" content="Kape Digital" />
     <meta name="creator" content="Kape Digital" />
     <meta name="publisher" content="Kape Digital" />
@@ -95,11 +97,14 @@ const organizationSchema = {
 
     <!-- Google Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QHZ2CD2SWN"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-QHZ2CD2SWN');
+    <script is:inline>
+      const analyticsWindow = window;
+      analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
+      analyticsWindow.gtag = function gtag() {
+        analyticsWindow.dataLayer.push(arguments);
+      };
+      analyticsWindow.gtag('js', new Date());
+      analyticsWindow.gtag('config', 'G-QHZ2CD2SWN');
     </script>
   </head>
 

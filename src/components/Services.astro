@@ -1,34 +1,69 @@
 ---
-const services = [
-  {
-    id: 'grano', name: 'Grano', tagline: 'Landing de conversión', activation: 'Desde $250', monthly: '$55/mes',
-    desc: 'Una página diseñada para convertir visitantes en clientes. Ideal para lanzar un servicio o reemplazar tu perfil de Instagram.',
-    features: ['Diseño personalizado', 'Formulario + WhatsApp', 'Google Analytics 4', 'Dominio primer año'],
-    cta: 'Ver detalle', featured: false,
-    icon: `<path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0 4v4l3 3"/>`,
-  },
-  {
-    id: 'tueste', name: 'Tueste', tagline: 'Paquete virtualización', activation: 'Desde $500', monthly: '$90/mes',
-    desc: 'La transformación digital completa para negocios que operan por redes o local físico. El paquete más solicitado de Kape.',
-    features: ['Sitio 4–6 páginas', 'WhatsApp Business', 'Google Business Profile', 'Correo profesional', 'GA4 + Search Console', 'Capacitación incluida'],
-    cta: 'Agendar cafecito', featured: true,
-    icon: `<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>`,
-  },
-  {
-    id: 'pergamino', name: 'Pergamino', tagline: 'Tienda en línea', activation: 'Desde $800', monthly: '$140/mes',
-    desc: 'Catálogo de productos, pagos en línea, panel de admin y capacitación completa para que manejés tu tienda.',
-    features: ['Catálogo + pagos', 'Panel de admin', 'Pasarela CR', 'Capacitación'],
-    cta: 'Ver detalle', featured: false,
-    icon: `<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>`,
-  },
-  {
-    id: 'finca', name: 'Finca', tagline: 'Sistema a medida', activation: 'Cotización', monthly: null,
-    desc: 'Apps web, portales y sistemas internos personalizados. Cotización según el alcance del proyecto.',
-    features: ['Aplicaciones web', 'Integraciones API', 'Panel personalizado', 'Cotización por alcance'],
-    cta: 'Conversar', featured: false,
-    icon: `<polygon points="3 9 12 2 21 9 21 20 3 20"/><line x1="9" y1="20" x2="9" y2="12"/><line x1="15" y1="20" x2="15" y2="12"/>`,
-  },
-];
+import { getLocale, getSiteText } from '../i18n';
+
+const locale = getLocale(Astro.url.pathname);
+const text = getSiteText(locale);
+const services = locale === 'en'
+  ? [
+      {
+        id: 'grano', name: 'Grano', tagline: 'Conversion landing page', activation: 'From $250', monthly: '$55/month',
+        desc: 'A page designed to convert visitors into clients. Ideal for launching a service or replacing your Instagram profile.',
+        features: ['Custom design', 'Form + WhatsApp', 'Google Analytics 4', 'First-year domain'],
+        cta: 'View details', featured: false,
+        icon: `<path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0 4v4l3 3"/>`,
+      },
+      {
+        id: 'tueste', name: 'Tueste', tagline: 'Digitalization package', activation: 'From $500', monthly: '$90/month',
+        desc: 'Complete digital transformation for businesses that operate through social media or a physical location. Kape Digital’s most requested package.',
+        features: ['4–6 page site', 'WhatsApp Business', 'Google Business Profile', 'Professional email', 'GA4 + Search Console', 'Training included'],
+        cta: 'Book a coffee chat', featured: true,
+        icon: `<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>`,
+      },
+      {
+        id: 'pergamino', name: 'Pergamino', tagline: 'Online store', activation: 'From $800', monthly: '$140/month',
+        desc: 'Product catalog, online payments, admin panel, and full training so you can manage your store.',
+        features: ['Catalog + payments', 'Admin panel', 'CR payment gateway', 'Training'],
+        cta: 'View details', featured: false,
+        icon: `<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>`,
+      },
+      {
+        id: 'finca', name: 'Finca', tagline: 'Custom system', activation: 'Quote', monthly: null,
+        desc: 'Custom web apps, portals, and internal systems. Quoted according to project scope.',
+        features: ['Web applications', 'API integrations', 'Custom dashboard', 'Scope-based quote'],
+        cta: 'Talk it through', featured: false,
+        icon: `<polygon points="3 9 12 2 21 9 21 20 3 20"/><line x1="9" y1="20" x2="9" y2="12"/><line x1="15" y1="20" x2="15" y2="12"/>`,
+      },
+    ]
+  : [
+      {
+        id: 'grano', name: 'Grano', tagline: 'Landing de conversión', activation: 'Desde $250', monthly: '$55/mes',
+        desc: 'Una página diseñada para convertir visitantes en clientes. Ideal para lanzar un servicio o reemplazar tu perfil de Instagram.',
+        features: ['Diseño personalizado', 'Formulario + WhatsApp', 'Google Analytics 4', 'Dominio primer año'],
+        cta: 'Ver detalle', featured: false,
+        icon: `<path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0 4v4l3 3"/>`,
+      },
+      {
+        id: 'tueste', name: 'Tueste', tagline: 'Paquete virtualización', activation: 'Desde $500', monthly: '$90/mes',
+        desc: 'La transformación digital completa para negocios que operan por redes o local físico. El paquete más solicitado de Kape.',
+        features: ['Sitio 4–6 páginas', 'WhatsApp Business', 'Google Business Profile', 'Correo profesional', 'GA4 + Search Console', 'Capacitación incluida'],
+        cta: 'Agendar cafecito', featured: true,
+        icon: `<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>`,
+      },
+      {
+        id: 'pergamino', name: 'Pergamino', tagline: 'Tienda en línea', activation: 'Desde $800', monthly: '$140/mes',
+        desc: 'Catálogo de productos, pagos en línea, panel de admin y capacitación completa para que manejés tu tienda.',
+        features: ['Catálogo + pagos', 'Panel de admin', 'Pasarela CR', 'Capacitación'],
+        cta: 'Ver detalle', featured: false,
+        icon: `<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>`,
+      },
+      {
+        id: 'finca', name: 'Finca', tagline: 'Sistema a medida', activation: 'Cotización', monthly: null,
+        desc: 'Apps web, portales y sistemas internos personalizados. Cotización según el alcance del proyecto.',
+        features: ['Aplicaciones web', 'Integraciones API', 'Panel personalizado', 'Cotización por alcance'],
+        cta: 'Conversar', featured: false,
+        icon: `<polygon points="3 9 12 2 21 9 21 20 3 20"/><line x1="9" y1="20" x2="9" y2="12"/><line x1="15" y1="20" x2="15" y2="12"/>`,
+      },
+    ];
 ---
 <section id="servicios" class="py-24 bg-kape-beige relative overflow-hidden">
 
@@ -47,14 +82,14 @@ const services = [
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
             <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
           </svg>
-          Nuestros tuestes
+          {text.servicesSection.eyebrow}
         </span>
       </div>
       <h2 class="reveal reveal-delay-1 font-jakarta font-extrabold text-3xl lg:text-4xl text-kape-oscuro mb-4">
-        Elegí el tueste que necesitás
+        {text.servicesSection.title}
       </h2>
       <p class="reveal reveal-delay-2 accent-script text-xl text-kape-medio/80 max-w-lg mx-auto">
-        Cada paquete es un nivel de transformación digital.
+        {text.servicesSection.subtitle}
       </p>
     </div>
 
@@ -78,8 +113,8 @@ const services = [
 
           <!-- Badge + name -->
           <div>
-            <span class={`text-[10px] font-bold uppercase tracking-[0.12em] ${s.featured ? 'text-kape-naranja' : 'text-kape-naranja'}`}>
-              {s.name} {s.featured ? '· ⭐ Más solicitado' : ''}
+              <span class={`text-[10px] font-bold uppercase tracking-[0.12em] ${s.featured ? 'text-kape-naranja' : 'text-kape-naranja'}`}>
+              {s.name} {s.featured ? `· ⭐ ${text.servicesSection.featured}` : ''}
             </span>
             <h3 class={`font-jakarta font-bold text-lg mt-0.5 leading-tight ${s.featured ? 'text-white' : 'text-kape-oscuro'}`}>
               {s.tagline}
@@ -90,7 +125,7 @@ const services = [
           <div class={`space-y-1 ${s.featured ? 'text-kape-beige' : 'text-kape-medio'}`}>
             <p class="font-jakarta font-extrabold text-2xl">{s.activation}</p>
             {s.monthly && <p class="text-sm font-medium opacity-80">+ {s.monthly}</p>}
-            {!s.monthly && <p class="text-sm font-medium opacity-80">según alcance</p>}
+            {!s.monthly && <p class="text-sm font-medium opacity-80">{locale === 'en' ? 'by scope' : 'según alcance'}</p>}
           </div>
 
           <!-- Description -->
@@ -128,16 +163,16 @@ const services = [
     <!-- Catación entry-level card -->
     <div class="reveal max-w-2xl mx-auto">
       <div class="bg-kape-white rounded-2xl p-6 border-2 border-dashed border-kape-medio/25 text-center">
-        <p class="text-kape-medio/60 text-sm mb-1">¿No sabés por dónde empezar?</p>
+        <p class="text-kape-medio/60 text-sm mb-1">{text.servicesSection.moreNeeded}</p>
         <p class="font-jakarta font-bold text-kape-oscuro text-xl mb-2">
-          Catación express —
-          <span class="text-kape-naranja">$90</span>
+            {text.servicesSection.expressName} —
+            <span class="text-kape-naranja">{text.servicesSection.expressPrice}</span>
         </p>
         <p class="text-sm text-kape-medio/70 mb-4">
-          Auditoría de tu estado digital actual + reporte con recomendaciones. Entrega en 48 horas.
+            {text.servicesSection.expressDescription}
         </p>
-        <a href="#cafecito" class="inline-flex items-center gap-2 text-kape-naranja font-semibold text-sm hover:underline">
-          Agendar catación →
+          <a href="#cafecito" class="inline-flex items-center gap-2 text-kape-naranja font-semibold text-sm hover:underline">
+            {text.servicesSection.expressCta} →
         </a>
       </div>
     </div>

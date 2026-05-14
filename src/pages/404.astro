@@ -2,9 +2,19 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import { getLocale, getSiteText, localizedPath } from '../i18n';
+
+const locale = getLocale(Astro.url.pathname);
+const text = getSiteText(locale);
+const links = [
+  { label: text.nav.services, href: localizedPath(Astro.url.pathname, '/servicios'), icon: '☕' },
+  { label: text.nav.portfolio, href: localizedPath(Astro.url.pathname, '/portafolio'), icon: '🎨' },
+  { label: text.nav.blog, href: localizedPath(Astro.url.pathname, '/blog'), icon: '📝' },
+  { label: text.nav.about, href: localizedPath(Astro.url.pathname, '/sobre'), icon: 'ℹ️' },
+];
 ---
 
-<Layout title="404 — Página no encontrada | Kape Digital" description="La página que buscas no existe. Vuelve a inicio o contacta con nosotros.">
+<Layout locale={locale} title={locale === 'en' ? '404 — Page not found | Kape Digital' : '404 — Página no encontrada | Kape Digital'} description={locale === 'en' ? 'The page you are looking for does not exist. Go back home or contact us.' : 'La página que buscas no existe. Vuelve a inicio o contacta con nosotros.'}>
   <Navbar />
   <main class="pt-16 min-h-screen flex flex-col">
     
@@ -22,27 +32,27 @@ import Footer from '../components/Footer.astro';
             404
           </h1>
           <p class="font-jakarta font-extrabold text-2xl lg:text-4xl text-kape-oscuro -mt-6">
-            Página no encontrada
+            {locale === 'en' ? 'Page not found' : 'Página no encontrada'}
           </p>
         </div>
 
         <!-- Description -->
         <p class="text-lg text-kape-medio/80 mb-4">
-          Lo sentimos, la página que buscas se fue a tomar un café y no volvió.
+          {locale === 'en' ? 'Sorry, the page you are looking for went for a coffee and never came back.' : 'Lo sentimos, la página que buscas se fue a tomar un café y no volvió.'}
         </p>
         <p class="text-sm text-kape-medio/60 mb-10">
-          Verifica la URL o vuelve al inicio para explorar más.
+          {locale === 'en' ? 'Check the URL or go back home to explore more.' : 'Verifica la URL o vuelve al inicio para explorar más.'}
         </p>
 
         <!-- CTA Buttons -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/"
+          <a href={localizedPath(Astro.url.pathname, '/')}
              class="inline-flex items-center justify-center gap-2 bg-kape-naranja text-white font-bold px-7 py-3.5 rounded-full btn-ripple hover:bg-orange-700 transition-colors">
-            ← Volver al inicio
+            ← {locale === 'en' ? 'Back home' : 'Volver al inicio'}
           </a>
-          <a href="/#cafecito"
+          <a href={locale === 'en' ? '/en/#cafecito' : '/#cafecito'}
              class="inline-flex items-center justify-center gap-2 border-2 border-kape-medio text-kape-oscuro font-bold px-7 py-3 rounded-full hover:bg-kape-beige transition-colors">
-            Agendar cafecito
+            {locale === 'en' ? 'Book a coffee chat' : 'Agendar cafecito'}
           </a>
         </div>
       </div>
@@ -52,15 +62,10 @@ import Footer from '../components/Footer.astro';
     <section class="py-16 bg-kape-beige/40">
       <div class="max-w-2xl mx-auto px-6 lg:px-8 text-center">
         <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-6">
-          ¿Quizás buscabas algo de esto?
+          {locale === 'en' ? 'Maybe you were looking for this?' : '¿Quizás buscabas algo de esto?'}
         </h2>
         <div class="grid sm:grid-cols-2 gap-4">
-          {[
-            { label: 'Servicios', href: '/servicios', icon: '☕' },
-            { label: 'Portafolio', href: '/portafolio', icon: '🎨' },
-            { label: 'Blog', href: '/blog', icon: '📝' },
-            { label: 'Sobre mí', href: '/sobre', icon: 'ℹ️' },
-          ].map(link => (
+          {links.map(link => (
             <a href={link.href}
                class="p-4 bg-kape-white rounded-lg border border-kape-beige hover:border-kape-medio/30 transition-all hover:shadow-md">
               <span class="text-3xl block mb-2">{link.icon}</span>

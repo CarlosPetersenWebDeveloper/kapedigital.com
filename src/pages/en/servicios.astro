@@ -1,0 +1,178 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import CTA from '../../components/CTA.astro';
+import Footer from '../../components/Footer.astro';
+
+const packages = [
+  {
+    name: 'Grano', sub: 'Conversion landing page', activation: 'From $250', monthly: '$55/month',
+    priceNote: 'one-time activation',
+    color: 'bg-amber-50', accent: '#D97706',
+    desc: 'The first step away from Instagram. A focused single-page site designed to drive action.',
+    includes: [
+      'Fully custom design',
+      'Copywriting for the page',
+      'Contact form',
+      'Direct WhatsApp button',
+      'Google Analytics 4 configured',
+      'Hosting + SSL active (included in monthly fee)',
+      'Technical support by WhatsApp',
+      '24/7 uptime monitoring',
+    ],
+    ideal: 'Launch a product or service · Replace your Instagram profile · Test a business idea',
+  },
+  {
+    name: 'Tueste', sub: 'Digitalization package', activation: 'From $500', monthly: '$90/month',
+    priceNote: 'one-time activation',
+    color: 'bg-kape-beige', accent: '#6F4E37',
+    desc: 'Full digital transformation for businesses that operate through WhatsApp, social media, or a physical store and want to level up.',
+    includes: [
+      '4 to 6 page website',
+      'Responsive design (mobile + desktop)',
+      'WhatsApp Business setup',
+      'Google Business Profile',
+      'Professional email (you@yourbusiness.com)',
+      'Google Analytics 4 + Search Console',
+      'Full usage training',
+      'Hosting + SSL active (included in monthly fee)',
+      'Ongoing technical support',
+    ],
+    ideal: 'Businesses with a proven product or service · Physical stores · Professional services',
+    starred: true,
+  },
+  {
+    name: 'Pergamino', sub: 'Online store', activation: 'From $800', monthly: '$140/month',
+    priceNote: 'one-time activation',
+    color: 'bg-green-50', accent: '#15803D',
+    desc: 'Everything in Tueste plus a product catalog, online payments, and a dashboard you can manage yourself.',
+    includes: [
+      'Everything in the Tueste package',
+      'Filterable product catalog',
+      'Shopping cart',
+      'Payment gateway (SINPE, card)',
+      'Admin dashboard',
+      'Basic inventory management',
+      'Automatic email confirmations',
+      'Daily store backups',
+      'Extended training',
+    ],
+    ideal: 'Businesses with physical or digital products · Teams selling via WhatsApp who want automation',
+  },
+  {
+    name: 'Finca', sub: 'Custom system', activation: 'Quote', monthly: null,
+    priceNote: 'based on scope',
+    color: 'bg-orange-50', accent: '#EA580C',
+    desc: 'When the need is unique and no template solves it. Apps, portals, internal systems. Priced by scope, outside the subscription model.',
+    includes: [
+      'Requirements analysis',
+      'Architecture design',
+      'Custom development',
+      'External API integrations',
+      'Custom admin dashboard',
+      'Testing and QA',
+      'Technical documentation',
+      'Post-launch support',
+    ],
+    ideal: 'Companies with specific flows · Management systems · Login-based portals',
+  },
+];
+
+---
+<Layout locale="en" title="Services — Kape Digital" description="Kape Digital's WaaS plans: Grano, Tueste, Pergamino, and Finca. Digital presence from $250 activation + $55/month.">
+  <Navbar />
+  <main class="pt-16">
+    <section class="py-20 bg-kape-white relative overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
+        <div class="coffee-ring coffee-ring-xl absolute -top-20 -right-24 opacity-25"></div>
+      </div>
+      <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center relative">
+        <span class="section-pill">Services</span>
+        <h1 class="font-jakarta font-extrabold text-4xl lg:text-5xl text-kape-oscuro mb-4">Choose the roast you need</h1>
+        <p class="accent-script text-xl text-kape-medio/80 max-w-xl mx-auto mb-6">Each plan is a subscription for digital presence: you pay activation once and we operate it month by month.</p>
+        <p class="text-sm text-kape-medio/60">Minimum term: 6 months · Then month to month with 15 days' notice</p>
+      </div>
+    </section>
+
+    {packages.map((pkg, i) => (
+      <section class={`py-16 ${i % 2 === 0 ? 'bg-kape-white' : 'bg-kape-beige'} relative overflow-hidden`}>
+        <div class="max-w-5xl mx-auto px-6 lg:px-8">
+          <div class={`grid lg:grid-cols-2 gap-12 items-start ${i % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+            <div>
+              <div class="flex items-center gap-3 mb-4">
+                <span class="font-jakarta font-extrabold text-sm uppercase tracking-widest" style={`color: ${pkg.accent}`}>{pkg.name}</span>
+                {pkg.starred && <span class="bg-kape-naranja text-white text-xs font-bold px-3 py-1 rounded-full">⭐ Most requested</span>}
+              </div>
+              <h2 class="font-jakarta font-extrabold text-3xl lg:text-4xl text-kape-oscuro mb-2">{pkg.sub}</h2>
+              <div class="mb-6">
+                <p class="font-jakarta font-extrabold text-3xl" style={`color: ${pkg.accent}`}>{pkg.activation}<span class="text-base font-normal text-kape-medio/60 ml-2">· {pkg.priceNote}</span></p>
+                {pkg.monthly && <p class="font-jakarta font-semibold text-xl text-kape-medio mt-1">+ {pkg.monthly} <span class="text-sm font-normal text-kape-medio/60">(ongoing operation)</span></p>}
+              </div>
+              <p class="text-kape-medio/80 text-base leading-relaxed mb-6">{pkg.desc}</p>
+              <div class="bg-kape-beige/60 rounded-xl p-4 text-sm text-kape-medio/70 mb-8">
+                <p class="font-semibold text-kape-oscuro text-xs uppercase tracking-wider mb-2">Ideal for:</p>
+                {pkg.ideal}
+              </div>
+              <a href="#cafecito" class="inline-flex items-center gap-2 bg-kape-naranja text-white font-bold px-7 py-3.5 rounded-full btn-ripple hover:bg-orange-700 transition-colors">Book a free coffee chat →</a>
+            </div>
+            <div class={`${pkg.color} rounded-2xl p-7`}>
+              <p class="font-jakarta font-bold text-kape-oscuro text-sm uppercase tracking-wider mb-5">Includes:</p>
+              <ul class="space-y-3">
+                {pkg.includes.map(item => (
+                  <li class="flex items-start gap-3 text-sm text-kape-medio/80">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={pkg.accent} stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <section class="py-12 bg-kape-white">
+      <div class="max-w-4xl mx-auto px-6 lg:px-8">
+        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
+          <div class="flex-1">
+            <span class="font-jakarta font-extrabold text-xs uppercase tracking-widest text-amber-600 mb-1 block">Diagnosis</span>
+            <h3 class="font-jakarta font-extrabold text-2xl text-kape-oscuro mb-2">Express tasting</h3>
+            <p class="text-kape-medio/75 text-sm leading-relaxed">We review your current digital state and deliver a report with findings and concrete recommendations. No subscription required. It's the best starting point if you already have something online and want to know what is failing.</p>
+          </div>
+          <div class="text-center md:text-right flex-shrink-0">
+            <p class="font-jakarta font-extrabold text-3xl text-amber-600">$90</p>
+            <p class="text-xs text-kape-medio/60 mb-4">one-time payment · separate quote</p>
+            <a href="#cafecito" class="inline-flex items-center gap-2 bg-kape-naranja text-white font-bold px-6 py-3 rounded-full btn-ripple hover:bg-orange-700 transition-colors text-sm">Book a coffee chat →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-kape-beige">
+      <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+        <span class="section-pill">After-dinner chat</span>
+        <h2 class="font-jakarta font-extrabold text-3xl text-kape-oscuro mb-2">Maintenance for external sites</h2>
+        <p class="text-kape-medio/70 text-sm mb-8 max-w-xl mx-auto">Have a website we did not build and want us to operate it? This plan is for you. Technical support for Grano, Tueste, and Pergamino is already included in their monthly fee.</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          {[
+            { plan: 'Basic plan', price: '$120/month', items: ['Security updates', 'Monthly backup', 'Metrics report', 'WhatsApp support'] },
+            { plan: 'Full plan', price: '$220/month', items: ['Everything in the basic plan', 'Continuous improvements and tweaks', 'Monthly coffee catch-up', 'Priority response'] },
+          ].map(m => (
+            <div class="bg-kape-white rounded-2xl p-7 text-left">
+              <h3 class="font-jakarta font-bold text-kape-oscuro text-xl mb-1">{m.plan}</h3>
+              <p class="font-jakarta font-extrabold text-kape-medio text-2xl mb-5">{m.price}</p>
+              <ul class="space-y-2">
+                {m.items.map(it => (
+                  <li class="flex items-center gap-2 text-sm text-kape-medio/75"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>{it}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <CTA />
+  </main>
+  <Footer />
+</Layout>
