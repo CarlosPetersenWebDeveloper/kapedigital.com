@@ -68,9 +68,8 @@ export function validateContactForm(data: ContactFormData): ValidationResult {
     errors.message = 'El mensaje debe tener al menos 10 caracteres';
   }
 
-  if ((data.date && !data.time) || (!data.date && data.time)) {
-    errors.date = 'Fecha y hora deben completarse juntas';
-    errors.time = 'Fecha y hora deben completarse juntas';
+  if (!data.date && data.time) {
+    errors.time = 'Si especificas una hora, también debes indicar una fecha';
   }
 
   return {
@@ -98,8 +97,3 @@ export function debounce<T extends (...args: any[]) => any>(
     timeout = setTimeout(() => func(...args), wait);
   };
 }
-
-    if ((data.date && !data.time) || (!data.date && data.time)) {
-      errors.date = 'Fecha y hora deben completarse juntas';
-      errors.time = 'Fecha y hora deben completarse juntas';
-    }

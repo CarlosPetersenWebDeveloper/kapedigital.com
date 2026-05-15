@@ -141,14 +141,14 @@ const text = getSiteText(locale);
   </div>
 </section>
 
-<script is:inline>
+<script is:inline define:vars={{ sending: text.ctaSection.sending, error: text.ctaSection.error, success: text.ctaSection.success }}>
   const quoteForm = document.getElementById('quote-form');
   const quoteStatus = document.getElementById('quote-form-status');
 
   if (quoteForm && quoteStatus) {
     quoteForm.addEventListener('submit', async function(event) {
       event.preventDefault();
-      quoteStatus.textContent = `${text.ctaSection.sending}`;
+      quoteStatus.textContent = sending;
 
       const formData = new FormData(quoteForm);
 
@@ -161,13 +161,13 @@ const text = getSiteText(locale);
         const payload = await response.json();
 
         if (!response.ok || !payload.ok) {
-          throw new Error(payload.error || text.ctaSection.error);
+          throw new Error(payload.error || error);
         }
 
         quoteForm.reset();
-        quoteStatus.textContent = text.ctaSection.success;
-      } catch (error) {
-        quoteStatus.textContent = error instanceof Error ? error.message : text.ctaSection.error;
+        quoteStatus.textContent = success;
+      } catch (err) {
+        quoteStatus.textContent = err instanceof Error ? err.message : error;
       }
     });
   }
