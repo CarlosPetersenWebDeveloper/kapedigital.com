@@ -97,11 +97,11 @@ const text = getSiteText(locale);
       </div>
       <div class="hidden sm:block w-px h-6 bg-kape-medio/20"></div>
       <p class="text-sm text-kape-medio">
-        <span class="font-bold text-kape-naranja">$0</span> el primer cafecito
+        <span class="font-bold text-kape-naranja">$0</span> {locale === 'en' ? 'the first coffee chat' : 'el primer cafecito'}
       </p>
       <div class="hidden sm:block w-px h-6 bg-kape-medio/20"></div>
       <p class="text-sm text-kape-medio">
-        Resultados en <span class="font-bold text-kape-oscuro">semanas, no meses</span>
+        {locale === 'en' ? 'Results in ' : 'Resultados en '}<span class="font-bold text-kape-oscuro">{locale === 'en' ? 'weeks, not months' : 'semanas, no meses'}</span>
       </p>
     </div>
   </div>

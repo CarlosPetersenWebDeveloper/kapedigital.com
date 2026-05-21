@@ -75,17 +75,17 @@ const text = getSiteText(locale);
       <div class="grid md:grid-cols-2 gap-4">
         <label class="block">
           <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.name}</span>
-          <input name="name" required type="text" placeholder="Tu nombre"
+          <input name="name" required type="text" placeholder={text.ctaSection.form.namePlaceholder}
                  class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro placeholder:text-kape-medio/40 outline-none ring-1 ring-transparent focus:ring-kape-naranja" />
         </label>
         <label class="block">
           <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.email}</span>
-          <input name="email" required type="email" placeholder="tu@correo.com"
+          <input name="email" required type="email" placeholder={text.ctaSection.form.emailPlaceholder}
                  class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro placeholder:text-kape-medio/40 outline-none ring-1 ring-transparent focus:ring-kape-naranja" />
         </label>
         <label class="block">
           <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.company}</span>
-          <input name="company" type="text" placeholder="Nombre de tu negocio"
+          <input name="company" type="text" placeholder={text.ctaSection.form.companyPlaceholder}
                  class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro placeholder:text-kape-medio/40 outline-none ring-1 ring-transparent focus:ring-kape-naranja" />
         </label>
         <label class="block">
@@ -96,7 +96,7 @@ const text = getSiteText(locale);
             <option>Tueste</option>
             <option>Pergamino</option>
             <option>Finca</option>
-            <option>Catación express</option>
+            <option>{text.ctaSection.form.expressOption}</option>
           </select>
         </label>
         <label class="block">
@@ -114,12 +114,12 @@ const text = getSiteText(locale);
       <div class="mt-4 grid gap-4">
         <label class="block">
           <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.budget}</span>
-          <input name="budget" type="text" placeholder="Ej: $500 - $1,000"
+          <input name="budget" type="text" placeholder={text.ctaSection.form.budgetPlaceholder}
                  class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro placeholder:text-kape-medio/40 outline-none ring-1 ring-transparent focus:ring-kape-naranja" />
         </label>
         <label class="block">
           <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.message}</span>
-          <textarea name="message" required rows="5" placeholder="Contame qué necesitás, plazos y cualquier detalle útil..."
+          <textarea name="message" required rows="5" placeholder={text.ctaSection.form.messagePlaceholder}
                     class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro placeholder:text-kape-medio/40 outline-none ring-1 ring-transparent focus:ring-kape-naranja"></textarea>
         </label>
       </div>

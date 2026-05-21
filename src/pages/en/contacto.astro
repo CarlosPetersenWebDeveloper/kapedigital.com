@@ -1,15 +1,15 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
-import CTA from '../components/CTA.astro';
-import { getLocale, getSiteText } from '../i18n';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import CTA from '../../components/CTA.astro';
+import { getLocale, getSiteText } from '../../i18n';
 
 const locale = getLocale(Astro.url.pathname);
 const text = getSiteText(locale);
 ---
 
-<Layout title={text.contactPage.title} description={text.contactPage.description}>
+<Layout locale="en" title={text.contactPage.title} description={text.contactPage.description}>
   <Navbar />
 
   <main class="pt-16">
