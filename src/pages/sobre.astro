@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import CTA from '../components/CTA.astro';
 import Footer from '../components/Footer.astro';
+import { localizedPath } from '../i18n';
 
 const stack = [
   { name: 'React', desc: 'Interfaces modernas y rápidas' },
@@ -34,35 +35,35 @@ const values = [
         <div class="coffee-ring coffee-ring-md absolute bottom-8 left-8 opacity-20"></div>
       </div>
 
-      <div class="max-w-3xl mx-auto px-6 lg:px-8 relative">
-        <div class="reveal reveal-right">
+      <div class="max-w-5xl mx-auto px-6 lg:px-8 relative">
+        <div class="reveal reveal-right grid md:grid-cols-2 gap-8 items-center">
+          <div>
             <span class="section-pill">Sobre mí</span>
-            <h1 class="font-jakarta font-extrabold text-3xl lg:text-4xl text-kape-oscuro mb-6 leading-tight">
-              Detrás de Kape Digital hay una persona,<br/>
-              <em class="accent-script font-normal text-kape-medio">no una agencia.</em>
+            <h1 class="font-jakarta font-extrabold text-3xl lg:text-4xl text-kape-oscuro mb-4 leading-tight">
+              Hola — soy <span class="text-kape-medio">Carlos Petersen</span>
             </h1>
 
-            <!-- Story placeholder -->
-            <div class="space-y-4 text-kape-medio/80 text-base leading-relaxed mb-8">
+            <div class="space-y-4 text-kape-medio/80 text-base leading-relaxed mb-6">
               <p>
-                Soy Carlos Petersen, desarrollador web freelancer en Costa Rica con menos de un año
-                en el mercado pero con la convicción de que los negocios costarricenses merecen
-                una presencia digital tan buena como los de cualquier parte del mundo.
+                Soy Carlos Petersen, desarrollador web freelancer en Costa Rica con menos de un año en el mercado, con la convicción de que
+                los negocios costarricenses merecen una presencia digital tan buena como la de cualquier parte del mundo.
               </p>
               <p>
-                Kape Digital nació de ver a emprendedores con productos increíbles perder clientes
-                simplemente por no estar bien en internet. El nombre "Kape" — café en tagalo — es
-                un homenaje a la calidez del café costarricense y una metáfora de cómo me gusta
-                trabajar: cercano, sin prisa, con calidad.
+                En Kape Digital trabajo de forma directa con emprendedores y pymes para convertir su oferta en experiencias web claras, rápidas y enfocadas a resultados.
+                Me especializo en sitios que venden y en soluciones prácticas: catálogos, pasarelas simples y páginas optimizadas para búsqueda local.
               </p>
               <p class="bg-kape-beige rounded-xl p-4 border-l-4 border-kape-naranja text-sm italic font-lora">
-                "Digitalizamos tu negocio, como un buen café: a tu gusto y con calidad."
+                "Digitalizamos tu negocio como un buen café, a tu gusto y con calidad" 
               </p>
             </div>
 
-            <!-- Portafolio links -->
-            <div>
-              <p class="text-xs font-bold uppercase tracking-wider text-kape-medio/50 mb-3">Proyectos recientes:</p>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a href={localizedPath(Astro.url.pathname, '/contacto')} class="inline-flex items-center gap-2 px-5 py-3 bg-kape-naranja text-white rounded-full font-semibold hover:bg-orange-600">Contactame</a>
+              <a href="/portafolio" class="inline-flex items-center gap-2 px-5 py-3 border border-kape-beige rounded-full text-kape-oscuro hover:bg-kape-beige">Ver portafolio</a>
+            </div>
+
+            <div class="mt-6">
+              <p class="text-xs font-bold uppercase tracking-wider text-kape-medio/50 mb-3">Proyectos recientes</p>
               <div class="flex flex-wrap gap-2">
                 {['mvpcardscr.com', 'beestorecr.com', 'ajsolucionessacr.com'].map(url => (
                   <a href={`https://${url}`} target="_blank" rel="noopener"
@@ -73,8 +74,41 @@ const values = [
               </div>
             </div>
           </div>
+
+          <aside class="bg-kape-white rounded-2xl p-6 shadow-sm">
+            <div class="flex flex-col items-center text-center gap-4">
+              <div class="w-36 h-36 rounded-full bg-kape-beige flex items-center justify-center overflow-hidden">
+                <!-- Placeholder avatar -->
+                <svg width="84" height="84" viewBox="0 0 24 24" fill="none" stroke="#6F4E37" stroke-width="1.2" stroke-linecap="round">
+                  <circle cx="12" cy="8" r="3" />
+                  <path d="M4 20c1.5-4 6-6 8-6s6.5 2 8 6" />
+                </svg>
+              </div>
+              <div>
+                <p class="font-jakarta font-bold text-kape-oscuro">Carlos Petersen</p>
+                <p class="text-sm text-kape-medio/70">Desarrollador web · Kape Digital</p>
+              </div>
+
+              <div class="w-full grid grid-cols-3 gap-2 mt-2">
+                <div class="text-center">
+                  <p class="font-jakarta font-bold text-kape-oscuro">+3</p>
+                  <p class="text-xs text-kape-medio/70">Proyectos</p>
+                </div>
+                <div class="text-center">
+                  <p class="font-jakarta font-bold text-kape-oscuro">+3</p>
+                  <p class="text-xs text-kape-medio/70">Clientes</p>
+                </div>
+                <div class="text-center">
+                  <p class="font-jakarta font-bold text-kape-oscuro">CR</p>
+                  <p class="text-xs text-kape-medio/70">Local</p>
+                </div>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
+
+      
     </section>
 
     <!-- Values -->

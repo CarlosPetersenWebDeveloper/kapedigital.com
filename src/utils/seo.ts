@@ -94,6 +94,52 @@ export function generateServiceSchema(service: {
 }
 
 /**
+ * Generate Product schema for coffee items
+ */
+export function generateProductSchema(product: {
+  name: string;
+  description: string;
+  image?: string;
+  sku?: string;
+  brand?: string;
+  price?: string;
+  priceCurrency?: string;
+  availability?: string;
+}): SchemaOrgItem {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.description,
+    image: product.image || 'https://kapedigital.com/placeholder-coffee.jpg',
+    sku: product.sku,
+    brand: product.brand ? { '@type': 'Brand', name: product.brand } : undefined,
+    offers: product.price ? {
+      '@type': 'Offer',
+      price: product.price,
+      priceCurrency: product.priceCurrency || 'USD',
+      availability: product.availability || 'https://schema.org/InStock',
+      url: 'https://kapedigital.com',
+    } : undefined,
+  } as SchemaOrgItem;
+}
+
+/**
+ * Generate FAQPage schema from Q&A pairs
+ */
+export function generateFAQSchema(faqs: Array<{ question: string; answer: string }>): SchemaOrgItem {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  };
+}
+
+/**
  * Generate breadcrumb schema
  */
 export function generateBreadcrumbSchema(breadcrumbs: Array<{

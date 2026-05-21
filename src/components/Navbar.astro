@@ -1,5 +1,6 @@
 ---
 import { getLocale, getSiteText, localizedHome, localizedPath } from '../i18n';
+import Beans from './Beans.astro';
 
 const locale = getLocale(Astro.url.pathname);
 const text = getSiteText(locale);
@@ -9,6 +10,7 @@ const links = [
   { label: text.nav.portfolio, href: localizedPath(Astro.url.pathname, '/portafolio') },
   { label: text.nav.blog, href: localizedPath(Astro.url.pathname, '/blog') },
   { label: text.nav.about, href: localizedPath(Astro.url.pathname, '/sobre') },
+  { label: text.nav.contact, href: localizedPath(Astro.url.pathname, '/contacto') },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -17,8 +19,9 @@ const switchHref = locale === 'en'
   : `/en${currentPath === '/' ? '' : currentPath}`;
 ---
 <header id="navbar"
-  class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 navbar-blur"
+  class="relative fixed top-0 left-0 right-0 z-40 transition-all duration-300 navbar-blur"
   style="background-color: rgba(250,247,242,0.72);">
+  <Beans class="hidden lg:block" />
   <nav class="max-w-6xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between gap-8">
 
     <!-- Logo -->
@@ -40,7 +43,9 @@ const switchHref = locale === 'en'
       {links.map(link => (
         <li>
           <a href={link.href}
-             class="text-sm font-medium text-kape-medio hover:text-kape-oscuro transition-colors duration-200 hover-line">
+             class={link.label === text.nav.contact
+               ? "btn-contact solid text-sm font-semibold px-3 py-1.5 shadow-sm transition-colors"
+               : "text-sm font-medium text-kape-medio hover:text-kape-oscuro transition-colors duration-200 hover-line"}>
             {link.label}
           </a>
         </li>
@@ -75,7 +80,9 @@ const switchHref = locale === 'en'
       {links.map(link => (
         <li>
           <a href={link.href}
-             class="text-kape-medio font-medium text-base hover:text-kape-naranja transition-colors">
+             class={link.label === text.nav.contact
+               ? "btn-contact solid block text-base font-medium px-4 py-2 rounded-md text-center"
+               : "text-kape-medio font-medium text-base hover:text-kape-naranja transition-colors"}>
             {link.label}
           </a>
         </li>
