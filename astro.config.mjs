@@ -13,21 +13,18 @@ export default defineConfig({
 
   integrations: [
     tailwind(),
+    // Sitemap auto-generado con todas las rutas (ES + EN).
+    // El hreflang se inyecta desde el <head> de cada página (Layout.astro),
+    // que es la forma recomendada por Google y más robusta.
     sitemap({
-      // Auto-generates sitemap.xml + sitemap-index.xml at build time
-      // and includes hreflang for the bilingual site.
-      i18n: {
-        defaultLocale: 'es',
-        locales: {
-          es: 'es-CR',
-          en: 'en',
-        },
+      filter: (page) => {
+        if (!page) return false;
+        if (page.includes('/api/')) return false;
+        if (page.endsWith('/404') || page.endsWith('/404/')) return false;
+        return true;
       },
-      // Exclude API routes and 404 from the sitemap
-      filter: (page) => !page.includes('/api/') && !page.endsWith('/404'),
       changefreq: 'weekly',
       priority: 0.7,
-      lastmod: new Date(),
     }),
   ],
 
