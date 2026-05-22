@@ -4,7 +4,15 @@ import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import { blogPosts } from '../../data/blog';
 ---
-<Layout title="Blog — Notas de tueste · Kape Digital" description="Artículos prácticos sobre digitalización, sitios web y marketing para negocios costarricenses.">
+<Layout
+  title="Blog — Notas de tueste sobre desarrollo web y SEO en CR | Kape Digital"
+  description="Artículos prácticos sobre digitalización, sitios web, SEO y marketing digital para PYMEs y emprendedores costarricenses. Guías sin tecnicismos."
+  pageType="blog-list"
+  breadcrumbs={[
+    { label: 'Inicio', url: 'https://kapedigital.com/' },
+    { label: 'Blog',   url: 'https://kapedigital.com/blog/' },
+  ]}
+>
   <Navbar />
   <main class="pt-16">
 

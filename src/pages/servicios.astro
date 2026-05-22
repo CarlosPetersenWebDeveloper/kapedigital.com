@@ -83,8 +83,18 @@ const packages = [
     ideal: 'Empresas con flujos específicos · Sistemas de gestión · Portales con login',
   },
 ];
+
+const breadcrumbs = [
+  { label: 'Inicio',    url: 'https://kapedigital.com/' },
+  { label: 'Servicios', url: 'https://kapedigital.com/servicios/' },
+];
 ---
-<Layout title="Servicios — Kape Digital" description="Conocé los planes WaaS de Kape Digital: Grano, Tueste, Pergamino y Finca. Presencia digital operada desde $250 de activación + $55/mes.">
+<Layout
+  title="Servicios y precios de desarrollo web en Costa Rica — Kape Digital"
+  description="Planes WaaS de Kape Digital: Grano (landing, $250), Tueste (sitio completo, $500), Pergamino (tienda online, $800) y Finca (sistema a medida). Precios con IVA, cafecito gratis."
+  pageType="services"
+  breadcrumbs={breadcrumbs}
+>
   <Navbar />
   <main class="pt-16">
 

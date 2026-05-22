@@ -188,6 +188,111 @@ html { scroll-behavior: smooth; }
   }
 }
 
+/* ─────────────────────────────────────────────────────────────
+   ── Retoques UI quirúrgicos (accesibilidad + UX) ────────────
+   ───────────────────────────────────────────────────────── */
+
+/* Focus visible global — WCAG AA (cumple con criterio 2.4.7) */
+*:focus-visible {
+  outline: 2px solid #EA580C;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #EA580C;
+  outline-offset: 3px;
+}
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #EA580C;
+  outline-offset: 0;
+}
+
+/* Skip-to-content link (oculto hasta foco con teclado) */
+.skip-to-content {
+  position: absolute;
+  top: -48px;
+  left: 8px;
+  z-index: 100;
+  background: #EA580C;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  transition: top 0.2s ease;
+}
+.skip-to-content:focus,
+.skip-to-content:focus-visible {
+  top: 8px;
+  outline: 3px solid #4B2E2B;
+  outline-offset: 2px;
+}
+
+/* Form submit button — loading state */
+.btn-submitting {
+  cursor: progress;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.btn-submitting::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+  border: 2px solid rgba(255,255,255,0.45);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Pulse-ring animation (used by CTA coffee cup icon) */
+@keyframes pulseRing {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+.animate-pulse-ring {
+  animation: pulseRing 2.2s cubic-bezier(0.66, 0, 0.34, 1) infinite;
+}
+
+/* Mejor jerarquía mobile — tipografía más legible bajo 640px */
+@media (max-width: 640px) {
+  h1 { letter-spacing: -0.01em; }
+  h2 { letter-spacing: -0.005em; }
+  /* Ajustar padding excesivo de secciones grandes en mobile */
+  section.py-24 { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+}
+
+/* Asegurar que inputs en iOS no hagan zoom al hacer focus */
+@media (max-width: 640px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="time"],
+  input[type="search"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* Respeto reduce motion también en pulse rings */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-ring { animation: none; }
+}
+
+/* TODO Carlos: revisar el modo oscuro forzado de abajo — los selectores
+   con `!important` están invirtiendo la paleta cremas/cafés de la marca.
+   El sitio en producción se ve claro, así que probablemente sobra. */
 /* ── Forced dark theme ──────────────────────────────── */
 :root {
   color-scheme: dark;

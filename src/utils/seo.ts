@@ -1,135 +1,125 @@
 /**
  * SEO utilities for Kape Digital
- * Helpers for generating meta tags and schema markup
+ * Schema.org graph builder + meta helpers
  */
 
-export interface MetaTagsConfig {
-  title: string;
-  description: string;
-  image?: string;
-  url: string;
-  type?: string;
-}
+export type PageType =
+  | 'default'
+  | 'home'
+  | 'services'
+  | 'portfolio'
+  | 'about'
+  | 'contact'
+  | 'blog-list'
+  | 'blog-post';
 
 export interface SchemaOrgItem {
-  '@context': string;
   '@type': string;
   [key: string]: any;
 }
 
-/**
- * Generate Open Graph meta tags
- */
-export function generateOGMetaTags(config: MetaTagsConfig): Record<string, string> {
-  return {
-    'og:title': config.title,
-    'og:description': config.description,
-    'og:image': config.image || 'https://kapedigital.com/og-image.png',
-    'og:url': config.url,
-    'og:type': config.type || 'website',
-    'og:locale': 'es_CR',
-    'og:site_name': 'Kape Digital',
-  };
-}
+const ORG_ID      = 'https://kapedigital.com/#organization';
+const WEBSITE_ID  = 'https://kapedigital.com/#website';
+const BUSINESS_ID = 'https://kapedigital.com/#localbusiness';
+const PERSON_ID   = 'https://kapedigital.com/#person-carlos';
 
-/**
- * Generate Twitter Card meta tags
- */
-export function generateTwitterCardMetaTags(config: MetaTagsConfig): Record<string, string> {
-  return {
-    'twitter:card': 'summary_large_image',
-    'twitter:title': config.title,
-    'twitter:description': config.description,
-    'twitter:image': config.image || 'https://kapedigital.com/og-image.png',
-  };
-}
+const SOCIAL_LINKS = [
+  'https://www.instagram.com/kapedigital.cr',
+  'https://www.facebook.com/kapedigital.cr',
+  'https://www.linkedin.com/company/kape-digital',
+];
 
-/**
- * Generate LocalBusiness schema for Google Search
- */
-export function generateLocalBusinessSchema(): SchemaOrgItem {
+function organization(): SchemaOrgItem {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
+    '@type': 'Organization',
+    '@id': ORG_ID,
     name: 'Kape Digital',
-    image: 'https://kapedigital.com/favicon.svg',
-    description: 'Micro-agencia de desarrollo web en Costa Rica',
+    legalName: 'Kape Digital',
     url: 'https://kapedigital.com',
-    telephone: '+506-0000-0000', // Replace with actual phone
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://kapedigital.com/favicon.svg',
+      width: 512,
+      height: 512,
+    },
+    image: 'https://kapedigital.com/og-image.png',
+    description: 'Micro-agencia de desarrollo web en Costa Rica.',
+    foundingDate: '2025',
+    founder: { '@id': PERSON_ID },
+    sameAs: SOCIAL_LINKS,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'Customer Service',
+      email: 'hola@kapedigital.com',
+      availableLanguage: ['Spanish', 'English'],
+      areaServed: 'CR',
+    },
+  };
+}
+
+function localBusiness(): SchemaOrgItem {
+  return {
+    '@type': 'LocalBusiness',
+    '@id': BUSINESS_ID,
+    name: 'Kape Digital',
+    image: 'https://kapedigital.com/og-image.png',
+    url: 'https://kapedigital.com',
+    description: 'Desarrollo web, tiendas en linea y presencia digital para PYMEs costarricenses.',
+    priceRange: '$$',
+    email: 'hola@kapedigital.com',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'CR',
-      addressLocality: 'Costa Rica',
+      addressRegion: 'Cartago',
+      addressLocality: 'Cartago',
     },
-    sameAs: [
-      'https://www.instagram.com/kapedigital.cr',
-      'https://www.facebook.com/kapedigital.cr',
-      'https://www.linkedin.com/company/kape-digital',
+    areaServed: [
+      { '@type': 'Country', name: 'Costa Rica' },
+      { '@type': 'AdministrativeArea', name: 'San Jose' },
+      { '@type': 'AdministrativeArea', name: 'Cartago' },
+      { '@type': 'AdministrativeArea', name: 'Heredia' },
+      { '@type': 'AdministrativeArea', name: 'Alajuela' },
     ],
-    priceRange: '$',
-    areaServed: ['CR'],
+    sameAs: SOCIAL_LINKS,
+    knowsLanguage: ['es-CR', 'en'],
   };
 }
 
-/**
- * Generate Service schema for individual services
- */
-export function generateServiceSchema(service: {
-  name: string;
-  description: string;
-  price: string;
-}): SchemaOrgItem {
+function website(locale: 'es' | 'en'): SchemaOrgItem {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: service.name,
-    description: service.description,
-    provider: {
-      '@type': 'LocalBusiness',
-      name: 'Kape Digital',
+    '@type': 'WebSite',
+    '@id': WEBSITE_ID,
+    url: 'https://kapedigital.com',
+    name: 'Kape Digital',
+    description: locale === 'en'
+      ? 'Web development micro-agency in Costa Rica.'
+      : 'Micro-agencia de desarrollo web en Costa Rica.',
+    publisher: { '@id': ORG_ID },
+    inLanguage: locale === 'en' ? 'en' : 'es-CR',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://kapedigital.com/blog/?q={search_term_string}',
+      },
+      'query-input': 'required name=search_term_string',
     },
-    areaServed: ['CR'],
-    priceRange: service.price,
   };
 }
 
-/**
- * Generate Product schema for coffee items
- */
-export function generateProductSchema(product: {
-  name: string;
-  description: string;
-  image?: string;
-  sku?: string;
-  brand?: string;
-  price?: string;
-  priceCurrency?: string;
-  availability?: string;
-}): SchemaOrgItem {
+function personCarlos(): SchemaOrgItem {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.name,
-    description: product.description,
-    image: product.image || 'https://kapedigital.com/placeholder-coffee.jpg',
-    sku: product.sku,
-    brand: product.brand ? { '@type': 'Brand', name: product.brand } : undefined,
-    offers: product.price ? {
-      '@type': 'Offer',
-      price: product.price,
-      priceCurrency: product.priceCurrency || 'USD',
-      availability: product.availability || 'https://schema.org/InStock',
-      url: 'https://kapedigital.com',
-    } : undefined,
-  } as SchemaOrgItem;
+    '@type': 'Person',
+    '@id': PERSON_ID,
+    name: 'Carlos Petersen',
+    jobTitle: 'Web Developer & Founder',
+    worksFor: { '@id': ORG_ID },
+    url: 'https://kapedigital.com/sobre',
+  };
 }
 
-/**
- * Generate FAQPage schema from Q&A pairs
- */
-export function generateFAQSchema(faqs: Array<{ question: string; answer: string }>): SchemaOrgItem {
+function faqPage(faqs: Array<{ question: string; answer: string }>): SchemaOrgItem {
   return {
-    '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqs.map(f => ({
       '@type': 'Question',
@@ -139,21 +129,112 @@ export function generateFAQSchema(faqs: Array<{ question: string; answer: string
   };
 }
 
-/**
- * Generate breadcrumb schema
- */
-export function generateBreadcrumbSchema(breadcrumbs: Array<{
-  label: string;
-  url: string;
-}>): SchemaOrgItem {
+function breadcrumbList(items: Array<{ label: string; url: string }>): SchemaOrgItem {
   return {
-    '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: breadcrumbs.map((crumb, index) => ({
+    itemListElement: items.map((c, i) => ({
       '@type': 'ListItem',
-      position: index + 1,
-      name: crumb.label,
-      item: crumb.url,
+      position: i + 1,
+      name: c.label,
+      item: c.url,
     })),
   };
+}
+
+function articleSchema(article: {
+  headline: string;
+  description: string;
+  datePublished: string;
+  author?: string;
+  image?: string;
+}, url: string): SchemaOrgItem {
+  return {
+    '@type': 'BlogPosting',
+    headline: article.headline,
+    description: article.description,
+    datePublished: article.datePublished,
+    dateModified: article.datePublished,
+    image: article.image || 'https://kapedigital.com/og-image.png',
+    author: article.author
+      ? { '@type': 'Person', name: article.author }
+      : { '@id': ORG_ID },
+    publisher: { '@id': ORG_ID },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    inLanguage: url.includes('/en/') ? 'en' : 'es-CR',
+  };
+}
+
+export function servicesGraph(locale: 'es' | 'en'): SchemaOrgItem[] {
+  const isEn = locale === 'en';
+  const services = [
+    { name: 'Grano',     sub: isEn ? 'Conversion landing page' : 'Landing de conversion',  desc: isEn ? 'Single-page website to convert visitors into customers.' : 'Landing disenada para convertir visitantes en clientes.', price: '250' },
+    { name: 'Tueste',    sub: isEn ? 'Digitalization package'  : 'Paquete de virtualizacion', desc: isEn ? 'Complete 4-6 page website with WhatsApp, Google Business and training.' : 'Sitio web 4-6 paginas con WhatsApp Business, Google Business y capacitacion.', price: '500' },
+    { name: 'Pergamino', sub: isEn ? 'Online store'            : 'Tienda en linea',         desc: isEn ? 'Ecommerce with catalog, payments and admin panel.' : 'Tienda en linea con catalogo, pagos y panel de admin.', price: '800' },
+    { name: 'Finca',     sub: isEn ? 'Custom system'           : 'Sistema a medida',         desc: isEn ? 'Custom web applications and integrations.' : 'Aplicaciones web a medida e integraciones.', price: null as string | null },
+  ];
+
+  return services.map(s => {
+    const base: SchemaOrgItem = {
+      '@type': 'Service',
+      name: s.name + ' - ' + s.sub,
+      description: s.desc,
+      provider: { '@id': BUSINESS_ID },
+      areaServed: 'CR',
+      serviceType: s.sub,
+    };
+    if (s.price) {
+      base.offers = {
+        '@type': 'Offer',
+        price: s.price,
+        priceCurrency: 'USD',
+      };
+    }
+    return base;
+  });
+}
+
+export interface SchemaInput {
+  pageType:     PageType;
+  url:          string;
+  title:        string;
+  description:  string;
+  image:        string;
+  locale:       'es' | 'en';
+  faqs?:        Array<{ question: string; answer: string }>;
+  breadcrumbs?: Array<{ label: string; url: string }>;
+  article?: {
+    headline:      string;
+    description:   string;
+    datePublished: string;
+    author?:       string;
+    image?:        string;
+  };
+}
+
+export function buildSchemaGraph(input: SchemaInput) {
+  const graph: SchemaOrgItem[] = [
+    organization(),
+    localBusiness(),
+    website(input.locale),
+    personCarlos(),
+  ];
+
+  if (input.faqs && input.faqs.length > 0) graph.push(faqPage(input.faqs));
+  if (input.breadcrumbs && input.breadcrumbs.length > 0) graph.push(breadcrumbList(input.breadcrumbs));
+  if (input.pageType === 'services') graph.push(...servicesGraph(input.locale));
+  if (input.pageType === 'blog-post' && input.article) graph.push(articleSchema(input.article, input.url));
+
+  graph.push({
+    '@type': input.pageType === 'blog-post' ? 'Article' : 'WebPage',
+    '@id': input.url + '#webpage',
+    url: input.url,
+    name: input.title,
+    description: input.description,
+    isPartOf: { '@id': WEBSITE_ID },
+    about: { '@id': ORG_ID },
+    inLanguage: input.locale === 'en' ? 'en' : 'es-CR',
+    primaryImageOfPage: { '@type': 'ImageObject', url: input.image },
+  });
+
+  return { '@context': 'https://schema.org', '@graph': graph };
 }

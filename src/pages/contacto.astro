@@ -7,27 +7,23 @@ import { getLocale, getSiteText } from '../i18n';
 
 const locale = getLocale(Astro.url.pathname);
 const text = getSiteText(locale);
+
+const breadcrumbs = [
+  { label: locale === 'en' ? 'Home' : 'Inicio', url: 'https://kapedigital.com/' },
+  { label: text.contactPage.eyebrow, url: 'https://kapedigital.com/contacto/' },
+];
 ---
 
-<Layout title={text.contactPage.title} description={text.contactPage.description}>
+<Layout
+  title={text.contactPage.title}
+  description={text.contactPage.description}
+  pageType="contact"
+  breadcrumbs={breadcrumbs}
+>
   <Navbar />
 
   <main class="pt-16">
-    <!-- Page header -->
-    <section class="pt-16 pb-8 bg-kape-white">
-      <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-        <span class="section-pill">{text.contactPage.eyebrow}</span>
-        <h1 class="font-jakarta font-extrabold text-3xl lg:text-5xl text-kape-oscuro mt-4 mb-4">
-          {text.contactPage.heading}
-        </h1>
-        <p class="text-kape-medio/80 text-lg max-w-2xl mx-auto">
-          {text.contactPage.intro} <a href="mailto:hola@kapedigital.com" class="text-kape-naranja font-semibold">hola@kapedigital.com</a>.
-        </p>
-      </div>
-    </section>
-
-    <!-- Same form used across the site -->
-    <CTA />
+    <CTA variant="light" />
   </main>
 
   <Footer />

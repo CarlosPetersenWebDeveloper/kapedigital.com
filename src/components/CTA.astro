@@ -1,40 +1,82 @@
 ---
 import { getLocale, getSiteText } from '../i18n';
 
+interface Props {
+  /** "dark" = fondo café oscuro (default, usado en el home). "light" = fondo crema con card café claro (usado en /contacto). */
+  variant?: 'dark' | 'light';
+}
+
+const { variant = 'dark' } = Astro.props;
+const isLight = variant === 'light';
+
 const locale = getLocale(Astro.url.pathname);
 const text = getSiteText(locale);
----
-<section id="cafecito" class="py-24 bg-kape-oscuro relative overflow-hidden">
 
-  <!-- Decorative beans (light, subtle) -->
-  <div aria-hidden="true" class="absolute inset-0 pointer-events-none select-none">
-    <div class="absolute top-8 left-8">
-      <div style="width:24px;height:38px;border-radius:50%;background:rgba(245,233,218,0.08);transform:rotate(20deg)"></div>
+// ─── Estilos condicionales por variant ───────────────────────────
+const styles = isLight
+  ? {
+      section:       'bg-kape-white',
+      iconBg:        'bg-kape-beige ring-2 ring-kape-medio/15',
+      iconPulse1:    'ring-kape-naranja/25',
+      iconPulse2:    'ring-kape-naranja/15',
+      iconStroke:    '#6F4E37',
+      heading:       'text-kape-oscuro',
+      body:          'text-kape-medio/80',
+      emailBtn:      'border-2 border-kape-medio/30 text-kape-medio hover:bg-kape-beige/60',
+      formCard:      'bg-kape-beige/30 border-2 border-kape-beige rounded-3xl shadow-[0_8px_30px_rgba(111,78,55,0.06)]',
+      label:         'text-kape-oscuro',
+      input:         'bg-white border border-kape-beige text-kape-oscuro placeholder:text-kape-medio/40 focus:ring-kape-naranja focus:border-kape-naranja',
+      status:        'text-kape-medio/70',
+      footerNote:    'text-kape-medio/60',
+      showDecor:     false,
+    }
+  : {
+      section:       'bg-kape-oscuro',
+      iconBg:        'bg-kape-beige/10 ring-2 ring-kape-beige/20',
+      iconPulse1:    'ring-kape-naranja/20',
+      iconPulse2:    'ring-kape-naranja/10',
+      iconStroke:    '#F5E9DA',
+      heading:       'text-kape-white',
+      body:          'text-kape-beige/70',
+      emailBtn:      'border-2 border-kape-beige/30 text-kape-beige hover:bg-kape-beige/10',
+      formCard:      'bg-kape-white/6 border border-kape-beige/15 rounded-3xl',
+      label:         'text-kape-beige',
+      input:         'bg-kape-white/95 text-kape-oscuro placeholder:text-kape-medio/40 ring-1 ring-transparent focus:ring-kape-naranja',
+      status:        'text-kape-beige/70',
+      footerNote:    'text-kape-beige/40',
+      showDecor:     true,
+    };
+---
+<section id="cafecito" class={`py-24 ${styles.section} relative overflow-hidden`}>
+
+  {styles.showDecor && (
+    <!-- Decorative beans (dark variant only) -->
+    <div aria-hidden="true" class="absolute inset-0 pointer-events-none select-none">
+      <div class="absolute top-8 left-8">
+        <div style="width:24px;height:38px;border-radius:50%;background:rgba(245,233,218,0.08);transform:rotate(20deg)"></div>
+      </div>
+      <div class="absolute top-16 left-20">
+        <div style="width:14px;height:22px;border-radius:50%;background:rgba(245,233,218,0.06);transform:rotate(-10deg)"></div>
+      </div>
+      <div class="absolute bottom-8 right-12 animate-float-3">
+        <div style="width:20px;height:32px;border-radius:50%;background:rgba(245,233,218,0.07);transform:rotate(30deg)"></div>
+      </div>
+      <div class="absolute top-12 right-24 animate-float-1">
+        <div style="width:16px;height:26px;border-radius:50%;background:rgba(245,233,218,0.06);transform:rotate(-25deg)"></div>
+      </div>
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full"
+           style="background: radial-gradient(ellipse, rgba(111,78,55,0.4) 0%, transparent 70%); filter: blur(60px); top:-100px;"></div>
     </div>
-    <div class="absolute top-16 left-20">
-      <div style="width:14px;height:22px;border-radius:50%;background:rgba(245,233,218,0.06);transform:rotate(-10deg)"></div>
-    </div>
-    <div class="absolute bottom-8 right-12 animate-float-3">
-      <div style="width:20px;height:32px;border-radius:50%;background:rgba(245,233,218,0.07);transform:rotate(30deg)"></div>
-    </div>
-    <div class="absolute top-12 right-24 animate-float-1">
-      <div style="width:16px;height:26px;border-radius:50%;background:rgba(245,233,218,0.06);transform:rotate(-25deg)"></div>
-    </div>
-    <!-- Large bg glow -->
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full"
-         style="background: radial-gradient(ellipse, rgba(111,78,55,0.4) 0%, transparent 70%); filter: blur(60px); top:-100px;"></div>
-  </div>
+  )}
 
   <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center relative">
 
     <!-- Coffee cup icon -->
     <div class="reveal flex justify-center mb-8">
-      <div class="w-20 h-20 bg-kape-beige/10 rounded-full flex items-center justify-center
-                  ring-2 ring-kape-beige/20 relative">
-        <!-- Pulse rings -->
-        <div class="absolute inset-0 rounded-full ring-2 ring-kape-naranja/20 animate-pulse-ring"></div>
-        <div class="absolute inset-0 rounded-full ring-2 ring-kape-naranja/10 animate-pulse-ring" style="animation-delay:0.5s"></div>
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#F5E9DA" stroke-width="1.5" stroke-linecap="round">
+      <div class={`w-20 h-20 rounded-full flex items-center justify-center relative ${styles.iconBg}`}>
+        <div class={`absolute inset-0 rounded-full ring-2 animate-pulse-ring ${styles.iconPulse1}`}></div>
+        <div class={`absolute inset-0 rounded-full ring-2 animate-pulse-ring ${styles.iconPulse2}`} style="animation-delay:0.5s"></div>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={styles.iconStroke} stroke-width="1.5" stroke-linecap="round">
           <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
           <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
           <line x1="6" y1="1" x2="6" y2="4"/>
@@ -45,24 +87,21 @@ const text = getSiteText(locale);
     </div>
 
     <!-- Headline -->
-      <h2 class="reveal reveal-delay-1 font-jakarta font-extrabold text-3xl lg:text-5xl text-kape-white leading-tight mb-6">
+    <h2 class={`reveal reveal-delay-1 font-jakarta font-extrabold text-3xl lg:text-5xl leading-tight mb-6 ${styles.heading}`}>
       {text.ctaSection.eyebrow}
     </h2>
-    <p class="reveal reveal-delay-2 text-kape-beige/70 text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+    <p class={`reveal reveal-delay-2 text-lg leading-relaxed mb-10 max-w-2xl mx-auto ${styles.body}`}>
       {text.ctaSection.body}
     </p>
 
-    <!-- CTAs -->
+    <!-- Email CTA -->
     <div class="reveal reveal-delay-3 flex flex-col sm:flex-row gap-4 justify-center mb-10">
       <a
         href="mailto:hola@kapedigital.com"
-        class="inline-flex items-center justify-center gap-2 border-2 border-kape-beige/30 text-kape-beige
-               font-jakarta font-semibold text-base px-8 py-4 rounded-full
-               hover:bg-kape-beige/10 transition-all duration-300"
+        class={`inline-flex items-center justify-center gap-2 font-jakarta font-semibold text-base px-8 py-4 rounded-full transition-all duration-300 ${styles.emailBtn}`}
         aria-label={text.ctaSection.emailButton}
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-             aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
           <polyline points="22,6 12,13 2,6"/>
         </svg>
@@ -71,26 +110,26 @@ const text = getSiteText(locale);
     </div>
 
     <!-- Quote form -->
-    <form id="quote-form" class="reveal reveal-delay-4 max-w-3xl mx-auto bg-kape-white/6 border border-kape-beige/15 rounded-3xl p-6 lg:p-8 text-left">
+    <form id="quote-form" class={`reveal reveal-delay-4 max-w-3xl mx-auto p-6 lg:p-8 text-left ${styles.formCard}`}>
       <div class="grid md:grid-cols-2 gap-4">
         <label class="block">
-          <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.name}</span>
+          <span class={`block text-sm font-semibold mb-2 ${styles.label}`}>{text.ctaSection.form.name}</span>
           <input name="name" required type="text" placeholder={text.ctaSection.form.namePlaceholder}
-                 class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro placeholder:text-kape-medio/40 outline-none ring-1 ring-transparent focus:ring-kape-naranja" />
+                 class={`w-full rounded-xl px-4 py-3 outline-none ${styles.input}`} />
         </label>
         <label class="block">
-          <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.email}</span>
+          <span class={`block text-sm font-semibold mb-2 ${styles.label}`}>{text.ctaSection.form.email}</span>
           <input name="email" required type="email" placeholder={text.ctaSection.form.emailPlaceholder}
-                 class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro placeholder:text-kape-medio/40 outline-none ring-1 ring-transparent focus:ring-kape-naranja" />
+                 class={`w-full rounded-xl px-4 py-3 outline-none ${styles.input}`} />
         </label>
         <label class="block">
-          <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.company}</span>
+          <span class={`block text-sm font-semibold mb-2 ${styles.label}`}>{text.ctaSection.form.company}</span>
           <input name="company" type="text" placeholder={text.ctaSection.form.companyPlaceholder}
-                 class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro placeholder:text-kape-medio/40 outline-none ring-1 ring-transparent focus:ring-kape-naranja" />
+                 class={`w-full rounded-xl px-4 py-3 outline-none ${styles.input}`} />
         </label>
         <label class="block">
-          <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.service}</span>
-          <select name="service" class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro outline-none ring-1 ring-transparent focus:ring-kape-naranja">
+          <span class={`block text-sm font-semibold mb-2 ${styles.label}`}>{text.ctaSection.form.service}</span>
+          <select name="service" class={`w-full rounded-xl px-4 py-3 outline-none ${styles.input}`}>
             <option value="">{text.ctaSection.form.select}</option>
             <option>Grano</option>
             <option>Tueste</option>
@@ -100,27 +139,27 @@ const text = getSiteText(locale);
           </select>
         </label>
         <label class="block">
-          <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.date}</span>
+          <span class={`block text-sm font-semibold mb-2 ${styles.label}`}>{text.ctaSection.form.date}</span>
           <input name="date" type="date"
-                 class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro outline-none ring-1 ring-transparent focus:ring-kape-naranja" />
+                 class={`w-full rounded-xl px-4 py-3 outline-none ${styles.input}`} />
         </label>
         <label class="block">
-          <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.time}</span>
+          <span class={`block text-sm font-semibold mb-2 ${styles.label}`}>{text.ctaSection.form.time}</span>
           <input name="time" type="time"
-                 class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro outline-none ring-1 ring-transparent focus:ring-kape-naranja" />
+                 class={`w-full rounded-xl px-4 py-3 outline-none ${styles.input}`} />
         </label>
       </div>
 
       <div class="mt-4 grid gap-4">
         <label class="block">
-          <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.budget}</span>
+          <span class={`block text-sm font-semibold mb-2 ${styles.label}`}>{text.ctaSection.form.budget}</span>
           <input name="budget" type="text" placeholder={text.ctaSection.form.budgetPlaceholder}
-                 class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro placeholder:text-kape-medio/40 outline-none ring-1 ring-transparent focus:ring-kape-naranja" />
+                 class={`w-full rounded-xl px-4 py-3 outline-none ${styles.input}`} />
         </label>
         <label class="block">
-          <span class="block text-sm font-semibold text-kape-beige mb-2">{text.ctaSection.form.message}</span>
+          <span class={`block text-sm font-semibold mb-2 ${styles.label}`}>{text.ctaSection.form.message}</span>
           <textarea name="message" required rows="5" placeholder={text.ctaSection.form.messagePlaceholder}
-                    class="w-full rounded-xl bg-kape-white/95 px-4 py-3 text-kape-oscuro placeholder:text-kape-medio/40 outline-none ring-1 ring-transparent focus:ring-kape-naranja"></textarea>
+                    class={`w-full rounded-xl px-4 py-3 outline-none ${styles.input}`}></textarea>
         </label>
       </div>
 
@@ -130,12 +169,12 @@ const text = getSiteText(locale);
         <button type="submit" class="btn-ripple inline-flex items-center justify-center gap-2 rounded-full bg-kape-naranja px-6 py-3 font-semibold text-white hover:bg-orange-700 transition-colors">
           {text.ctaSection.formButton}
         </button>
-        <p id="quote-form-status" class="text-sm text-kape-beige/70"></p>
+        <p id="quote-form-status" class={`text-sm ${styles.status}`}></p>
       </div>
     </form>
 
     <!-- Fine print -->
-    <p class="reveal reveal-delay-4 text-kape-beige/40 text-sm">
+    <p class={`reveal reveal-delay-4 text-sm mt-6 ${styles.footerNote}`}>
       {text.ctaSection.footerNote}
     </p>
   </div>
@@ -149,6 +188,14 @@ const text = getSiteText(locale);
     quoteForm.addEventListener('submit', async function(event) {
       event.preventDefault();
       quoteStatus.textContent = sending;
+
+      // Loading state: deshabilitar y marcar el botón
+      const submitBtn = quoteForm.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.classList.add('btn-submitting');
+        submitBtn.setAttribute('aria-busy', 'true');
+      }
 
       const formData = new FormData(quoteForm);
 
@@ -168,6 +215,13 @@ const text = getSiteText(locale);
         quoteStatus.textContent = success;
       } catch (err) {
         quoteStatus.textContent = err instanceof Error ? err.message : error;
+      } finally {
+        // Restaurar el botón pase lo que pase
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('btn-submitting');
+          submitBtn.removeAttribute('aria-busy');
+        }
       }
     });
   }

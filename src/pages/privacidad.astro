@@ -3,7 +3,14 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 ---
-<Layout title="Política de privacidad · Kape Digital" description="Cómo tratamos los datos que nos compartís en Kape Digital.">
+<Layout
+  title="Política de privacidad · Kape Digital"
+  description="Cómo tratamos los datos que nos compartís en Kape Digital. Cumplimiento de la Ley 8968 de Protección de Datos en Costa Rica."
+  breadcrumbs={[
+    { label: 'Inicio', url: 'https://kapedigital.com/' },
+    { label: 'Política de privacidad', url: 'https://kapedigital.com/privacidad/' },
+  ]}
+>
   <Navbar />
   <main class="pt-16 bg-kape-beige min-h-screen">
     <section class="py-16">

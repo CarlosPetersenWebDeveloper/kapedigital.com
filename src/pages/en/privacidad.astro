@@ -3,7 +3,15 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 ---
-<Layout locale="en" title="Privacy policy · Kape Digital" description="How we handle the data you share with Kape Digital.">
+<Layout
+  locale="en"
+  title="Privacy policy · Kape Digital"
+  description="How we handle the data you share with Kape Digital. Compliance with Costa Rica's Personal Data Protection Law (Law 8968)."
+  breadcrumbs={[
+    { label: 'Home', url: 'https://kapedigital.com/en/' },
+    { label: 'Privacy policy', url: 'https://kapedigital.com/en/privacidad/' },
+  ]}
+>
   <Navbar />
   <main class="pt-16 bg-kape-beige min-h-screen">
     <section class="py-16">

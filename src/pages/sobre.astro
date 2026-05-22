@@ -24,7 +24,15 @@ const values = [
   { title: 'Educación incluida', desc: 'Cada entrega viene con capacitación. Tu sitio es tuyo y aprendés a manejarlo.' },
 ];
 ---
-<Layout title="Sobre mí — Kape Digital" description="Conocé a Carlos Petersen, el desarrollador detrás de Kape Digital, la micro-agencia de desarrollo web en Costa Rica.">
+<Layout
+  title="Sobre mí — Carlos Petersen, desarrollador web en Costa Rica | Kape Digital"
+  description="Soy Carlos Petersen, desarrollador full-stack costarricense detrás de Kape Digital. Especialista en React, PHP, Laravel y WordPress para PYMEs."
+  pageType="about"
+  breadcrumbs={[
+    { label: 'Inicio',   url: 'https://kapedigital.com/' },
+    { label: 'Sobre mí', url: 'https://kapedigital.com/sobre/' },
+  ]}
+>
   <Navbar />
   <main class="pt-16">
 

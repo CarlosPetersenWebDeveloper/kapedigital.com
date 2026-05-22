@@ -9,8 +9,21 @@ import BlogPreview from '../../components/BlogPreview.astro';
 import TrustFAQ from '../../components/TrustFAQ.astro';
 import CTA from '../../components/CTA.astro';
 import Footer from '../../components/Footer.astro';
+
+const faqs = [
+  { question: 'What do I need to get started?', answer: 'Your idea, the business name, and a short conversation are enough to begin. If you already have a logo, copy, or social channels, great; if not, we can organize that too.' },
+  { question: 'How long does a project take?', answer: 'It depends on scope, but the idea is to work in stages and deliver the essentials quickly so your business starts looking professional sooner.' },
+  { question: 'Can I start with something small?', answer: 'Yes. In fact, many SMEs convert better when they start with a clear base and later scale up to a larger site or store.' },
+  { question: 'Can you help if I only have Instagram or WhatsApp?', answer: 'Yes. That is exactly where it makes the most sense to organize the digital presence and build an owned base that does not depend on one social network.' },
+];
 ---
-<Layout locale="en" title="Kape Digital — We turn your business into a digital presence, your way." description="Web design and development for Costa Rican SMEs and entrepreneurs. Websites, online stores, and complete digital presence in English and Spanish.">
+<Layout
+  locale="en"
+  title="Web Development Agency in Costa Rica — Kape Digital"
+  description="Web design and development for Costa Rican SMEs and entrepreneurs. Custom websites, online stores, and complete digital presence from $250 + VAT. Free discovery coffee chat."
+  pageType="home"
+  faqs={faqs}
+>
   <Navbar />
   <main>
     <Hero />

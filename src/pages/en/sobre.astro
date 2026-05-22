@@ -24,7 +24,16 @@ const values = [
 ];
 
 ---
-<Layout locale="en" title="About — Kape Digital" description="Meet Carlos Petersen, the developer behind Kape Digital, the web development micro-agency in Costa Rica.">
+<Layout
+  locale="en"
+  title="About — Carlos Petersen, web developer in Costa Rica | Kape Digital"
+  description="I'm Carlos Petersen, full-stack developer behind Kape Digital, a web development micro-agency in Costa Rica. Specialist in React, PHP, Laravel and WordPress for SMEs."
+  pageType="about"
+  breadcrumbs={[
+    { label: 'Home',  url: 'https://kapedigital.com/en/' },
+    { label: 'About', url: 'https://kapedigital.com/en/sobre/' },
+  ]}
+>
   <Navbar />
   <main class="pt-16">
     <section class="py-20 lg:py-28 bg-kape-white relative overflow-hidden">

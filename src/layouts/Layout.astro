@@ -1,116 +1,162 @@
 ---
+import { buildSchemaGraph, type PageType } from '../utils/seo';
+
 interface Props {
-  title?:       string;
-  description?: string;
-  locale?:      'es' | 'en';
+  title?:        string;
+  description?:  string;
+  locale?:       'es' | 'en';
+  image?:        string;
+  ogType?:       'website' | 'article';
+  noindex?:      boolean;
+  pageType?:     PageType;
+  faqs?:         Array<{ question: string; answer: string }>;
+  breadcrumbs?:  Array<{ label: string; url: string }>;
+  article?:      {
+    headline:     string;
+    description:  string;
+    datePublished: string;
+    author?:      string;
+    image?:       string;
+  };
 }
 
 const {
-  title       = 'Kape Digital — Digitalizamos tu negocio, a tu gusto.',
-  description = 'Micro-agencia de desarrollo web en Costa Rica. Virtualizamos PYMEs y emprendedores con sitios web, tiendas en línea y presencia digital completa.',
-  locale      = Astro.url.pathname.startsWith('/en') ? 'en' : 'es',
+  title,
+  description,
+  locale       = Astro.url.pathname.startsWith('/en') ? 'en' : 'es',
+  image        = 'https://kapedigital.com/og-image.png',
+  ogType       = 'website',
+  noindex      = false,
+  pageType     = 'default',
+  faqs,
+  breadcrumbs,
+  article,
 } = Astro.props;
 
-// Get current URL for canonical
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+// Default titles/descriptions per locale
+const defaultTitle = locale === 'en'
+  ? 'Kape Digital — Web development & digital presence for Costa Rican SMEs'
+  : 'Kape Digital — Desarrollo web y presencia digital para PYMEs en Costa Rica';
 
-// Organization Schema for Local SEO
-const organizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  'name': 'Kape Digital',
-  'url': 'https://kapedigital.com',
-  'logo': 'https://kapedigital.com/favicon.svg',
-  'description': description,
-  'sameAs': [
-    'https://www.instagram.com/kapedigital.cr',
-    'https://www.facebook.com/kapedigital.cr',
-    'https://www.linkedin.com/company/kape-digital',
-  ],
-  'address': {
-    '@type': 'PostalAddress',
-    'addressCountry': 'CR',
-    'addressLocality': 'Costa Rica',
-  },
-  'contactPoint': {
-    '@type': 'ContactPoint',
-    'contactType': 'Customer Service',
-    'availableLanguage': 'es-CR',
-  },
-  'areaServed': 'CR',
-  'priceRange': '$',
-};
+const defaultDescription = locale === 'en'
+  ? 'Web design and development micro-agency in Costa Rica. We turn small businesses operating on WhatsApp and social media into websites that actually sell.'
+  : 'Micro-agencia de desarrollo web en Costa Rica. Convertimos negocios que operan por WhatsApp y redes sociales en sitios web que venden de verdad.';
+
+const finalTitle       = title       ?? defaultTitle;
+const finalDescription = description ?? defaultDescription;
+
+// Canonical URL — always without /en/ prefix gets es; with prefix gets en
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://kapedigital.com');
+
+// hreflang alternates — calculate ES and EN counterparts of current page
+const cleanPath = Astro.url.pathname.replace(/^\/en/, '') || '/';
+const esURL = new URL(cleanPath, 'https://kapedigital.com');
+const enURL = new URL(`/en${cleanPath === '/' ? '' : cleanPath}`, 'https://kapedigital.com');
+
+// Schema.org graph — multiple types combined
+const schemaGraph = buildSchemaGraph({
+  pageType,
+  url:          canonicalURL.toString(),
+  title:        finalTitle,
+  description:  finalDescription,
+  image,
+  locale,
+  faqs,
+  breadcrumbs,
+  article,
+});
 ---
 <!DOCTYPE html>
 <html lang={locale === 'en' ? 'en' : 'es'}>
   <head>
-    <!-- Meta esenciales -->
+    <!-- ===== Core meta ===== -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content={description} />
-    <title>{title}</title>
+    <meta name="description" content={finalDescription} />
+    <title>{finalTitle}</title>
 
-    <!-- Canonical URL para evitar duplicados -->
+    <!-- ===== Canonical + hreflang (CRITICAL for bilingual SEO) ===== -->
     <link rel="canonical" href={canonicalURL.toString()} />
+    <link rel="alternate" hreflang="es"      href={esURL.toString()} />
+    <link rel="alternate" hreflang="es-CR"   href={esURL.toString()} />
+    <link rel="alternate" hreflang="en"      href={enURL.toString()} />
+    <link rel="alternate" hreflang="x-default" href={esURL.toString()} />
 
-    <!-- Favicon -->
+    <!-- ===== Favicon ===== -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
 
-    <!-- Open Graph (redes sociales) -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL.toString()} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://kapedigital.com/og-image.png" />
-    <meta property="og:locale" content={locale === 'en' ? 'en_US' : 'es_CR'} />
-    <meta property="og:site_name" content="Kape Digital" />
+    <!-- ===== Open Graph ===== -->
+    <meta property="og:type"        content={ogType} />
+    <meta property="og:url"         content={canonicalURL.toString()} />
+    <meta property="og:title"       content={finalTitle} />
+    <meta property="og:description" content={finalDescription} />
+    <meta property="og:image"       content={image} />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale"      content={locale === 'en' ? 'en_US' : 'es_CR'} />
+    <meta property="og:locale:alternate" content={locale === 'en' ? 'es_CR' : 'en_US'} />
+    <meta property="og:site_name"   content="Kape Digital" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://kapedigital.com/og-image.png" />
+    <!-- ===== Twitter / X ===== -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:site"        content="@kapedigital" />
+    <meta name="twitter:creator"     content="@kapedigital" />
+    <meta name="twitter:title"       content={finalTitle} />
+    <meta name="twitter:description" content={finalDescription} />
+    <meta name="twitter:image"       content={image} />
 
-    <!-- SEO & Indexing -->
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <!-- ===== Indexing ===== -->
+    {noindex
+      ? <meta name="robots" content="noindex, nofollow" />
+      : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    }
     <meta name="googlebot" content="index, follow" />
-    <meta name="bingbot" content="index, follow" />
-    <meta name="language" content={locale === 'en' ? 'English' : 'Spanish'} />
-    <meta name="author" content="Kape Digital" />
-    <meta name="creator" content="Kape Digital" />
+    <meta name="bingbot"   content="index, follow" />
+    <meta name="language"  content={locale === 'en' ? 'English' : 'Spanish'} />
+    <meta name="author"    content="Kape Digital" />
     <meta name="publisher" content="Kape Digital" />
+    <meta name="geo.region" content="CR" />
+    <meta name="geo.placename" content="Costa Rica" />
 
-    <!-- Preconnect para Google Fonts (performance) -->
+    <!-- ===== Google Search Console verification =====
+         REEMPLAZAR el valor de content por el que te da GSC al crear la propiedad.
+         Instrucciones: ver Proyectos/kapedigital.com/02 - documentación oficial/GSC-Setup.md -->
+    <meta name="google-site-verification" content="REEMPLAZAR_CON_CODIGO_DE_GSC" />
+
+    <!-- ===== Fonts (optimized: dropped Lora, reduced weights) ===== -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
 
-    <!-- Google Fonts con font-display=swap para mejor performance -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500&family=Lora:ital,wght@0,400;1,400;1,500&display=swap"
-          rel="stylesheet" />
-
-    <!-- JSON-LD Schema para SEO (busca Google) -->
-    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <!-- ===== Theme + JSON-LD schema graph ===== -->
     <meta name="theme-color" content="#FAF7F2" />
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
 
-    <!-- Google Analytics (gtag.js) -->
+    <!-- ===== Google Analytics 4 ===== -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QHZ2CD2SWN"></script>
     <script is:inline>
-      const analyticsWindow = window;
-      analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
-      analyticsWindow.gtag = function gtag() {
-        analyticsWindow.dataLayer.push(arguments);
-      };
-      analyticsWindow.gtag('js', new Date());
-      analyticsWindow.gtag('config', 'G-QHZ2CD2SWN');
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-QHZ2CD2SWN', { anonymize_ip: true });
     </script>
   </head>
 
   <body class="bg-kape-white font-inter text-kape-oscuro antialiased overflow-x-hidden">
+    <!-- Skip to content link — accesibilidad WCAG 2.4.1 -->
+    <a href="#main-content" class="skip-to-content">
+      {locale === 'en' ? 'Skip to main content' : 'Saltar al contenido principal'}
+    </a>
 
-    <slot />
+    <div id="main-content" tabindex="-1" style="outline: none;">
+      <slot />
+    </div>
 
     <script is:inline>
       // ── Reveal on scroll ─────────────────────────────
@@ -134,8 +180,8 @@ const organizationSchema = {
       }, { passive: true });
 
       // ── Mobile menu ───────────────────────────────────
-      var btn   = document.getElementById('menu-btn');
-      var mNav  = document.getElementById('mobile-nav');
+      var btn  = document.getElementById('menu-btn');
+      var mNav = document.getElementById('mobile-nav');
       btn && btn.addEventListener('click', function() {
         mNav && mNav.classList.toggle('hidden');
         var expanded = btn.getAttribute('aria-expanded') === 'true';

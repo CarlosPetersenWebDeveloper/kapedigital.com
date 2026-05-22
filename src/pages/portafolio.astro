@@ -34,7 +34,15 @@ const projects = [
   },
 ];
 ---
-<Layout title="Portafolio — Kape Digital" description="Proyectos de desarrollo web de Kape Digital: tiendas en línea, sitios corporativos y más.">
+<Layout
+  title="Portafolio de proyectos web en Costa Rica — Kape Digital"
+  description="Proyectos reales de Kape Digital en Costa Rica: tiendas en línea (MVP Cards, BeeStore), sitios corporativos (AJ Soluciones) y más. Tecnologías React, PHP, Laravel, WordPress."
+  pageType="portfolio"
+  breadcrumbs={[
+    { label: 'Inicio',     url: 'https://kapedigital.com/' },
+    { label: 'Portafolio', url: 'https://kapedigital.com/portafolio/' },
+  ]}
+>
   <Navbar />
   <main class="pt-16">
 

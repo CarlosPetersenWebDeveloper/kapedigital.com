@@ -78,8 +78,18 @@ const packages = [
   },
 ];
 
+const breadcrumbs = [
+  { label: 'Home',     url: 'https://kapedigital.com/en/' },
+  { label: 'Services', url: 'https://kapedigital.com/en/servicios/' },
+];
 ---
-<Layout locale="en" title="Services — Kape Digital" description="Kape Digital's WaaS plans: Grano, Tueste, Pergamino, and Finca. Digital presence from $250 activation + $55/month.">
+<Layout
+  locale="en"
+  title="Web Development Services & Pricing in Costa Rica — Kape Digital"
+  description="Kape Digital WaaS plans: Grano (landing, $250), Tueste (full website, $500), Pergamino (online store, $800), Finca (custom system). Costa Rican SME-friendly pricing."
+  pageType="services"
+  breadcrumbs={breadcrumbs}
+>
   <Navbar />
   <main class="pt-16">
     <section class="py-20 bg-kape-white relative overflow-hidden">
