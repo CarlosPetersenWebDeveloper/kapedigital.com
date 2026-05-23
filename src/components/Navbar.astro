@@ -19,7 +19,7 @@ const switchHref = locale === 'en'
   : `/en${currentPath === '/' ? '' : currentPath}`;
 ---
 <header id="navbar"
-  class="relative fixed top-0 left-0 right-0 z-40 transition-all duration-300 navbar-blur"
+  class="sticky top-0 left-0 right-0 z-40 transition-all duration-300 navbar-blur"
   style="background-color: rgba(250,247,242,0.72);">
   <Beans class="hidden lg:block" />
   <nav class="max-w-6xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between gap-8">
