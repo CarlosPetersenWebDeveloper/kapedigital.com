@@ -149,12 +149,7 @@ const schemaGraph = buildSchemaGraph({
   </head>
 
   <body class="bg-kape-white font-inter text-kape-oscuro antialiased overflow-x-hidden">
-    <!-- Skip to content link — accesibilidad WCAG 2.4.1 -->
-    <a href="#main-content" class="skip-to-content">
-      {locale === 'en' ? 'Skip to main content' : 'Saltar al contenido principal'}
-    </a>
-
-    <div id="main-content" tabindex="-1" style="outline: none;">
+    <div>
       <slot />
     </div>
 
