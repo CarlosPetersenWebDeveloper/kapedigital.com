@@ -1,0 +1,107 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+---
+<Layout
+  title="Política de privacidad · TicoStar"
+  description="Cómo TicoStar trata los datos que compartís al usar la app. Producto interno de Kape Digital."
+  breadcrumbs={[
+    { label: 'Inicio', url: 'https://kapedigital.com/' },
+    { label: 'TicoStar', url: 'https://kapedigital.com/ticostar/' },
+    { label: 'Política de privacidad', url: 'https://kapedigital.com/ticostar/privacidad/' },
+  ]}
+>
+  <Navbar />
+  <main class="pt-16 bg-kape-beige min-h-screen">
+    <section class="py-16">
+      <div class="max-w-4xl mx-auto px-6 lg:px-8">
+        <div class="bg-kape-white rounded-3xl p-8 lg:p-10 shadow-[0_8px_40px_rgba(111,78,55,0.08)]">
+          <span class="section-pill">TicoStar · Privacidad</span>
+          <h1 class="font-jakarta font-extrabold text-3xl lg:text-4xl text-kape-oscuro mt-2 mb-4">Política de privacidad</h1>
+          <p class="text-kape-medio/75 leading-relaxed mb-2">
+            <strong>Vigente desde:</strong> 22 de mayo de 2026 · <strong>Última actualización:</strong> 22 de mayo de 2026
+          </p>
+          <p class="text-kape-medio/75 leading-relaxed mb-8">
+            Esta política describe cómo TicoStar (en adelante "la App"), operada por Kape Digital, recolecta, usa y protege la información personal de sus usuarios. Al usar la App, aceptás esta política.
+          </p>
+
+          <div class="space-y-6 text-kape-medio/80 leading-relaxed">
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">1. Información que recolectamos</h2>
+              <ul class="list-disc list-inside space-y-1">
+                <li><strong>Datos de cuenta:</strong> correo electrónico y nombre visible que vos elegís al registrarte.</li>
+                <li><strong>Datos de uso:</strong> calificaciones a jugadores, comentarios, hilos que creás, equipo favorito.</li>
+                <li><strong>Datos técnicos:</strong> IP, modelo de dispositivo, versión de Android, fecha de inicio de sesión.</li>
+                <li><strong>Datos publicitarios:</strong> identificador publicitario de Android (AAID), procesado por Google AdMob.</li>
+              </ul>
+              <p class="mt-2">No recolectamos ubicación precisa, contactos, fotos personales ni información financiera.</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">2. Para qué usamos tus datos</h2>
+              <ul class="list-disc list-inside space-y-1">
+                <li>Permitirte iniciar sesión y acceder a las funcionalidades de la App.</li>
+                <li>Mostrar tu nombre y avatar en los comentarios y calificaciones que publicás.</li>
+                <li>Calcular promedios públicos de jugadores basados en las calificaciones de la comunidad.</li>
+                <li>Moderar la comunidad y prevenir abusos.</li>
+                <li>Mostrar publicidad relevante a través de Google AdMob.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">3. Con quién compartimos tus datos</h2>
+              <p>Compartimos información limitada con los siguientes terceros, exclusivamente para que la App funcione:</p>
+              <ul class="list-disc list-inside mt-2 space-y-1">
+                <li><strong>Supabase</strong> — proveedor de backend que almacena tu cuenta y datos.</li>
+                <li><strong>Google AdMob</strong> — recibe el identificador publicitario para anuncios.</li>
+                <li><strong>Google Sign-In</strong> (si lo usás) — verifica tu identidad.</li>
+              </ul>
+              <p class="mt-2"><strong>No vendemos tus datos a terceros bajo ninguna circunstancia.</strong></p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">4. Seguridad</h2>
+              <p>Tus datos se almacenan en servidores de Supabase con encriptación TLS en tránsito y en reposo. Las contraseñas se almacenan exclusivamente como hashes criptográficos (nunca en texto plano).</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">5. Tus derechos</h2>
+              <ul class="list-disc list-inside space-y-1">
+                <li><strong>Acceder</strong> a la información que tenemos sobre vos.</li>
+                <li><strong>Corregir</strong> tu nombre, avatar o cualquier dato de tu perfil desde la app.</li>
+                <li><strong>Eliminar tu cuenta</strong> y todos tus datos. Escribinos a <a href="mailto:hola@kapedigital.com" class="text-kape-naranja underline">hola@kapedigital.com</a> con el asunto "Eliminar cuenta TicoStar".</li>
+                <li><strong>Exportar</strong> tus datos. Solicitalo al mismo correo.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">6. Menores de edad</h2>
+              <p>TicoStar está pensada para usuarios mayores de 13 años. Si sos menor, necesitás el consentimiento de tu madre, padre o representante legal.</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">7. Publicidad</h2>
+              <p>La App muestra anuncios a través de Google AdMob. AdMob puede usar el identificador publicitario para personalizar anuncios. Podés gestionar este permiso desde la configuración de Android (Ajustes → Google → Anuncios).</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">8. Cambios a esta política</h2>
+              <p>Si actualizamos esta política, te notificamos dentro de la App y publicamos la nueva versión acá. La fecha "Última actualización" siempre refleja la versión vigente.</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">9. Contacto</h2>
+              <p>Para cualquier consulta sobre privacidad, escribinos a <a href="mailto:hola@kapedigital.com" class="text-kape-naranja underline">hola@kapedigital.com</a>.</p>
+            </section>
+          </div>
+
+          <p class="mt-10 pt-6 border-t border-kape-medio/15 text-sm text-kape-medio/65">
+            TicoStar es un producto de Kape Digital, Costa Rica. Cumplimos con la Ley 8968 de Protección de Datos.
+          </p>
+        </div>
+      </div>
+    </section>
+    <Footer />
+  </main>
+</Layout>

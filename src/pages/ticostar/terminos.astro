@@ -1,0 +1,113 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+---
+<Layout
+  title="Términos de uso · TicoStar"
+  description="Términos y condiciones para usar la app TicoStar. Producto interno de Kape Digital."
+  breadcrumbs={[
+    { label: 'Inicio', url: 'https://kapedigital.com/' },
+    { label: 'TicoStar', url: 'https://kapedigital.com/ticostar/' },
+    { label: 'Términos de uso', url: 'https://kapedigital.com/ticostar/terminos/' },
+  ]}
+>
+  <Navbar />
+  <main class="pt-16 bg-kape-beige min-h-screen">
+    <section class="py-16">
+      <div class="max-w-4xl mx-auto px-6 lg:px-8">
+        <div class="bg-kape-white rounded-3xl p-8 lg:p-10 shadow-[0_8px_40px_rgba(111,78,55,0.08)]">
+          <span class="section-pill">TicoStar · Términos</span>
+          <h1 class="font-jakarta font-extrabold text-3xl lg:text-4xl text-kape-oscuro mt-2 mb-4">Términos de uso</h1>
+          <p class="text-kape-medio/75 leading-relaxed mb-2">
+            <strong>Vigente desde:</strong> 22 de mayo de 2026
+          </p>
+          <p class="text-kape-medio/75 leading-relaxed mb-8">
+            Al usar TicoStar, aceptás cumplir estos términos. Si no estás de acuerdo, no uses la App.
+          </p>
+
+          <div class="space-y-6 text-kape-medio/80 leading-relaxed">
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">1. Edad mínima</h2>
+              <p>Para usar la App debés tener al menos 13 años. Si sos menor de edad, necesitás el permiso de tu madre, padre o representante legal.</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">2. Cuenta de usuario</h2>
+              <ul class="list-disc list-inside space-y-1">
+                <li>Sos responsable de la información que registrás al crear tu cuenta.</li>
+                <li>No podés crear cuentas con identidades falsas o suplantando a otra persona.</li>
+                <li>Sos responsable de mantener segura tu contraseña.</li>
+                <li>Kape Digital se reserva el derecho de suspender o eliminar cuentas que violen estos términos.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">3. Comportamiento esperado</h2>
+              <ul class="list-disc list-inside space-y-1">
+                <li>Tratar con respeto a otros usuarios.</li>
+                <li>No publicar contenido ofensivo, discriminatorio, vulgar o que incite al odio.</li>
+                <li>No hacer spam ni publicar contenido publicitario sin autorización.</li>
+                <li>No usar la App para acosar, intimidar o difamar a otras personas.</li>
+                <li>No manipular el sistema de calificaciones con múltiples cuentas o de mala fe.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">4. Contenido de los usuarios</h2>
+              <p>Cuando publicás un comentario, una calificación o un hilo en la App, otorgás a Kape Digital una licencia no exclusiva, mundial y gratuita para almacenar, mostrar y distribuir ese contenido dentro de la App. Vos mantenés la propiedad del contenido que creás.</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">5. Moderación</h2>
+              <p>Kape Digital se reserva el derecho de moderar, ocultar o eliminar contenido que viole estos términos, suspender o cerrar cuentas por incumplimiento reiterado, e implementar filtros automáticos de palabras ofensivas.</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">6. Calificaciones de jugadores</h2>
+              <p>Las calificaciones que los usuarios otorgan a jugadores profesionales son opiniones subjetivas y no reflejan necesariamente la opinión de Kape Digital, los jugadores o los equipos. Kape Digital no se responsabiliza por la veracidad o exactitud de estas opiniones.</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">7. Propiedad intelectual</h2>
+              <ul class="list-disc list-inside space-y-1">
+                <li>El nombre "TicoStar", el logotipo, la identidad visual y el código de la App son propiedad de Kape Digital.</li>
+                <li>Los logotipos, nombres y escudos de los equipos de la Liga Promerica son propiedad de sus respectivos dueños y se usan con fines informativos.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">8. Publicidad</h2>
+              <p>La App muestra publicidad a través de Google AdMob para mantenerse gratuita. Kape Digital no se responsabiliza por el contenido de los anuncios mostrados por AdMob.</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">9. Limitación de responsabilidad</h2>
+              <p>TicoStar se ofrece "tal cual" sin garantías de funcionamiento ininterrumpido. Kape Digital no se hace responsable por pérdida de datos por fallas técnicas externas, comentarios u opiniones de otros usuarios, o daños indirectos derivados del uso de la App.</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">10. Cambios en los términos</h2>
+              <p>Podemos modificar estos términos en cualquier momento. Si hay cambios significativos, te lo notificaremos en la App. El uso continuado después de los cambios implica aceptación.</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">11. Jurisdicción</h2>
+              <p>Estos términos se rigen por las leyes de Costa Rica. Cualquier disputa se resolverá en los tribunales de San José, Costa Rica.</p>
+            </section>
+
+            <section>
+              <h2 class="font-jakarta font-bold text-xl text-kape-oscuro mb-2">12. Contacto</h2>
+              <p>Para consultas, escribinos a <a href="mailto:hola@kapedigital.com" class="text-kape-naranja underline">hola@kapedigital.com</a>.</p>
+            </section>
+          </div>
+
+          <p class="mt-10 pt-6 border-t border-kape-medio/15 text-sm text-kape-medio/65">
+            TicoStar es un producto de Kape Digital, Costa Rica. © 2026 Kape Digital. Todos los derechos reservados.
+          </p>
+        </div>
+      </div>
+    </section>
+    <Footer />
+  </main>
+</Layout>
