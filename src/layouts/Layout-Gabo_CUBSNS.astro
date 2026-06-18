@@ -1,0 +1,197 @@
+---
+import { buildSchemaGraph, type PageType } from '../utils/seo';
+
+interface Props {
+  title?:        string;
+  description?:  string;
+  locale?:       'es' | 'en';
+  image?:        string;
+  ogType?:       'website' | 'article';
+  noindex?:      boolean;
+  pageType?:     PageType;
+  faqs?:         Array<{ question: string; answer: string }>;
+  breadcrumbs?:  Array<{ label: string; url: string }>;
+  article?:      {
+    headline:     string;
+    description:  string;
+    datePublished: string;
+    author?:      string;
+    image?:       string;
+  };
+}
+
+const {
+  title,
+  description,
+  locale       = Astro.url.pathname.startsWith('/en') ? 'en' : 'es',
+  image        = 'https://kapedigital.com/og-image.png',
+  ogType       = 'website',
+  noindex      = false,
+  pageType     = 'default',
+  faqs,
+  breadcrumbs,
+  article,
+} = Astro.props;
+
+// Default titles/descriptions per locale
+const defaultTitle = locale === 'en'
+  ? 'Kape Digital — Web development & digital presence for Costa Rican SMEs'
+  : 'Kape Digital — Desarrollo web y presencia digital para PYMEs en Costa Rica';
+
+const defaultDescription = locale === 'en'
+  ? 'Web design and development micro-agency in Costa Rica. We turn small businesses operating on WhatsApp and social media into websites that actually sell.'
+  : 'Micro-agencia de desarrollo web en Costa Rica. Convertimos negocios que operan por WhatsApp y redes sociales en sitios web que venden de verdad.';
+
+const finalTitle       = title       ?? defaultTitle;
+const finalDescription = description ?? defaultDescription;
+
+// Canonical URL — always without /en/ prefix gets es; with prefix gets en
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://kapedigital.com');
+
+// hreflang alternates — calculate ES and EN counterparts of current page
+const cleanPath = Astro.url.pathname.replace(/^\/en/, '') || '/';
+const esURL = new URL(cleanPath, 'https://kapedigital.com');
+const enURL = new URL(`/en${cleanPath === '/' ? '' : cleanPath}`, 'https://kapedigital.com');
+
+// Schema.org graph — multiple types combined
+const schemaGraph = buildSchemaGraph({
+  pageType,
+  url:          canonicalURL.toString(),
+  title:        finalTitle,
+  description:  finalDescription,
+  image,
+  locale,
+  faqs,
+  breadcrumbs,
+  article,
+});
+---
+<!DOCTYPE html>
+<html lang={locale === 'en' ? 'en' : 'es'}>
+  <head>
+    <!-- ===== Core meta ===== -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content={finalDescription} />
+    <title>{finalTitle}</title>
+
+    <!-- ===== Canonical + hreflang (CRITICAL for bilingual SEO) ===== -->
+    <link rel="canonical" href={canonicalURL.toString()} />
+    <link rel="alternate" hreflang="es"      href={esURL.toString()} />
+    <link rel="alternate" hreflang="es-CR"   href={esURL.toString()} />
+    <link rel="alternate" hreflang="en"      href={enURL.toString()} />
+    <link rel="alternate" hreflang="x-default" href={esURL.toString()} />
+
+    <!-- ===== Favicon ===== -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- ===== Open Graph ===== -->
+    <meta property="og:type"        content={ogType} />
+    <meta property="og:url"         content={canonicalURL.toString()} />
+    <meta property="og:title"       content={finalTitle} />
+    <meta property="og:description" content={finalDescription} />
+    <meta property="og:image"       content={image} />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale"      content={locale === 'en' ? 'en_US' : 'es_CR'} />
+    <meta property="og:locale:alternate" content={locale === 'en' ? 'es_CR' : 'en_US'} />
+    <meta property="og:site_name"   content="Kape Digital" />
+
+    <!-- ===== Twitter / X ===== -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:site"        content="@kapedigital" />
+    <meta name="twitter:creator"     content="@kapedigital" />
+    <meta name="twitter:title"       content={finalTitle} />
+    <meta name="twitter:description" content={finalDescription} />
+    <meta name="twitter:image"       content={image} />
+
+    <!-- ===== Indexing ===== -->
+    {noindex
+      ? <meta name="robots" content="noindex, nofollow" />
+      : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    }
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot"   content="index, follow" />
+    <meta name="language"  content={locale === 'en' ? 'English' : 'Spanish'} />
+    <meta name="author"    content="Kape Digital" />
+    <meta name="publisher" content="Kape Digital" />
+    <meta name="geo.region" content="CR" />
+    <meta name="geo.placename" content="Costa Rica" />
+
+    <!-- ===== Google Search Console verification =====
+         REEMPLAZAR el valor de content por el que te da GSC al crear la propiedad.
+         Instrucciones: ver Proyectos/kapedigital.com/02 - documentación oficial/GSC-Setup.md -->
+    <meta name="google-site-verification" content="REEMPLAZAR_CON_CODIGO_DE_GSC" />
+
+    <!-- ===== Fonts (optimized: dropped Lora, reduced weights) ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ===== Theme + JSON-LD schema graph ===== -->
+    <meta name="theme-color" content="#FAF7F2" />
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+
+    <!-- ===== Google Analytics 4 ===== -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QHZ2CD2SWN"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-QHZ2CD2SWN', { anonymize_ip: true });
+    </script>
+  </head>
+
+  <body class="bg-kape-white font-inter text-kape-oscuro antialiased overflow-x-hidden">
+    <div>
+      <slot />
+    </div>
+
+    <script is:inline>
+      // ── Reveal on scroll ─────────────────────────────
+      var revealObs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('revealed');
+            revealObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
+        .forEach(function(el) { revealObs.observe(el); });
+
+      // ── Navbar shadow ─────────────────────────────────
+      var navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 20) navbar && navbar.classList.add('nav-scrolled');
+        else navbar && navbar.classList.remove('nav-scrolled');
+      }, { passive: true });
+
+      // ── Mobile menu ───────────────────────────────────
+      var btn  = document.getElementById('menu-btn');
+      var mNav = document.getElementById('mobile-nav');
+      btn && btn.addEventListener('click', function() {
+        mNav && mNav.classList.toggle('hidden');
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !expanded);
+      });
+
+      // ── Process line reveal ───────────────────────────
+      var lineObs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) e.target.classList.add('revealed');
+        });
+      }, { threshold: 0.35 });
+      document.querySelectorAll('.process-line').forEach(function(el) {
+        lineObs.observe(el);
+      });
+    </script>
+  </body>
+</html>

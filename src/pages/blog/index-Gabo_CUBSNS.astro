@@ -1,0 +1,136 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { blogPosts } from '../../data/blog';
+---
+<Layout
+  title="Blog — Notas de tueste sobre desarrollo web y SEO en CR | Kape Digital"
+  description="Artículos prácticos sobre digitalización, sitios web, SEO y marketing digital para PYMEs y emprendedores costarricenses. Guías sin tecnicismos."
+  pageType="blog-list"
+  breadcrumbs={[
+    { label: 'Inicio', url: 'https://kapedigital.com/' },
+    { label: 'Blog',   url: 'https://kapedigital.com/blog/' },
+  ]}
+>
+  <Navbar />
+  <main class="pt-16">
+
+    <!-- Hero -->
+    <section class="py-20 bg-kape-white relative overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
+        <div class="coffee-ring coffee-ring-xl absolute -top-12 -left-16 opacity-20"></div>
+      </div>
+      <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center relative">
+        <span class="section-pill">Blog</span>
+        <h1 class="font-jakarta font-extrabold text-4xl lg:text-5xl text-kape-oscuro mb-4">
+          Notas de tueste
+        </h1>
+        <p class="accent-script text-xl text-kape-medio/80 max-w-xl mx-auto">
+          Artículos prácticos para digitalizar tu negocio costarricense.
+        </p>
+      </div>
+    </section>
+
+    <!-- sección de detalles de café eliminada -->
+
+    <!-- Posts -->
+    <section class="py-12 bg-kape-beige pb-24">
+      <div class="max-w-5xl mx-auto px-6 lg:px-8">
+
+        <!-- Controls / Filters (visual only) -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <div class="flex items-center gap-3">
+            <span class="section-pill">Blog</span>
+            <p class="text-sm text-kape-medio/70">Artículos prácticos y guías rápidas</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <input aria-label="Buscar" placeholder="Buscar en el blog" type="search"
+                   class="px-4 py-2 rounded-xl border border-kape-beige/30 bg-white/90 text-sm outline-none focus:ring-kape-naranja" />
+            <div class="hidden sm:flex items-center gap-2">
+              <button class="px-3 py-1 text-xs rounded-full bg-kape-white/90 border border-kape-beige">Todos</button>
+              <button class="px-3 py-1 text-xs rounded-full bg-kape-white/90 border border-kape-beige">Café</button>
+              <button class="px-3 py-1 text-xs rounded-full bg-kape-white/90 border border-kape-beige">Web</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured post -->
+        <article class="reveal bg-kape-white rounded-3xl overflow-hidden shadow-lg mb-8 group hover:-translate-y-1 transition-transform duration-300">
+          <div class={`h-1 ${blogPosts[0].accent.replace('border-', 'bg-')}`}></div>
+          <div class="p-8 grid md:grid-cols-3 gap-6 items-center">
+            <div class="md:col-span-2">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-kape-naranja">{blogPosts[0].category}</span>
+                <span class="text-xs text-kape-medio/50">{blogPosts[0].date} · {blogPosts[0].readTime}</span>
+              </div>
+              <h2 class="font-jakarta font-extrabold text-3xl text-kape-oscuro mb-4 group-hover:text-kape-medio transition-colors">{blogPosts[0].title}</h2>
+              <p class="text-kape-medio/75 text-base leading-relaxed mb-6">{blogPosts[0].excerpt}</p>
+              <a href={`/blog/${blogPosts[0].slug}`} class="inline-flex items-center gap-2 text-kape-naranja font-semibold">
+                Leer nota →
+              </a>
+            </div>
+            <div class="hidden md:flex items-center justify-center">
+              <div class="w-full h-44 rounded-xl overflow-hidden bg-gradient-to-tr from-white to-kape-beige flex items-center justify-center">
+                <svg width="84" height="84" viewBox="0 0 24 24" fill="none" stroke="#6F4E37" stroke-width="1.5" stroke-linecap="round" opacity="0.5">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Rest of posts as richer cards -->
+        <div class="grid md:grid-cols-2 gap-6">
+          {blogPosts.slice(1).map((post, i) => (
+            <article class={`reveal reveal-delay-${i + 1} bg-kape-white rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group`}>
+              <div class="p-4 md:p-6 flex gap-4 md:gap-6 items-start">
+                <div class="w-24 h-24 rounded-lg shrink-0 bg-gradient-to-br from-white to-kape-beige flex items-center justify-center overflow-hidden">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#6F4E37" stroke-width="1.2" stroke-linecap="round" opacity="0.5">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-3">
+                      <span class="text-xs font-semibold uppercase tracking-wide text-kape-naranja">{post.category}</span>
+                      <span class="text-xs text-kape-medio/50">{post.date}</span>
+                    </div>
+                    <span class="text-xs text-kape-medio/50">{post.readTime}</span>
+                  </div>
+                  <h3 class="font-jakarta font-bold text-kape-oscuro text-lg mb-2 group-hover:text-kape-medio transition-colors">{post.title}</h3>
+                  <p class="text-kape-medio/70 text-sm mb-3 leading-relaxed">{post.excerpt}</p>
+                  <a href={`/blog/${post.slug}`} class="text-kape-naranja text-sm font-semibold">Leer nota →</a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <!-- Newsletter signup -->
+        <div class="reveal mt-12 bg-kape-oscuro rounded-2xl p-8 text-center">
+          <p class="text-kape-beige/60 text-sm mb-2">Una vez al mes, sin spam</p>
+          <h3 class="font-jakarta font-bold text-white text-2xl mb-4">
+            Suscribite a la <span class="text-kape-naranja">Bolsa mensual</span>
+          </h3>
+          <p class="text-kape-beige/70 text-sm mb-6 max-w-sm mx-auto">
+            Lo más relevante sobre digitalización para negocios ticos, en un solo correo.
+          </p>
+          <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <input type="email" placeholder="tu@correo.com"
+                   class="flex-1 bg-kape-white/10 border border-kape-beige/20 text-white placeholder-kape-beige/40
+                          rounded-xl px-4 py-3 text-sm outline-none focus:border-kape-naranja transition-colors"/>
+            <button type="submit"
+                    class="bg-kape-naranja text-white font-semibold px-6 py-3 rounded-xl hover:bg-orange-500 transition-colors btn-ripple">
+              Suscribirme
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

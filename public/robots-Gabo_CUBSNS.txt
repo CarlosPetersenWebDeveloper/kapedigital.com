@@ -1,0 +1,11 @@
+# Robots.txt — Kape Digital
+# https://kapedigital.com
+
+User-agent: *
+Allow: /
+
+# Block API routes (no SEO value)
+Disallow: /api/
+
+# Sitemap (generated dynamically by src/pages/sitemap.xml.ts)
+Sitemap: https://kapedigital.com/sitemap.xml

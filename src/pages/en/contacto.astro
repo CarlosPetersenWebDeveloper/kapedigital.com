@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import CTA from '../../components/CTA.astro';
+import { getLocale, getSiteText } from '../../i18n';
+
+const locale = getLocale(Astro.url.pathname);
+const text = getSiteText(locale);
+
+const breadcrumbs = [
+  { label: 'Home', url: 'https://kapedigital.com/en/' },
+  { label: text.contactPage.eyebrow, url: 'https://kapedigital.com/en/contacto/' },
+];
+---
+
+<Layout
+  locale="en"
+  title={text.contactPage.title}
+  description={text.contactPage.description}
+  pageType="contact"
+  breadcrumbs={breadcrumbs}
+>
+  <Navbar />
+
+  <main class="pt-16">
+    <CTA variant="light" />
+  </main>
+
+  <Footer />
+</Layout>
