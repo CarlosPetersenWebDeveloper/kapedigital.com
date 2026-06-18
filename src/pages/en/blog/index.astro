@@ -7,7 +7,16 @@ import { localizedPath } from '../../../i18n';
 
 const blogPosts = getBlogPosts('en');
 ---
-<Layout locale="en" title="Blog — Roast notes · Kape Digital" description="Practical articles about digitalization, websites, and marketing for Costa Rican businesses.">
+<Layout
+  locale="en"
+  title="Blog — Roast notes on web development & SEO in Costa Rica | Kape Digital"
+  description="Practical articles about digitalization, websites, SEO and digital marketing for Costa Rican SMEs and entrepreneurs. Plain-language guides."
+  pageType="blog-list"
+  breadcrumbs={[
+    { label: 'Home', url: 'https://kapedigital.com/en/' },
+    { label: 'Blog', url: 'https://kapedigital.com/en/blog/' },
+  ]}
+>
   <Navbar />
   <main class="pt-16">
     <section class="py-20 bg-kape-white relative overflow-hidden">

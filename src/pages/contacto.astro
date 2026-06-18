@@ -2,71 +2,29 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import CTA from '../components/CTA.astro';
+import { getLocale, getSiteText } from '../i18n';
+
+const locale = getLocale(Astro.url.pathname);
+const text = getSiteText(locale);
+
+const breadcrumbs = [
+  { label: locale === 'en' ? 'Home' : 'Inicio', url: 'https://kapedigital.com/' },
+  { label: text.contactPage.eyebrow, url: 'https://kapedigital.com/contacto/' },
+];
 ---
 
-<Layout title="Contacto — Kape Digital" description="Contactá a Carlos Petersen para desarrollar tu sitio web o pedir asesoría sobre café y presencia digital.">
+<Layout
+  title={text.contactPage.title}
+  description={text.contactPage.description}
+  pageType="contact"
+  breadcrumbs={breadcrumbs}
+>
   <Navbar />
 
   <main class="pt-16">
-    <section class="py-20 bg-kape-white">
-      <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-        <span class="section-pill">Contacto</span>
-        <h1 class="font-jakarta font-extrabold text-3xl lg:text-4xl text-kape-oscuro mb-4">Hablemos de tu proyecto</h1>
-        <p class="text-kape-medio/80 mb-8">Completá el formulario o escribime directamente a <a href="mailto:hola@kapedigital.com" class="text-kape-naranja font-semibold">hola@kapedigital.com</a>.</p>
-
-        <form id="contact-page-form" class="max-w-2xl mx-auto bg-kape-beige/10 border border-kape-beige/20 rounded-2xl p-6 text-left">
-          <div class="grid md:grid-cols-2 gap-4">
-            <label>
-              <span class="block text-sm font-semibold text-kape-oscuro mb-2">Nombre</span>
-              <input name="name" required type="text" placeholder="Tu nombre"
-                     class="w-full rounded-xl px-4 py-3 bg-white outline-none" />
-            </label>
-            <label>
-              <span class="block text-sm font-semibold text-kape-oscuro mb-2">Email</span>
-              <input name="email" required type="email" placeholder="tu@correo.com"
-                     class="w-full rounded-xl px-4 py-3 bg-white outline-none" />
-            </label>
-            <label class="md:col-span-2">
-              <span class="block text-sm font-semibold text-kape-oscuro mb-2">Asunto</span>
-              <input name="subject" type="text" placeholder="Sobre qué querés hablar"
-                     class="w-full rounded-xl px-4 py-3 bg-white outline-none" />
-            </label>
-            <label class="md:col-span-2">
-              <span class="block text-sm font-semibold text-kape-oscuro mb-2">Mensaje</span>
-              <textarea name="message" rows="5" required class="w-full rounded-xl px-4 py-3 bg-white outline-none" placeholder="Contame brevemente tu proyecto..."></textarea>
-            </label>
-          </div>
-
-          <div class="mt-4 flex items-center justify-between">
-            <button type="submit" class="bg-kape-naranja text-white px-6 py-3 rounded-full font-semibold">Enviar mensaje</button>
-            <p id="contact-form-status" class="text-sm text-kape-medio/70"></p>
-          </div>
-        </form>
-      </div>
-    </section>
+    <CTA variant="light" />
   </main>
 
   <Footer />
-
-  <script is:inline>
-    (function(){
-      const form = document.getElementById('contact-page-form');
-      const status = document.getElementById('contact-form-status');
-      if (!form) return;
-      form.addEventListener('submit', async function(e){
-        e.preventDefault();
-        status.textContent = 'Enviando...';
-        const data = new FormData(form);
-        try {
-          const res = await fetch('/api/contact', { method: 'POST', body: data });
-          const json = await res.json();
-          if (!res.ok || !json.ok) throw new Error(json.error || 'Error');
-          form.reset();
-          status.textContent = 'Mensaje enviado. Respondo pronto.';
-        } catch (err) {
-          status.textContent = err.message || 'Error al enviar';
-        }
-      });
-    })();
-  </script>
 </Layout>

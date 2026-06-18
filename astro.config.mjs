@@ -3,33 +3,30 @@ import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel/serverless';
 
 export default defineConfig({
-  // Site domain for SEO
   site: 'https://kapedigital.com',
-  
+
   adapter: vercel({
     runtime: 'nodejs20.x',
   }),
+
+  // Sitemap se genera con un endpoint custom en src/pages/sitemap.xml.ts
+  // (evita un bug de @astrojs/sitemap con output:'hybrid' que tira "Cannot read properties of undefined")
   integrations: [tailwind()],
-  
-  // Optimization for better Lighthouse scores
+
   vite: {
     build: {
       minify: 'terser',
       terserOptions: {
         compress: {
-          drop_console: true, // Remove console.logs in production
+          drop_console: true,
         },
       },
     },
   },
 
-  // Output configuration - use 'hybrid' to allow both static pages and dynamic API routes
   output: 'hybrid',
-  
-  // Trailing slash for consistent URLs (better for SEO)
   trailingSlash: 'ignore',
 
-  // Prerender all pages for maximum performance
   prerender: {
     crawlLinks: true,
   },

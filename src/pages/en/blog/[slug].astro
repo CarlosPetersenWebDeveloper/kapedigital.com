@@ -10,7 +10,24 @@ export function getStaticPaths() {
 
 const { post } = Astro.props;
 ---
-<Layout locale="en" title={`${post.title} · Kape Digital`} description={post.description}>
+<Layout
+  locale="en"
+  title={`${post.title} · Kape Digital`}
+  description={post.description}
+  ogType="article"
+  pageType="blog-post"
+  article={{
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    author: 'Carlos Petersen',
+  }}
+  breadcrumbs={[
+    { label: 'Home', url: 'https://kapedigital.com/en/' },
+    { label: 'Blog', url: 'https://kapedigital.com/en/blog/' },
+    { label: post.title, url: `https://kapedigital.com/en/blog/${post.slug}/` },
+  ]}
+>
   <Navbar />
   <main class="pt-16">
     <article class="py-16 bg-kape-beige">

@@ -9,24 +9,24 @@ export function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-
-const articleSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: post.title,
-  description: post.description,
-  datePublished: post.date,
-  author: {
-    '@type': 'Organization',
-    name: 'Kape Digital',
-  },
-  mainEntityOfPage: {
-    '@type': 'WebPage',
-    '@id': Astro.url.toString(),
-  },
-};
 ---
-<Layout title={`${post.title} · Kape Digital`} description={post.description}>
+<Layout
+  title={`${post.title} · Kape Digital`}
+  description={post.description}
+  ogType="article"
+  pageType="blog-post"
+  article={{
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    author: 'Carlos Petersen',
+  }}
+  breadcrumbs={[
+    { label: 'Inicio', url: 'https://kapedigital.com/' },
+    { label: 'Blog',   url: 'https://kapedigital.com/blog/' },
+    { label: post.title, url: `https://kapedigital.com/blog/${post.slug}/` },
+  ]}
+>
   <Navbar />
   <main class="pt-16">
     <article class="py-16 bg-kape-beige">
@@ -83,6 +83,5 @@ const articleSchema = {
       </div>
     </article>
   </main>
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <Footer />
 </Layout>

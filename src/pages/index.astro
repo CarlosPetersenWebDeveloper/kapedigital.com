@@ -9,13 +9,25 @@ import BlogPreview from '../components/BlogPreview.astro';
 import TrustFAQ from '../components/TrustFAQ.astro';
 import CTA from '../components/CTA.astro';
 import Footer from '../components/Footer.astro';
+
+// FAQs del home (mismas que TrustFAQ usa) — se envían al Layout para generar FAQPage schema
+// y obtener rich snippets de preguntas frecuentes en Google.
+const faqs = [
+  { question: '¿Qué necesito para empezar?', answer: 'Con tu idea, el nombre del negocio y una conversación breve alcanza para arrancar. Si ya tenés logo, textos o redes, mejor; si no, también podemos ordenarlo.' },
+  { question: '¿Cuánto tarda un proyecto?', answer: 'Depende del alcance, pero la idea es trabajar por etapas y entregar rápido lo esencial para que tu negocio empiece a verse profesional cuanto antes.' },
+  { question: '¿Puedo empezar con algo pequeño?', answer: 'Sí. De hecho, muchas PYMEs convierten mejor cuando empiezan con una base clara y luego escalan a un sitio más grande o una tienda.' },
+  { question: '¿Ustedes me ayudan si solo tengo Instagram o WhatsApp?', answer: 'Sí. Justamente ahí es donde más sentido tiene ordenar la presencia digital y armar una base propia que no dependa solo de una red social.' },
+];
 ---
-<Layout>
+<Layout
+  title="Agencia de desarrollo web en Costa Rica — Kape Digital"
+  description="Diseño y desarrollo web para PYMEs y emprendedores costarricenses. Sitios, tiendas en línea y presencia digital completa desde $250 + IVA. Cafecito exploratorio gratis."
+  pageType="home"
+  faqs={faqs}
+>
   <Navbar />
   <main>
     <Hero />
-
-    <!-- decoraciones visuales conservadas; sección de detalles de café eliminada -->
 
     <!-- Value props bar -->
     <section class="bg-kape-beige py-10 border-y border-kape-medio/10">

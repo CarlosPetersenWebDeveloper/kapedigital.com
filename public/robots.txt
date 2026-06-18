@@ -1,22 +1,11 @@
-# Robots.txt for Kape Digital
-# https://www.robotstxt.org/
+# Robots.txt — Kape Digital
+# https://kapedigital.com
 
 User-agent: *
 Allow: /
-Allow: /blog/
-Allow: /servicios/
-Allow: /portafolio/
-Allow: /sobre/
 
-# Disallow private/admin areas (if any)
-Disallow: /admin/
-Disallow: /private/
+# Block API routes (no SEO value)
+Disallow: /api/
 
-# Sitemap location
+# Sitemap (generated dynamically by src/pages/sitemap.xml.ts)
 Sitemap: https://kapedigital.com/sitemap.xml
-
-# Crawl delay for respectful indexing
-Crawl-delay: 1
-
-# Request rate (pages per second)
-Request-rate: 1/1s

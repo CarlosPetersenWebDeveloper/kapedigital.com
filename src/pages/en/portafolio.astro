@@ -11,7 +11,16 @@ const projects = [
 ];
 
 ---
-<Layout locale="en" title="Portfolio — Kape Digital" description="Kape Digital web development projects: online stores, business sites, and more.">
+<Layout
+  locale="en"
+  title="Web Development Portfolio in Costa Rica — Kape Digital"
+  description="Real Kape Digital projects in Costa Rica: online stores (MVP Cards, BeeStore), corporate sites (AJ Soluciones) and more. Tech stack: React, PHP, Laravel, WordPress."
+  pageType="portfolio"
+  breadcrumbs={[
+    { label: 'Home',      url: 'https://kapedigital.com/en/' },
+    { label: 'Portfolio', url: 'https://kapedigital.com/en/portafolio/' },
+  ]}
+>
   <Navbar />
   <main class="pt-16">
     <section class="py-20 bg-kape-white relative overflow-hidden">

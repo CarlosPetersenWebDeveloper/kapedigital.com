@@ -1,5 +1,5 @@
 ---
-import { getLocale, getSiteText } from '../i18n';
+import { getLocale, getSiteText, localizedPath } from '../i18n';
 
 const locale = getLocale(Astro.url.pathname);
 const text = getSiteText(locale);
@@ -75,7 +75,7 @@ const faqs = locale === 'en'
           <a href="#cafecito" class="inline-flex items-center justify-center rounded-full bg-kape-naranja px-6 py-3 font-semibold text-white hover:bg-orange-700 transition-colors">
             {text.trustSection.primaryCta}
           </a>
-          <a href="/servicios" class="inline-flex items-center justify-center rounded-full border border-kape-beige/25 px-6 py-3 font-semibold text-kape-beige hover:bg-kape-beige/10 transition-colors">
+          <a href={localizedPath(Astro.url.pathname, '/servicios')} class="inline-flex items-center justify-center rounded-full border border-kape-beige/25 px-6 py-3 font-semibold text-kape-beige hover:bg-kape-beige/10 transition-colors">
             {text.trustSection.secondaryCta}
           </a>
         </div>
